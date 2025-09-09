@@ -7,4 +7,4 @@ print(another)
 
 
 def MyFunc():
-  print(1)
+  print("Hello world!")
