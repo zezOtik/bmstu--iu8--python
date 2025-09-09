@@ -7,5 +7,5 @@ print(another)
 
 
 def MyFunc():
-    print("Hello  world!")
+    print("Hello  worldX!")
     return 1
