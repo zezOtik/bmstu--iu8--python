@@ -161,7 +161,7 @@ class OrderLineSpec(BaseModel):
                             должно быть строго больше 0")
 
         expected_price = self.item_line.price * self.quantity
-        if abs(expected_price - self.line_price) > 1e-6:
+        if abs(expected_price - self.line_price) > 0:
             raise ValueError(f"line_price должно быть равно {expected_price}")
         return self
 
@@ -172,6 +172,14 @@ class OrderSpec(BaseModel):
     items_line: List[OrderLineSpec]
 
     model_config = ConfigDict(extra="forbid")  # Запрещаем лишние поля
+
+    @model_validator(mode="after")
+    def check_unique_order_lines(self):
+        order_line_ids = [line.order_line_id for line in self.items_line]
+        if len(order_line_ids) != len(set(order_line_ids)):
+            raise ValueError(f"order_line_id должны \
+                            быть уникальными в рамках order_id={self.order_id}")
+        return self
 
 
 class OrdersSpec(BaseModel):
@@ -214,7 +222,7 @@ class OrdersSpec(BaseModel):
 
 
 if __name__ == "__main__":
-    with open("./data.yaml", "r", encoding="utf-8") as f:
+    with open("D:/BMSTU/Python_course/clone_git_repo/bmstu--iu8--python/students_folder/Zhukova_Mariya/lab2/data.yaml", "r", encoding="utf-8") as f:
         data = yaml.safe_load(f)
 
     orders = OrdersSpec(**data)
