@@ -10,163 +10,176 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class UserSpec(BaseModel):
-    user_id: int # НУЖНА УНИКАЛЬНОСТЬ!!!!!!!!!!!! - сделала в последнем классе
-    username: str 
-    surname: str 
-    second_name: Optional[str]=None
+class UserSpec(BaseModel): 
+    user_id: int
+    username: str
+    surname: str
+    second_name: Optional[str] = None
     email: EmailStr
-    status: str 
+    status: str
 
-    model_config = ConfigDict(extra="forbid") # Запрещаем лишние поля
+    model_config = ConfigDict(extra = "forbid")  # Запрещаем лишние поля
 
     # Проверка поля username на содержание только русского языка
-    @field_validator("username", mode="after")
+    @field_validator("username", mode = "after")
     @classmethod
-    def check_russian_in_name(cls, value:str) -> str:
-        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value):
-            raise ValueError("Поле username должно содержать только русский язык и быть не пустым")
+    def check_russian_in_name(cls, value: str) -> str: 
+        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value): 
+            raise ValueError("Поле username должно содержать \
+                             только русский язык и быть не пустым")
         return value
     
     # Проверка поля surname на содержание только русского языка
-    @field_validator("surname", mode="after") 
+    @field_validator("surname", mode = "after")
     @classmethod
-    def check_russian_in_surname(cls, value:str) -> str:
-        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value):
-            raise ValueError("Поле surname должно содержать только русский язык и быть не пустым")
+    def check_russian_in_surname(cls, value: str) -> str: 
+        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value): 
+            raise ValueError("Поле surname должно содержать \
+                             только русский язык и быть не пустым")
         return value
     
     # Проверка поля статус на допустимые значения
-    @field_validator("status", mode="after")
+    @field_validator("status", mode = "after")
     @classmethod
-    def check_status(cls, value:str) -> str:
-        if value not in ["active", "non-active"]:
-            raise ValueError("Поле status должно быть 'active' или 'non-active'")
+    def check_status(cls, value: str) -> str: 
+        if value not in ["active", "non-active"]: 
+            raise ValueError("Поле status должно быть \
+                             'active' или 'non-active'")
         return value
     
 
-class ProfileSpec(UserSpec):
+class ProfileSpec(UserSpec): 
     bio: str
-    url: HttpUrl # url: Текстовое поле, не пустой, однозначно должны быть ://
+    url: HttpUrl  # url: Текстовое поле, не пустой, однозначно должны быть ://
 
-    model_config = ConfigDict(extra="forbid") # Запрещаем лишние поля
+    model_config = ConfigDict(extra = "forbid")  # Запрещаем лишние поля
 
     # Проверка поля bio на содержание только русского языка
-    @field_validator("bio", mode="after")
+    @field_validator("bio", mode = "after")
     @classmethod
-    def check_russian_in_bio(cls, value:str) -> str:
-        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value):
-            raise ValueError("Поле username должно содержать только русский язык и быть не пустым")
+    def check_russian_in_bio(cls, value: str) -> str: 
+        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value): 
+            raise ValueError("Поле username должно содержать \
+                             только русский язык и быть не пустым")
         return value
     
-class ItemSpec(BaseModel):
+
+class ItemSpec(BaseModel): 
     item_id: int
-    name: str # Русский алфавит
-    desc: str # Русский алфавит
-    price: float # >0
+    name: str   # Русский алфавит
+    desc: str   # Русский алфавит
+    price: float  # >0
 
-    model_config = ConfigDict(extra="forbid") # Запрещаем лишние поля
+    model_config = ConfigDict(extra = "forbid")  # Запрещаем лишние поля
 
     # Проверка поля name на содержание только русского языка
-    @field_validator("name", mode="after")
+    @field_validator("name", mode = "after")
     @classmethod
-    def check_russian_in_name(cls, value:str) -> str:
-        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value):
-            raise ValueError("Поле name должно содержать только русский язык и быть не пустым")
+    def check_russian_in_name(cls, value: str) -> str: 
+        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value): 
+            raise ValueError("Поле name должно содержать \
+                             только русский язык и быть не пустым")
         return value
     
     # Проверка поля desc на содержание только русского языка
-    @field_validator("desc", mode="after") 
+    @field_validator("desc", mode = "after")
     @classmethod
-    def check_russian_in_desc(cls, value:str) -> str:
-        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value):
-            raise ValueError("Поле desc должно содержать только русский язык и быть не пустым")
+    def check_russian_in_desc(cls, value: str) -> str: 
+        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value): 
+            raise ValueError("Поле desc должно содержать \
+                             только русский язык и быть не пустым")
         return value
     
     # Проверка поля price на допустимые значения
-    @field_validator("price", mode="after")
+    @field_validator("price", mode = "after")
     @classmethod
-    def check_price(cls, value:float) -> float:
+    def check_price(cls, value:float) -> float: 
         if value <= 0:
-            raise ValueError("Значение в поле price должно быть строго больше 0")
+            raise ValueError("Значение в поле price \
+                             должно быть строго больше 0")
         return value
     
 
-class ServiceSpec(BaseModel):
+class ServiceSpec(BaseModel): 
     service_id: int
-    name: str # Русский алфавит
-    desc: str # Русский алфавит
-    price: float # >0
+    name: str  # Русский алфавит
+    desc: str  # Русский алфавит
+    price: float  # >0
 
-    model_config = ConfigDict(extra="forbid") # Запрещаем лишние поля
+    model_config = ConfigDict(extra = "forbid")  # Запрещаем лишние поля
 
     # Проверка поля name на содержание только русского языка
-    @field_validator("name", mode="after")
+    @field_validator("name", mode = "after")
     @classmethod
-    def check_russian_in_name(cls, value:str) -> str:
-        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value):
-            raise ValueError("Поле name должно содержать только русский язык и быть не пустым")
+    def check_russian_in_name(cls, value: str) -> str: 
+        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value): 
+            raise ValueError("Поле name должно содержать \
+                             только русский язык и быть не пустым")
         return value
     
     # Проверка поля desc на содержание только русского языка
-    @field_validator("desc", mode="after") 
+    @field_validator("desc", mode = "after")
     @classmethod
-    def check_russian_in_desc(cls, value:str) -> str:
-        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value):
-            raise ValueError("Поле desc должно содержать только русский язык и быть не пустым")
+    def check_russian_in_desc(cls, value: str) -> str: 
+        if not re.match(r'^[А-Яа-яЁё\s\-]+$', value): 
+            raise ValueError("Поле desc должно содержать \
+                             только русский язык и быть не пустым")
         return value
     
     # Проверка поля price на допустимые значения
-    @field_validator("price", mode="after")
+    @field_validator("price", mode = "after")
     @classmethod
-    def check_price(cls, value:float) -> float:
-        if value <= 0:
-            raise ValueError("Значение в поле price должно быть строго больше 0")
+    def check_price(cls, value: float) -> float: 
+        if value <= 0: 
+            raise ValueError("Значение в поле price \
+                             должно быть строго больше 0")
         return value
-    
 
-class OrderLineSpec(BaseModel):
+
+class OrderLineSpec(BaseModel): 
     order_id: int
     order_line_id: int  # Уникальное значение в рамках одного order_id
     item_line: Union[ItemSpec, ServiceSpec]
     quantity: float
     line_price: float
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra = "forbid")
 
-    @field_validator("quantity", mode="after")
+    @field_validator("quantity", mode = "after")
     @classmethod
     def check_quantity(cls, value: float) -> float:
-        if value <= 0:
-            raise ValueError("Значение в поле quantity должно быть строго больше 0")
+        if value <= 0: 
+            raise ValueError("Значение в поле quantity \
+                             должно быть строго больше 0")
         return value
 
     @model_validator(mode="after")
-    def check_line_price(self):
-        if self.line_price <= 0:
-            raise ValueError("Значение в поле line_price должно быть строго больше 0")
+    def check_line_price(self): 
+        if self.line_price <= 0: 
+            raise ValueError("Значение в поле line_price \
+                             должно быть строго больше 0")
 
         expected_price = self.item_line.price * self.quantity
-        if abs(expected_price - self.line_price) > 1e-6:
+        if abs(expected_price - self.line_price) > 1e-6: 
             raise ValueError(f"line_price должно быть равно {expected_price}")
         return self
     
 
-class OrderSpec(BaseModel):
+class OrderSpec(BaseModel): 
     order_id: int
     user_info: ProfileSpec
     items_line: List[OrderLineSpec]
     
-    model_config = ConfigDict(extra="forbid") # Запрещаем лишние поля
+    model_config = ConfigDict(extra = "forbid")  # Запрещаем лишние поля
 
 
-class OrdersSpec(BaseModel):
+class OrdersSpec(BaseModel): 
     market_place_orders: List[OrderSpec]
 
-    model_config = ConfigDict(extra="forbid") # Запрещаем лишние поля
+    model_config = ConfigDict(extra = "forbid")  # Запрещаем лишние поля
 
-    @model_validator(mode="after")
-    def check_global_uniques(self):
+    @model_validator(mode = "after")
+    def check_global_uniques(self): 
         user_ids = []
         item_ids = []
         service_ids = []
@@ -198,8 +211,9 @@ class OrdersSpec(BaseModel):
 
         return self
     
-if __name__ == "__main__":
-    with open("./data.yaml", "r", encoding="utf-8") as f:
+    
+if __name__ == "__main__": 
+    with open("./data.yaml", "r", encoding = "utf-8") as f:
         data = yaml.safe_load(f)
 
     orders = OrdersSpec(**data)
