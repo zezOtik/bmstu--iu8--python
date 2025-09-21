@@ -29,7 +29,7 @@ class UserSpec(BaseModel):
             raise ValueError("Поле username должно \
                             содержать только русский язык и быть не пустым")
         return value
-    
+
     # Проверка поля surname на содержание только русского языка
     @field_validator("surname", mode="after")
     @classmethod
@@ -38,7 +38,7 @@ class UserSpec(BaseModel):
             raise ValueError("Поле surname должно содержать \
                             только русский язык и быть не пустым")
         return value
-    
+
     # Проверка поля статус на допустимые значения
     @field_validator("status", mode="after")
     @classmethod
@@ -65,7 +65,7 @@ class ProfileSpec(UserSpec):
         return value
 
 
-class ItemSpec(BaseModel): 
+class ItemSpec(BaseModel):
     item_id: int
     name: str   # Русский алфавит
     desc: str   # Русский алфавит
@@ -81,7 +81,7 @@ class ItemSpec(BaseModel):
             raise ValueError("Поле name должно содержать \
                             только русский язык и быть не пустым")
         return value
-    
+
     # Проверка поля desc на содержание только русского языка
     @field_validator("desc", mode="after")
     @classmethod
@@ -90,7 +90,7 @@ class ItemSpec(BaseModel):
             raise ValueError("Поле desc должно содержать \
                             только русский язык и быть не пустым")
         return value
-    
+
     # Проверка поля price на допустимые значения
     @field_validator("price", mode="after")
     @classmethod
@@ -117,7 +117,7 @@ class ServiceSpec(BaseModel):
             raise ValueError("Поле name должно содержать \
                             только русский язык и быть не пустым")
         return value
-    
+
     # Проверка поля desc на содержание только русского языка
     @field_validator("desc", mode="after")
     @classmethod
@@ -126,7 +126,7 @@ class ServiceSpec(BaseModel):
             raise ValueError("Поле desc должно содержать \
                             только русский язык и быть не пустым")
         return value
-    
+
     # Проверка поля price на допустимые значения
     @field_validator("price", mode="after")
     @classmethod
@@ -164,17 +164,17 @@ class OrderLineSpec(BaseModel):
         if abs(expected_price - self.line_price) > 1e-6:
             raise ValueError(f"line_price должно быть равно {expected_price}")
         return self
-    
 
-class OrderSpec(BaseModel): 
+
+class OrderSpec(BaseModel):
     order_id: int
     user_info: ProfileSpec
     items_line: List[OrderLineSpec]
-    
+
     model_config = ConfigDict(extra="forbid")  # Запрещаем лишние поля
 
 
-class OrdersSpec(BaseModel): 
+class OrdersSpec(BaseModel):
     market_place_orders: List[OrderSpec]
 
     model_config = ConfigDict(extra="forbid")  # Запрещаем лишние поля
@@ -211,10 +211,10 @@ class OrdersSpec(BaseModel):
             raise ValueError("service_id должны быть уникальными")
 
         return self
-    
+
 
 if __name__ == "__main__":
-    with open("./data.yaml", "r", encoding = "utf-8") as f:
+    with open("./data.yaml", "r", encoding="utf-8") as f:
         data = yaml.safe_load(f)
 
     orders = OrdersSpec(**data)
