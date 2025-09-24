@@ -4,10 +4,12 @@ from typing_extensions import Literal
 import logging
 import yaml
 
-RUS_RE = r'^[А-Яа-яЁё][А-Яа-яЁё \-]*$' 
-Status = Literal['active', 'non-active'] 
-logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s') 
+
+RUS_RE = r'^[А-Яа-яЁё][А-Яа-яЁё \-]*$'
+Status = Literal['active', 'non-active']
+logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 logger = logging.getLogger(__name__)
+
 
 class UserSpec(BaseModel):
     user_id: int
@@ -27,6 +29,7 @@ class UserSpec(BaseModel):
             raise ValueError('email должен содержать @ и .')
         return v
 
+
 class ProfileSpec(UserSpec):
     bio: str = Field(..., pattern=RUS_RE)
     url: str
@@ -37,7 +40,8 @@ class ProfileSpec(UserSpec):
         if '://' not in v:
             raise ValueError("url должен содержать '://'")
         return v
-    
+
+
 class ItemSpec(BaseModel):
     item_id: int
     name: str = Field(..., pattern=RUS_RE)
@@ -47,6 +51,7 @@ class ItemSpec(BaseModel):
     class Config:
         extra = 'forbid'
 
+
 class ServiceSpec(BaseModel):
     service_id: int
     name: str = Field(..., pattern=RUS_RE)
@@ -55,6 +60,7 @@ class ServiceSpec(BaseModel):
 
     class Config:
         extra = 'forbid'
+
 
 class OrderLineSpec(BaseModel):
     order_id: int
@@ -75,6 +81,7 @@ class OrderLineSpec(BaseModel):
                 f'({self.line_price} != {self.quantity} * {self.item_line.price} = {expected})'
             )
         return self
+
 
 class OrderSpec(BaseModel):
     order_id: int
@@ -97,6 +104,7 @@ class OrderSpec(BaseModel):
                 raise ValueError(f'повтор order_line_id внутри order {self.order_id}')
             seen.add(ln.order_line_id)
         return self
+
 
 class OrdersSpec(BaseModel):
     market_place_orders: List[OrderSpec]
@@ -132,6 +140,7 @@ class OrdersSpec(BaseModel):
                         raise ValueError(f'повторяющийся service_id: {il.service_id}')
                     service_ids.add(il.service_id)
         return self
+
 
 def load(yaml_text: str) -> OrdersSpec:
     data = yaml.safe_load(yaml_text)
