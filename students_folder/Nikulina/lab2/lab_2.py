@@ -78,7 +78,8 @@ class OrderLineSpec(BaseModel):
         if self.line_price != expected:
             raise ValueError(
                 f'line_price не равно quantity * item_line.price '
-                f'({self.line_price} != {self.quantity} * {self.item_line.price} = {expected})'
+                f'({self.line_price} != {self.quantity} * '
+                f'{self.item_line.price} = {expected})'
             )
         return self
 
@@ -99,9 +100,11 @@ class OrderSpec(BaseModel):
         seen: Set[int] = set()
         for ln in self.items_line:
             if ln.order_id != self.order_id:
-                raise ValueError('order_line.order_id должен совпадать с order.order_id')
+                raise ValueError('order_line.order_id должен'
+                ' совпадать с order.order_id')
             if ln.order_line_id in seen:
-                raise ValueError(f'повтор order_line_id внутри order {self.order_id}')
+                raise ValueError(f'повтор order_line_id '
+                f'внутри order {self.order_id}')
             seen.add(ln.order_line_id)
         return self
 
@@ -133,11 +136,13 @@ class OrdersSpec(BaseModel):
                 il = ln.item_line
                 if isinstance(il, ItemSpec):
                     if il.item_id in item_ids:
-                        raise ValueError(f'повторяющийся item_id: {il.item_id}')
+                        raise ValueError(f'повторяющийся '
+                        f'item_id: {il.item_id}')
                     item_ids.add(il.item_id)
                 else:
                     if il.service_id in service_ids:
-                        raise ValueError(f'повторяющийся service_id: {il.service_id}')
+                        raise ValueError(f'повторяющийся '
+                        f'service_id: {il.service_id}')
                     service_ids.add(il.service_id)
         return self
 
@@ -165,7 +170,9 @@ for o in orders.market_place_orders:
     for ln in o.items_line:
         logger.info(
             f'строка заказа={ln.order_line_id}, '
-            f'order_id={ln.order_id}, количество={ln.quantity}, цена={ln.line_price}'
+            f'order_id={ln.order_id}, '
+            f'количество={ln.quantity}, '
+            f'цена={ln.line_price}'
         )
 
         if isinstance(ln.item_line, ServiceSpec):
