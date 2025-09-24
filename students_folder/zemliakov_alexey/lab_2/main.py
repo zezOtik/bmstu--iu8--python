@@ -81,7 +81,9 @@ logging.info(f'Orders spec: {res}', exc_info=True)
 logging.info(f'Order spec first: {res.market_place_orders[0]}', exc_info=True)
 logging.info(f'Profile spec: {res.market_place_orders[0].user_info}',
              exc_info=True)
-logging.info(f'Order line spec first: {res.market_place_orders[0].order_lines[0]}',
+logging.info(f'Order line spec first: '
+             f'{res.market_place_orders[0].order_lines[0]}',
              exc_info=True)
-logging.info(f'Item spec first: {res.market_place_orders[0].order_lines[0].item_line}',
+logging.info(f'Item spec first:'
+             f' {res.market_place_orders[0].order_lines[0].item_line}',
              exc_info=True)
