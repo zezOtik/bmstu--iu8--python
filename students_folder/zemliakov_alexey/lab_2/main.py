@@ -12,12 +12,15 @@ class UserSpec(BaseModel):
     username: str = Field(min_length=1, pattern=r'^[а-яА-ЯёЁ\s]+$')
     surname: str = Field(min_length=1, pattern=r'^[а-яА-ЯёЁ\s]+$')
     second_name: Optional[str] = Field(pattern=r'^[а-яА-ЯёЁ\s]+$', default='')
-    email: str = Field(pattern=r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
+    email: str = (
+        Field(pattern=r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'))
     status: Literal['active', 'non-active']
+
 
 class ProfileSpec(UserSpec):
     bio: str = Field(min_length=1, pattern=r'^[а-яА-ЯёЁ\s]+$')
     url: str = Field(pattern=r'://')
+
 
 class ItemSpec(BaseModel):
     item_id: int
@@ -25,11 +28,13 @@ class ItemSpec(BaseModel):
     desc: str = Field(min_length=1, pattern=r'^[а-яА-ЯёЁ\s]+$')
     price: float = Field(gt=0)
 
+
 class ServiceSpec(BaseModel):
     service_id: int
     name: str = Field(min_length=1, pattern=r'^[а-яА-ЯёЁ\s]+$')
     desc: str = Field(min_length=1, pattern=r'^[а-яА-ЯёЁ\s]+$')
     price: float = Field(gt=0)
+
 
 class OrderLineSpec(BaseModel):
     order_id: int
@@ -43,13 +48,16 @@ class OrderLineSpec(BaseModel):
         self.line_price = self.quantity * self.item_line.price
         return self
 
+
 class OrderSpec(BaseModel):
     order_id: int
     user_info: ProfileSpec
     order_lines: List[OrderLineSpec]
 
+
 class OrdersSpec(BaseModel):
     market_place_orders: List[OrderSpec]
+
 
 def get_orders_from_yaml(yaml_data) -> OrdersSpec | None:
     if yaml_data and 'market_place_orders' in yaml_data:
