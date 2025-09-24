@@ -100,11 +100,15 @@ class OrderSpec(BaseModel):
         seen: Set[int] = set()
         for ln in self.items_line:
             if ln.order_id != self.order_id:
-                raise ValueError('order_line.order_id должен'
-                ' совпадать с order.order_id')
+                raise ValueError(
+                    'order_line.order_id должен '
+                    'совпадать с order.order_id'
+                )
             if ln.order_line_id in seen:
-                raise ValueError(f'повтор order_line_id '
-                f'внутри order {self.order_id}')
+                raise ValueError(
+                    f'повтор order_line_id '
+                    f'внутри order {self.order_id}'
+                )
             seen.add(ln.order_line_id)
         return self
 
@@ -136,13 +140,17 @@ class OrdersSpec(BaseModel):
                 il = ln.item_line
                 if isinstance(il, ItemSpec):
                     if il.item_id in item_ids:
-                        raise ValueError(f'повторяющийся '
-                        f'item_id: {il.item_id}')
+                        raise ValueError(
+                            f'повторяющийся '
+                            f'item_id: {il.item_id}'
+                        )
                     item_ids.add(il.item_id)
                 else:
                     if il.service_id in service_ids:
-                        raise ValueError(f'повторяющийся '
-                        f'service_id: {il.service_id}')
+                        raise ValueError(
+                            f'повторяющийся '
+                            f'service_id: {il.service_id}'
+                        )
                     service_ids.add(il.service_id)
         return self
 
