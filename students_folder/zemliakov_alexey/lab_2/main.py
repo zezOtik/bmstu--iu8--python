@@ -1,7 +1,7 @@
 import yaml
 import logging
 
-from pydantic import BaseModel, Field, model_validator, field_validator
+from pydantic import BaseModel, Field, model_validator
 from typing import Optional, Literal, List
 
 from typing_extensions import Self
@@ -66,7 +66,8 @@ def get_orders_from_yaml(yaml_data) -> OrdersSpec | None:
     return None
 
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 try:
     with open('data.yaml', 'r') as file:
         yaml_data = yaml.safe_load(file)
@@ -78,6 +79,9 @@ except Exception as e:
 
 logging.info(f'Orders spec: {res}', exc_info=True)
 logging.info(f'Order spec first: {res.market_place_orders[0]}', exc_info=True)
-logging.info(f'Profile spec: {res.market_place_orders[0].user_info}', exc_info=True)
-logging.info(f'Order line spec first: {res.market_place_orders[0].order_lines[0]}', exc_info=True)
-logging.info(f'Item spec first: {res.market_place_orders[0].order_lines[0].item_line}', exc_info=True)
+logging.info(f'Profile spec: {res.market_place_orders[0].user_info}',
+             exc_info=True)
+logging.info(f'Order line spec first: {res.market_place_orders[0].order_lines[0]}',
+             exc_info=True)
+logging.info(f'Item spec first: {res.market_place_orders[0].order_lines[0].item_line}',
+             exc_info=True)
