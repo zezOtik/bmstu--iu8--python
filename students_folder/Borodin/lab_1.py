@@ -99,6 +99,3 @@ while True:
         break
     else:
         print("Invalid task. Please try again.")
-
-
-
