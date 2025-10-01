@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator, EmailStr, HttpUrl
 from typing import Optional, List, Union, Set
 from typing_extensions import Literal
 import logging
@@ -16,30 +16,30 @@ class UserSpec(BaseModel):
     username: str = Field(..., pattern=RUS_RE)
     surname: str = Field(..., pattern=RUS_RE)
     second_name: Optional[str] = Field(None, pattern=RUS_RE)
-    email: str
+    email: EmailStr
     status: Status
 
     class Config:
         extra = 'forbid'
 
-    @field_validator('email')
-    @classmethod
-    def check_email(cls, v: str) -> str:
-        if '@' not in v or '.' not in v:
-            raise ValueError('email должен содержать @ и .')
-        return v
+    # @field_validator('email')
+    # @classmethod
+    # def check_email(cls, v: str) -> str:
+    #     if '@' not in v or '.' not in v:
+    #         raise ValueError('email должен содержать @ и .')
+    #     return v
 
 
 class ProfileSpec(UserSpec):
     bio: str = Field(..., pattern=RUS_RE)
-    url: str
+    url: HttpUrl
 
-    @field_validator('url')
-    @classmethod
-    def check_url(cls, v: str) -> str:
-        if '://' not in v:
-            raise ValueError("url должен содержать '://'")
-        return v
+    # @field_validator('url')
+    # @classmethod
+    # def check_url(cls, v: str) -> str:
+    #     if '://' not in v:
+    #         raise ValueError("url должен содержать '://'")
+    #     return v
 
 
 class ItemSpec(BaseModel):
