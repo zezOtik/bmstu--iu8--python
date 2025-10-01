@@ -1,4 +1,5 @@
-from pydantic import BaseModel, Field, field_validator, model_validator, EmailStr, HttpUrl
+from pydantic import BaseModel, Field, model_validator
+from pydantic import EmailStr, HttpUrl
 from typing import Optional, List, Union, Set
 from typing_extensions import Literal
 import logging
