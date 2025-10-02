@@ -1,6 +1,7 @@
 from pydantic import BaseModel, model_validator, HttpUrl, computed_field, field_validator
 from typing import List, Union, Optional
 
+
 class UserSpec(BaseModel):
     model_config = {
         "extra": "forbid"
@@ -63,6 +64,7 @@ class ProfileSpec(BaseModel):
             raise ValueError("URL must contain '://'")
         return value
 
+
 class ItemSpec(BaseModel):
     model_config = {
         "extra": "forbid"
@@ -91,7 +93,8 @@ class ItemSpec(BaseModel):
         if value <= 0:
             raise ValueError("Price must be greater than 0")
         return value
-    
+
+
 class ServiceSpec(BaseModel):
     model_config = {
         "extra": "forbid"
@@ -120,7 +123,8 @@ class ServiceSpec(BaseModel):
         if value <= 0:
             raise ValueError("Price must be greater than 0")
         return value
-    
+
+
 class OrderLineSpec(BaseModel):
     model_config = {
         "extra": "forbid"
@@ -146,7 +150,8 @@ class OrderLineSpec(BaseModel):
     @computed_field
     def line_price(self) -> float:
         return self.quantity * self.item_line.price
-    
+
+
 class OrderSpec(BaseModel):
     model_config = {
         "extra": "forbid"
@@ -154,6 +159,7 @@ class OrderSpec(BaseModel):
     order_id: int
     user_info: ProfileSpec
     items_line: List[OrderLineSpec]
+
 
 class OrdersSpec(BaseModel):
     model_config = {
