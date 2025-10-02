@@ -1,11 +1,6 @@
 name: ZMV Lab1 Tests Only
 
 on:
-  push:
-    paths:
-      - 'students_folder/Zotov_folder/**'
-      - 'tests/Zotov/**'
-      - 'tests/src/Zotov/**'
   pull_request:
     paths:
       - 'students_folder/Zotov_folder/**'
