@@ -1,4 +1,5 @@
-from pydantic import BaseModel, model_validator, HttpUrl, computed_field, field_validator
+from pydantic import (BaseModel, model_validator,
+                      HttpUrl, computed_field, field_validator)
 from typing import List, Union, Optional
 
 
@@ -44,7 +45,7 @@ class ProfileSpec(BaseModel):
         if value not in ['active', 'non-active']:
             raise ValueError("Status must be 'active' or 'non-active'")
         return value
-    
+
     @field_validator('email', mode='after')
     def validate_email(self, value):
         if '@' not in value or '.' not in value:
@@ -53,7 +54,8 @@ class ProfileSpec(BaseModel):
 
     @field_validator('bio', mode='after')
     def validate_bio(self, value):
-        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
+        is_russian = all('а' <= char <= 'я' or
+            'А' <= char <= 'Я' or char.isspace() for char in value)
         if not is_russian:
             raise ValueError("Bio must contain only Russian alphabet characters")
         return value
@@ -76,14 +78,16 @@ class ItemSpec(BaseModel):
 
     @field_validator('name', mode='after')
     def validate_name(self, value):
-        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
+        is_russian = all('а' <= char <= 'я'
+            or 'А' <= char <= 'Я' or char.isspace() for char in value)
         if not is_russian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
-    
+
     @field_validator('desc', mode='after')
     def validate_desc(self, value):
-        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
+        is_russian = all('а' <= char <= 'я'
+            or 'А' <= char <= 'Я' or char.isspace() for char in value)
         if not is_russian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
@@ -106,14 +110,16 @@ class ServiceSpec(BaseModel):
 
     @field_validator('name', mode='after')
     def validate_name(self, value):
-        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
+        is_russian = all('а' <= char <= 'я'
+            or 'А' <= char <= 'Я' or char.isspace() for char in value)
         if not is_russian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
     
     @field_validator('desc', mode='after')
     def validate_desc(self, value):
-        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
+        is_russian = all('а' <= char <= 'я'
+            or 'А' <= char <= 'Я' or char.isspace() for char in value)
         if not is_russian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
