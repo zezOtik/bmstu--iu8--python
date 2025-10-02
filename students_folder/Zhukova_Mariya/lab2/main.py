@@ -104,13 +104,13 @@ class OrdersSpec(BaseModel):
                     service_ids.append(item_line.service_id)
 
         if len(user_ids) != len(set(user_ids)):
-            raise ValueError("user_id должны быть уникальными")
+            raise ValueError("user_id должны быть уникальными!")
         if len(order_ids) != len(set(order_ids)):
-            raise ValueError("order_id должен быть уникальными")
+            raise ValueError("order_id должен быть уникальными!")
         if len(item_ids) != len(set(item_ids)):
-            raise ValueError("item_id должны быть уникальными")
+            raise ValueError("item_id должны быть уникальными!")
         if len(service_ids) != len(set(service_ids)):
-            raise ValueError("service_id должны быть уникальными")
+            raise ValueError("service_id должны быть уникальными!")
 
         return self
 
