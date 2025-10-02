@@ -22,3 +22,6 @@ answerList:
     value:
     answer: true
 ```
+
+## Полезные материалы
+https://habr.com/ru/articles/716248/ - про фикстуры
