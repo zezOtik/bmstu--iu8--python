@@ -1,0 +1,56 @@
+name: ZMV Lab1 Tests Only
+
+on:
+  push:
+    paths:
+      - 'students_folder/Zotov_folder/**'
+      - 'tests/Zotov/**'
+      - 'tests/src/Zotov/**'
+  pull_request:
+    paths:
+      - 'students_folder/Zotov_folder/**'
+      - 'tests/Zotov/**'
+      - 'tests/src/Zotov/**'
+  workflow_dispatch:
+
+jobs:
+  zmv-lab1-tests:
+    name: Run ZMV Lab1 Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python 3.13
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.13"
+    
+    - name: Cache pip packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml', '**/tox.ini') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install tox
+      run: |
+        python -m pip install --upgrade pip
+        pip install tox
+    
+    - name: Run ZMV Lab1 tests
+      run: tox -e zmv_lab1
+    
+    - name: Show tox environments
+      if: failure()
+      run: tox list
+    
+    - name: Show test files found
+      if: failure()
+      run: |
+        echo "=== Test files with zmv_lab1 marker ==="
+        find tests/ -name "*.py" -exec grep -l "zmv_lab1" {} \; || true
+        echo "=== All test files ==="
+        find tests/ -name "test_*.py" || true
