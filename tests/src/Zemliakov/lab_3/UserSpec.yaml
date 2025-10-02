@@ -3,7 +3,7 @@ answerList:
   - test_desc: 'Get correct UserSpec'
     value:
       user_id: 123
-      name: Алексей
+      username: Алексей
       surname: Земляков
       email: test@tes.ru
       status: active
@@ -15,7 +15,7 @@ answerList:
   - test_desc: 'Get incorrect User model, more attributes'
     value:
       user_id: 123
-      name: Алексей
+      username: Алексей
       surname: Земляков
       email: test@tes.ru
       status: active
@@ -24,7 +24,7 @@ answerList:
   - test_desc: 'Get incorrect type User.user_id'
     value:
       user_id: one
-      name: Алексей
+      username: Алексей
       surname: Земляков
       email: test@tes.ru
       status: active
@@ -32,7 +32,7 @@ answerList:
   - test_desc: 'Get incorrect symbol User.name'
     value:
       user_id: 1
-      name: Alexey
+      username: Alexey
       surname: Земляков
       email: test@tes.ru
       status: active
@@ -40,7 +40,7 @@ answerList:
   - test_desc: 'Get incorrect symbol User.surname'
     value:
       user_id: 1
-      name: Алексей
+      username: Алексей
       surname: Zemlyakov
       email: test@tes.ru
       status: active
@@ -48,7 +48,7 @@ answerList:
   - test_desc: 'Get incorrect validation User.email'
     value:
       user_id: 1
-      name: Алексей
+      username: Алексей
       surname: Земляков
       email: test.ru
       status: active
@@ -56,7 +56,7 @@ answerList:
   - test_desc: 'Get incorrect type User.name'
     value:
       user_id: 1
-      name: [1, 2, 4]
+      username: [1, 2, 4]
       surname: Земляков
       email: test.ru
       status: active
@@ -64,7 +64,7 @@ answerList:
   - test_desc: 'Get incorrect type User.surname'
     value:
       user_id: 1
-      name: Алексей
+      username: Алексей
       surname: [1, 2, 4]
       email: test.ru
       status: active
@@ -72,7 +72,7 @@ answerList:
   - test_desc: 'Get incorrect User.status'
     value:
       user_id: 1
-      name: Алексей
+      username: Алексей
       surname: [1, 2, 4]
       email: test.ru
       status: status

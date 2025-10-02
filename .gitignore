@@ -2,3 +2,4 @@
 .venv
 .tox
 venv
+__pycache__
