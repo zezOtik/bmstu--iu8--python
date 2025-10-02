@@ -128,3 +128,4 @@ if __name__ == "__main__":
         logger.error(f"Ошибка парсинга YAML: {e}")
     except Exception as e:
         logger.error(f"Произошла ошибка: {e}")
+        
