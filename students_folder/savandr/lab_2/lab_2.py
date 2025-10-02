@@ -46,6 +46,7 @@ class ProfileSpec(BaseModel):
         if value not in ['active', 'non-active']:
             raise ValueError("Status must be 'active' or 'non-active'")
         return value
+
     @field_validator('email', mode='after')
     def validate_email(self, value):
         if '@' not in value or '.' not in value:
@@ -123,7 +124,7 @@ class ServiceSpec(BaseModel):
         if not is_russian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
-    
+
     @field_validator('desc', mode='after')
     def validate_desc(self, value):
         is_russian = all(
