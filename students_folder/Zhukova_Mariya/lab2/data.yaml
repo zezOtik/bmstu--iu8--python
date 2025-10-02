@@ -1,0 +1,30 @@
+market_place_orders:
+  - order_id: 123321
+    user_info:
+      user_id: 1000
+      username: Тест
+      surname: Петров
+      second_name: null
+      email: test@mail.ru
+      status: active
+      bio: студент
+      url: https://folder.ru
+    items_line:
+      - order_id: 123321
+        order_line_id: 1
+        item_line:
+          service_id: 101
+          name: "Доставка"
+          desc: "Клиентская доставка"
+          price: 359
+        quantity: 1
+        line_price: 359
+      - order_id: 123321
+        order_line_id: 2
+        item_line:
+          service_id: 9999
+          name: "Лампа"
+          desc: "Настольная лампа"
+          price: 990
+        quantity: 2
+        line_price: 1980
