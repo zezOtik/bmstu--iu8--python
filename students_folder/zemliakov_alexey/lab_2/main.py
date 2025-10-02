@@ -9,6 +9,7 @@ from typing_extensions import Self
 
 russian_regular = r'^[а-яА-ЯёЁ\s]+$'
 
+
 class UserSpec(BaseModel):
     user_id: int
     username: str = Field(min_length=1, pattern=russian_regular)
