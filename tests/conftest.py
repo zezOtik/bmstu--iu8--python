@@ -3,6 +3,7 @@
 import os
 
 import pytest
+import yaml
 
 DIR_PATH = os.path.dirname(__file__)
 FILES_DIR = os.path.join(DIR_PATH, "src")
@@ -39,3 +40,40 @@ def get_stream(filepath):
         return open(filepath(filename), encoding=encoding)
 
     return make_stream
+
+
+@pytest.fixture()
+def read_yaml():
+    """Fixture for reading YAML files."""
+    
+    def _read_yaml(file_path: str) -> dict:
+        with open(file_path, "r", encoding="utf-8") as stream:
+            try:
+                return yaml.safe_load(stream)
+            except yaml.YAMLError as exc:
+                pytest.fail(f"Failed to load YAML file {file_path}: {exc}")
+    
+    return _read_yaml
+
+
+@pytest.fixture()
+def yaml_test_data(filepath, read_yaml):
+    """Fixture for getting test data from YAML files."""
+    
+    def _get_test_data(filename: str):
+        file_path = filepath(filename)
+        test_yaml = read_yaml(file_path)
+        
+        if "answerList" not in test_yaml:
+            pytest.fail(f"YAML file {filename} must contain 'answerList' key")
+        
+        test_cases = []
+        for item in test_yaml["answerList"]:
+            if not all(key in item for key in ["test_desc", "value", "answer"]):
+                pytest.fail(f"Each test case must have 'test_desc', 'value', and 'answer' keys")
+            
+            test_cases.append((item["test_desc"], item["value"], item["answer"]))
+        
+        return test_cases
+    
+    return _get_test_data

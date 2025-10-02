@@ -4,15 +4,14 @@ import pytest
 from pydantic import ValidationError
 
 from students_folder.Zotov_folder.lab_2.Profile import Profile
-from tests.common_func import get_set
 
 logger = logging.getLogger("test_Profile")
 
 
 @pytest.mark.zmv_lab1
-def test_class_profile(filepath):
-    file = filepath("Zotov/lab_2/Profile.yaml")
-    for test_desc, value, answer in get_set(file):
+def test_class_profile(yaml_test_data):
+    test_cases = yaml_test_data("Zotov/lab_2/Profile.yaml")
+    for test_desc, value, answer in test_cases:
         logger.info(f"Testing: {test_desc}")
         try:
             test_class = Profile.model_validate(value)
