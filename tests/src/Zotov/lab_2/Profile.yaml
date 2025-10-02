@@ -1,0 +1,33 @@
+testName: Zotov/lab_1/Profile
+answerList:
+  - test_desc: 'Get correct User'
+    value:
+      user_id: 123
+      name: Michael
+      surname: Zotov
+      age: 100500
+      salary: 100000
+    answer: true
+  - test_desc: 'Get incorrect User model, missing attributes'
+    value:
+      user_id: 123
+      name: Michael
+      surname: Zotov
+      salary: 100000
+    answer: false
+  - test_desc: 'Get incorrect User.age'
+    value:
+      user_id: 123
+      name: Michael
+      surname: Zotov
+      age: 10
+      salary: 100000
+    answer: false
+  - test_desc: 'Get incorrect type User.age'
+    value:
+      user_id: 123
+      name: Michael
+      surname: Zotov
+      age: [1, 2, 3, 4]
+      salary: 100000
+    answer: false
