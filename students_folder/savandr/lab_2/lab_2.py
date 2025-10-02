@@ -21,7 +21,7 @@ class UserSpec(BaseModel):
         return value
 
     @field_validator('email', mode='after')
-    def validate_email(cls, value):
+    def validate_email(self, value):
         if '@' not in value or '.' not in value:
             raise ValueError("Email must contain '@' and '.'")
         return value
@@ -40,26 +40,26 @@ class ProfileSpec(BaseModel):
     url: HttpUrl
 
     @field_validator('status', mode='after')
-    def validate_status(cls, value):
+    def validate_status(self, value):
         if value not in ['active', 'non-active']:
             raise ValueError("Status must be 'active' or 'non-active'")
         return value
     
     @field_validator('email', mode='after')
-    def validate_email(cls, value):
+    def validate_email(self, value):
         if '@' not in value or '.' not in value:
             raise ValueError("Email must contain '@' and '.'")
         return value
 
     @field_validator('bio', mode='after')
-    def validate_bio(cls, value):
-        isRussian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
-        if not isRussian:
+    def validate_bio(self, value):
+        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
+        if not is_russian:
             raise ValueError("Bio must contain only Russian alphabet characters")
         return value
 
     @field_validator('url', mode='after')
-    def validate_url(cls, value):
+    def validate_url(self, value):
         if '://' not in value:
             raise ValueError("URL must contain '://'")
         return value
@@ -75,21 +75,21 @@ class ItemSpec(BaseModel):
     price: float
 
     @field_validator('name', mode='after')
-    def validate_name(cls, value):
-        isRussian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
-        if not isRussian:
+    def validate_name(self, value):
+        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
+        if not is_russian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
     
     @field_validator('desc', mode='after')
-    def validate_desc(cls, value):
-        isRussian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
-        if not isRussian:
+    def validate_desc(self, value):
+        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
+        if not is_russian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
 
     @field_validator('price', mode='after')
-    def validate_price(cls, value):
+    def validate_price(self, value):
         if value <= 0:
             raise ValueError("Price must be greater than 0")
         return value
@@ -105,21 +105,21 @@ class ServiceSpec(BaseModel):
     price: float
 
     @field_validator('name', mode='after')
-    def validate_name(cls, value):
-        isRussian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
-        if not isRussian:
+    def validate_name(self, value):
+        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
+        if not is_russian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
     
     @field_validator('desc', mode='after')
-    def validate_desc(cls, value):
-        isRussian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
-        if not isRussian:
+    def validate_desc(self, value):
+        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
+        if not is_russian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
 
     @field_validator('price', mode='after')
-    def validate_price(cls, value):
+    def validate_price(self, value):
         if value <= 0:
             raise ValueError("Price must be greater than 0")
         return value
@@ -136,16 +136,16 @@ class OrderLineSpec(BaseModel):
     line_price: float
 
     @field_validator('quantity', mode='after')
-    def validate_quantity(cls, value):
+    def validate_quantity(self, value):
         if value <= 0:
             raise ValueError("Quantity must be greater than 0")
         return value
-    
+
     @model_validator(mode='after')
-    def validate_order_line_id(cls):
-        if cls.order_line_id <= 0 or cls.order_line_id > cls.order_id:
-            raise ValueError("Order line ID must be greater than 0 and less than or equal to order ID")
-        return cls
+    def validate_order_line_id(self):
+        if self.order_line_id <= 0 or self.order_line_id > self.order_id:
+            raise ValueError("Wrong order line ID")
+        return self
 
     @computed_field
     def line_price(self) -> float:
