@@ -7,7 +7,7 @@ import yaml
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Аннотированный тип для русских строк
+# Аннотированный тип для русского алфавита в строках
 RussianStr = Annotated[str, Field(pattern=r'^[А-Яа-яЁё\s\-]+$')]
 
 
