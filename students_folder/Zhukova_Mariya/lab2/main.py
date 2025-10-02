@@ -75,7 +75,8 @@ class OrderSpec(BaseModel):
     def check_unique_order_lines(self):
         order_line_ids = [line.order_line_id for line in self.items_line]
         if len(order_line_ids) != len(set(order_line_ids)):
-            raise ValueError(f"order_line_id должны быть уникальными в рамках order_id={self.order_id}")
+            raise ValueError(f"order_line_id должны быть \
+                             уникальными в рамках order_id={self.order_id}")
         return self
 
 
