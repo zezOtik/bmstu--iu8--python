@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 # Аннотированный тип для русских строк
 RussianStr = Annotated[str, Field(pattern=r'^[А-Яа-яЁё\s\-]+$')]
 
+
 class UserSpec(BaseModel):
     user_id: int
     username: RussianStr
