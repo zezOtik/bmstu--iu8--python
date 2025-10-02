@@ -3,7 +3,7 @@ from typing import Optional, Union, List, Literal, Annotated
 import logging
 import yaml
 
-# Логгер
+# Логгер Логгер
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
