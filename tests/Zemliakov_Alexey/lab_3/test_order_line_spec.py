@@ -8,6 +8,7 @@ from students_folder.zemliakov_alexey.lab_2.main import OrderLineSpec
 logger = logging.getLogger("test_order_line_spec")
 
 
+@pytest.mark.zaa_lab3
 def test_class_order_line(yaml_test_data):
     test_cases = yaml_test_data("Zemliakov/lab_3/OrderLineSpec.yaml")
     for test_desc, value, answer in test_cases:

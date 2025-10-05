@@ -8,6 +8,7 @@ from students_folder.zemliakov_alexey.lab_2.main import UserSpec
 logger = logging.getLogger("test_Profile")
 
 
+@pytest.mark.zaa_lab3
 def test_class_user(yaml_test_data):
     test_cases = yaml_test_data("Zemliakov/lab_3/UserSpec.yaml")
     for test_desc, value, answer in test_cases:

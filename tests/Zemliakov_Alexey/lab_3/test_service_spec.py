@@ -8,6 +8,7 @@ from students_folder.zemliakov_alexey.lab_2.main import ServiceSpec
 logger = logging.getLogger("test_item_spec")
 
 
+@pytest.mark.zaa_lab3
 def test_class_service_spec(yaml_test_data):
     test_cases = yaml_test_data("Zemliakov/lab_3/ServiceSpec.yaml")
     for test_desc, value, answer in test_cases:
