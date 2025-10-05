@@ -3,17 +3,17 @@ import logging
 import pytest
 from pydantic import ValidationError
 
-from students_folder.zemliakov_alexey.lab_2.main import UserSpec
+from students_folder.zemliakov_alexey.lab_2.main import ItemSpec
 
-logger = logging.getLogger("test_Profile")
+logger = logging.getLogger("test_item_spec")
 
 
-def test_class_user(yaml_test_data):
-    test_cases = yaml_test_data("Zemliakov/lab_3/UserSpec.yaml")
+def test_class_item(yaml_test_data):
+    test_cases = yaml_test_data("Zemliakov/lab_3/ItemSpec.yaml")
     for test_desc, value, answer in test_cases:
         logger.info(f"Testing: {test_desc}")
         try:
-            test_class = UserSpec.model_validate(value)
+            test_class = ItemSpec.model_validate(value)
             # Ожидаем answer = True
             test_answer = True
             assert (
