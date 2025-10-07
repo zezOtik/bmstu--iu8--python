@@ -4,7 +4,7 @@ c = int(input())
 print(round((a + b + c) / 3, 2))
 
 st = input()
-print(len(st), f"first -- {st[0]}, last -- {st[-1]}", st.upper(), st*3, sep="\n")
+print(len(st), f"first -- {st[0]}, last -- {st[-1]}", st.upper(), st * 3, sep="\n")
 
 example_list = [1, "test", 23, 57, "another string"]
 print(example_list[1], len(example_list), example_list[-3:], sep="\n")
