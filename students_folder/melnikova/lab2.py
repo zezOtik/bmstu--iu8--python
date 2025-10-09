@@ -30,6 +30,7 @@ class ProfileSpec(UserSpec):
              raise ValueError("url должен содержать '://'")
          return v
 
+
 class ItemSpec(BaseModel):
     item_id: int
     name: str
