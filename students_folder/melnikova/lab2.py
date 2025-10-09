@@ -1,7 +1,9 @@
-from pydantic import (BaseModel, model_validator, field_validator, Field, ConfigDict)
+from pydantic import (BaseModel, model_validator, field_validator,
+                      Field, ConfigDict)
 from typing import List, Optional, Literal, Set
 
 Status = Literal['active', 'non-active']
+
 
 class UserSpec(BaseModel):
     user_id: int
@@ -17,6 +19,7 @@ class UserSpec(BaseModel):
     #     if '@' not in v or '.' not in v:
     #         raise ValueError('email должен содержать @ и .')
     #     return v
+
 
 class ProfileSpec(UserSpec):
     bio: str
@@ -39,17 +42,12 @@ class ItemSpec(BaseModel):
 
     @field_validator('name', mode='after')
     def validate_russian(cls, value):
-        isRussian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
+        isRussian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace()
+                        for char in value)
         if not isRussian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
 
-    @field_validator('desc', mode='after')
-    def validate_russian(cls, value):
-        isRussian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
-        if not isRussian:
-            raise ValueError("Field must contain only Russian alphabet characters")
-        return value
 
 class ServiceSpec(BaseModel):
     service_id: int
@@ -65,27 +63,17 @@ class ServiceSpec(BaseModel):
     line_price: Optional[float] = Field(gt=0, default=None)
     model_config = ConfigDict(extra='forbid')
 
-    @model_validator(mode="after")
-    def calculate_line_prices(self) -> Self:
-        self.line_price = self.quantity * self.item_line.price
-        return self
-
     @field_validator('name', mode='after')
     def validate_russian(cls, value):
-        isRussian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
+        isRussian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace()
+                        for char in value)
         if not isRussian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
 
-    @field_validator('desc', mode='after')
-    def validate_russian(cls, value):
-        isRussian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace() for char in value)
-        if not isRussian:
-            raise ValueError("Field must contain only Russian alphabet characters")
-        return value
 
 class OrdersSpec(BaseModel):
-    market_place_orders: List[OrderSpec]
+    market_place_orders: List[ServiceSpec]
     model_config = ConfigDict(extra='forbid')
 
     @model_validator(mode='after')
@@ -107,5 +95,3 @@ class OrdersSpec(BaseModel):
                 )
             seen.add(ln.order_line_id)
         return self
-
-
