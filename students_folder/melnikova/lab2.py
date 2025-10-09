@@ -1,6 +1,5 @@
-import self
-from pydantic import BaseModel, model_validator, HttpUrl, computed_field, field_validator, Field, ConfigDict
-from typing import List, Union, Optional, Literal, Set
+from pydantic import (BaseModel, model_validator, field_validator, Field, ConfigDict)
+from typing import List, Optional, Literal, Set
 
 Status = Literal['active', 'non-active']
 
@@ -23,12 +22,12 @@ class ProfileSpec(UserSpec):
     bio: str
     url: str
 
-     @field_validator('url')
-     @classmethod
-     def check_url(cls, v: str) -> str:
-         if '://' not in v:
-             raise ValueError("url должен содержать '://'")
-         return v
+    @field_validator('url')
+    @classmethod
+    def check_url(cls, v: str) -> str:
+        if '://' not in v:
+            raise ValueError("url должен содержать '://'")
+        return v
 
 
 class ItemSpec(BaseModel):
