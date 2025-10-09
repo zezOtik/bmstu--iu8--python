@@ -43,7 +43,7 @@ class ItemSpec(BaseModel):
     @field_validator('name', mode='after')
     def validate_russian(self, value):
         is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace()
-                        for char in value)
+                         for char in value)
         if not is_russian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
@@ -66,7 +66,7 @@ class ServiceSpec(BaseModel):
     @field_validator('name', mode='after')
     def validate_russian(self, value):
         is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace()
-                        for char in value)
+                         for char in value)
         if not is_russian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
