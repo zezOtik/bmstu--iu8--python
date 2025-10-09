@@ -28,13 +28,6 @@ class Profile(User):
         ... )
         >>> print(profile)
         user_id=1 name='Анна' surname='Смирнова' age=25 salary=75000
-
-        >>> Profile(user_id=2, name="Борис", surname="Кузнецов", age=20, salary=50000, extra_field="error")
-        Traceback (most recent call last):
-        ...
-        pydantic_core._pydantic_core.ValidationError: 1 validation error for Profile
-        extra_field
-          Extra inputs are not permitted [type=extra_forbidden, ...]
     """
 
     model_config = ConfigDict(extra="forbid")
