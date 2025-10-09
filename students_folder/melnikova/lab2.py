@@ -41,10 +41,10 @@ class ItemSpec(BaseModel):
     model_config = ConfigDict(extra='forbid')
 
     @field_validator('name', mode='after')
-    def validate_russian(cls, value):
-        isRussian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace()
+    def validate_russian(self, value):
+        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace()
                         for char in value)
-        if not isRussian:
+        if not is_russian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
 
@@ -64,10 +64,10 @@ class ServiceSpec(BaseModel):
     model_config = ConfigDict(extra='forbid')
 
     @field_validator('name', mode='after')
-    def validate_russian(cls, value):
-        isRussian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace()
+    def validate_russian(self, value):
+        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace()
                         for char in value)
-        if not isRussian:
+        if not is_russian:
             raise ValueError("Field must contain only Russian alphabet characters")
         return value
 
