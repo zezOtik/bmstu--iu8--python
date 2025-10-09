@@ -2,3 +2,4 @@
 .venv
 .tox
 venv
+docs_src/build
