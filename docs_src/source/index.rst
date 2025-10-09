@@ -9,7 +9,8 @@ bmstu_python_iu8 documentation
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: API Reference:
 
+   my_example
    modules
