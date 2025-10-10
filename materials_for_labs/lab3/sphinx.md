@@ -4,7 +4,7 @@
 https://habr.com/ru/articles/750968/
 
 * это достаточно популярный инструмент для ведения автодокументации на проекте.
-* рекрасен в комбинации GithubAction + GithubPages.
+* прекрасен в комбинации GithubAction + GithubPages.
 * удобен в настройке в проекте, сборка осуществляется в отдельной ветке в репозитории, документация описывается в *.rst формате.
 * куча библиотек для связи с Pydantic, Numpy, Pandas и т.д. и т.п.
 
@@ -66,6 +66,11 @@ source .venv/bin/activate
 ```Bash
 # Установка того, что нужно для sphinx
 pip install sphinx sphinx-autodoc-typehints pydantic sphinx_rtd_theme
+```
+
+```Bash
+# Запуск автосборки документации по docsting для sphinx
+sphinx-apidoc -o docs_src/source students_folder
 ```
 
 ```Bash
