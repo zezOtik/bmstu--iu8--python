@@ -2,4 +2,5 @@
 .venv
 .tox
 venv
+docs_src/build
 __pycache__
