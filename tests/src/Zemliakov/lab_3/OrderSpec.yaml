@@ -1,0 +1,90 @@
+testName: Zemliakov/lab_3/OrderSpec
+answerList:
+  - test_desc: 'Get correct'
+    value:
+      order_id: 123
+      user_info:
+        user_id: 123
+        username: Алексей
+        surname: Земляков
+        email: test@tes.ru
+        status: active
+        bio: биография
+        url: https://github.com/Alexeyzem
+      order_lines:
+        - order_id: 123
+          order_line_id: 123
+          item_line:
+            item_id: 123
+            name: Продукт
+            desc: Супер крутой продукт
+            price: 10
+          quantity: 10.5
+    answer: true
+  - test_desc: 'Get incorrect, missing user_info'
+    value:
+      order_id: 123
+      order_lines:
+        - order_id: 123
+          order_line_id: 123
+          item_line:
+            item_id: 123
+            name: Продукт
+            desc: Супер крутой продукт
+            price: 10
+          quantity: 10.5
+    answer: false
+  - test_desc: 'Get incorrect, missing order_lines'
+    value:
+      order_id: 123
+      user_info:
+        user_id: 123
+        username: Алексей
+        surname: Земляков
+        email: test@tes.ru
+        status: active
+        bio: биография
+        url: https://github.com/Alexeyzem
+    answer: false
+  - test_desc: 'Get incorrect one order instead list'
+    value:
+      order_id: 123
+      user_info:
+        user_id: 123
+        username: Алексей
+        surname: Земляков
+        email: test@tes.ru
+        status: active
+        bio: биография
+        url: https://github.com/Alexeyzem
+      order_lines:
+        order_id: 123
+        order_line_id: 123
+        item_line:
+          item_id: 123
+          name: Продукт
+          desc: Супер крутой продукт
+          price: 10
+        quantity: 10.5
+    answer: false
+  - test_desc: 'Get incorrect, missing order_id'
+    value:
+      user_info:
+        user_id: 123
+        username: Алексей
+        surname: Земляков
+        email: test@tes.ru
+        status: active
+        bio: биография
+        url: https://github.com/Alexeyzem
+      order_lines:
+        - order_id: 123
+          order_line_id: 123
+          item_line:
+            item_id: 123
+            name: Продукт
+            desc: Супер крутой продукт
+            price: 10
+          quantity: 10.5
+    answer: false
+

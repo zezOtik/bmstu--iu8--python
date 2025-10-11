@@ -1,0 +1,71 @@
+testName: Zemliakov/lab_3/ProfileSpec
+answerList:
+  - test_desc: 'Get correct ProfileSpec'
+    value:
+      user_id: 123
+      username: Алексей
+      surname: Земляков
+      email: test@tes.ru
+      status: active
+      bio: биография
+      url: https://github.com/Alexeyzem
+    answer: true
+  - test_desc: 'Get incorrect Profile model, missing attributes'
+    value:
+      user_id: 123
+      username: Алексей
+      surname: Земляков
+      email: test@tes.ru
+      status: active
+    answer: false
+  - test_desc: 'Get incorrect Profile model, more attributes'
+    value:
+      user_id: 123
+      username: Алексей
+      surname: Земляков
+      email: test@tes.ru
+      status: active
+      bio: биография
+      url: https://github.com/Alexeyzem
+      age: 10
+    answer: false
+  - test_desc: 'Get incorrect type Profile.bio'
+    value:
+      user_id: 1
+      username: Алексей
+      surname: Земляков
+      email: test@tes.ru
+      status: active
+      bio: biography
+      url: https://github.com/Alexeyzem
+    answer: false
+  - test_desc: 'Get incorrect symbol User.url'
+    value:
+      user_id: 1
+      username: Alexey
+      surname: Земляков
+      email: test@tes.ru
+      status: active
+      bio: биография
+      url: badurl
+    answer: false
+  - test_desc: 'Get incorrect type User.url'
+    value:
+      user_id: 1
+      username: Alexey
+      surname: Земляков
+      email: test@tes.ru
+      status: active
+      bio: биография
+      url: [1, 2, 4]
+    answer: false
+  - test_desc: 'Get incorrect type User.bio'
+    value:
+      user_id: 1
+      username: Alexey
+      surname: Земляков
+      email: test@tes.ru
+      status: active
+      bio: [1, 2, 3]
+      url: https://github.com/Alexeyzem
+    answer: false

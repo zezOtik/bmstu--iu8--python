@@ -81,18 +81,17 @@ try:
     with open('data.yaml', 'r') as file:
         yaml_data = yaml.safe_load(file)
         res = get_orders_from_yaml(yaml_data)
+        logging.info(f'Orders spec: {res}', exc_info=True)
+        logging.info(f'Order spec first: {res.market_place_orders[0]}', exc_info=True)
+        logging.info(f'Profile spec: {res.market_place_orders[0].user_info}',
+                     exc_info=True)
+        logging.info(f'Order line spec first: '
+                     f'{res.market_place_orders[0].order_lines[0]}',
+                     exc_info=True)
+        logging.info(f'Item spec first:'
+                     f' {res.market_place_orders[0].order_lines[0].item_line}',
+                     exc_info=True)
 except FileNotFoundError:
     logging.error('File not found')
 except Exception as e:
     logging.error(f'Произошла ошибка при чтении файла: {e}')
-
-logging.info(f'Orders spec: {res}', exc_info=True)
-logging.info(f'Order spec first: {res.market_place_orders[0]}', exc_info=True)
-logging.info(f'Profile spec: {res.market_place_orders[0].user_info}',
-             exc_info=True)
-logging.info(f'Order line spec first: '
-             f'{res.market_place_orders[0].order_lines[0]}',
-             exc_info=True)
-logging.info(f'Item spec first:'
-             f' {res.market_place_orders[0].order_lines[0].item_line}',
-             exc_info=True)

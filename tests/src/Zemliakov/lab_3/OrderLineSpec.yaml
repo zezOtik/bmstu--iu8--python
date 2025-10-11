@@ -1,0 +1,97 @@
+testName: Zemliakov/lab_3/OrderLineSpec
+answerList:
+  - test_desc: 'Get correct without lineSpice'
+    value:
+      order_id: 123
+      order_line_id: 123
+      item_line:
+        item_id: 123
+        name: Продукт
+        desc: Супер крутой продукт
+        price: 10
+      quantity: 10.5
+    answer: true
+  - test_desc: 'Get correct model, with linePrice'
+    value:
+      order_id: 123
+      order_line_id: 123
+      item_line:
+        item_id: 123
+        name: Продукт
+        desc: Супер крутой продукт
+        price: 10
+      quantity: 10.5
+      line_price: 180.3
+    answer: true
+  - test_desc: 'Get incorrect model, more attributes'
+    value:
+      order_id: 123
+      order_line_id: 123
+      item_line:
+        item_id: 123
+        name: Продукт
+        desc: Супер крутой продукт
+        price: 10
+      quantity: 10.5
+      line_price: 180.3
+      bad_field: 98
+    answer: false
+  - test_desc: 'Get incorrect type id'
+    value:
+      order_id: mnbvcm
+      order_line_id: 123
+      item_line:
+        item_id: 123
+        name: Продукт
+        desc: Супер крутой продукт
+        price: 10
+      quantity: 10.5
+      line_price: 180.3
+    answer: false
+  - test_desc: 'Get incorrect order_line_id'
+    value:
+      order_id: 123
+      order_line_id: kl;jhg
+      item_line:
+        item_id: 123
+        name: Продукт
+        desc: Супер крутой продукт
+        price: 10
+      quantity: 10.5
+      line_price: 180.3
+    answer: false
+  - test_desc: 'Get incorrect type quantity'
+    value:
+      order_id: 123
+      order_line_id: 123
+      item_line:
+        item_id: 123
+        name: Продукт
+        desc: Супер крутой продукт
+        price: 10
+      quantity: jklhg
+      line_price: 180.3
+    answer: false
+  - test_desc: 'Get < 0 quantity'
+    value:
+      order_id: 123
+      order_line_id: 123
+      item_line:
+        item_id: 123
+        name: Продукт
+        desc: Супер крутой продукт
+        price: 10
+      quantity: -87
+    answer: false
+  - test_desc: 'Get incorrect line_price'
+    value:
+      order_id: 123
+      order_line_id: 123
+      item_line:
+        item_id: 123
+        name: Продукт
+        desc: Супер крутой продукт
+        price: 10
+      quantity: 12
+      line_price: jhgf
+    answer: false

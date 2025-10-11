@@ -1,0 +1,46 @@
+testName: Zemliakov/lab_3/OrderSpec
+answerList:
+  - test_desc: 'Get correct'
+    value:
+      market_place_orders:
+        - order_id: 123321
+          user_info:
+            user_id: 1000
+            username: "Тест"
+            surname: "Тестов"
+            email: test@mail.ru
+            status: active
+            bio: "студент"
+            url: https://folder.ru
+          order_lines:
+            - order_id: 123321
+              order_line_id: 1
+              quantity: 10
+              item_line:
+                item_id: 101
+                name: "Доставка"
+                desc: "Клиентская доставка"
+                price: 359
+    answer: true
+  - test_desc: 'Get incorrect, missing market_place_orders - no list'
+    value:
+      market_place_orders:
+        order_id: 123321
+        user_info:
+          user_id: 1000
+          username: "Тест"
+          surname: "Тестов"
+          email: test@mail.ru
+          status: active
+          bio: "студент"
+          url: https://folder.ru
+        order_lines:
+          - order_id: 123321
+            order_line_id: 1
+            quantity: 10
+            item_line:
+              item_id: 101
+              name: "Доставка"
+              desc: "Клиентская доставка"
+              price: 359
+    answer: false
