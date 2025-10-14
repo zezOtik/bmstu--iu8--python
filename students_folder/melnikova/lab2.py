@@ -1,8 +1,9 @@
 from pydantic import (BaseModel, model_validator, field_validator,
-                      Field, ConfigDict)
+                      Field, ConfigDict, HttpUrl)
 from typing import List, Optional, Literal, Set
 
 Status = Literal['active', 'non-active']
+RUS_RE = r'^[А-Яа-яЁё][А-Яа-яЁё \-]*$'
 
 
 class UserSpec(BaseModel):
@@ -19,40 +20,42 @@ class UserSpec(BaseModel):
     #     if '@' not in v or '.' not in v:
     #         raise ValueError('email должен содержать @ и .')
     #     return v
+    model_config = ConfigDict(extra='forbid')
 
 
 class ProfileSpec(UserSpec):
     bio: str
-    url: str
+    url: HttpUrl
 
-    @field_validator('url')
-    @classmethod
-    def check_url(cls, v: str) -> str:
-        if '://' not in v:
-            raise ValueError("url должен содержать '://'")
-        return v
+    # @field_validator('url')
+    # @classmethod
+    # def check_url(cls, v: str) -> str:
+    #   if '://' not in v:
+    #       raise ValueError("url должен содержать '://'")
+    #   return v
 
+    model_config = ConfigDict(extra='forbid')
 
 class ItemSpec(BaseModel):
     item_id: int
-    name: str
-    desc: str
+    name: str = Field(..., pattern=RUS_RE)
+    desc: str = Field(..., pattern=RUS_RE)
     price: float = Field(gt=0)
     model_config = ConfigDict(extra='forbid')
 
-    @field_validator('name', mode='after')
-    def validate_russian(self, value):
-        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace()
-                         for char in value)
-        if not is_russian:
-            raise ValueError("Field must contain only Russian alphabet characters")
-        return value
+    #@field_validator('name', mode='after')
+    #def validate_russian(self, value):
+    #    is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace()
+    #                     for char in value)
+    #    if not is_russian:
+    #        raise ValueError("Field must contain only Russian alphabet characters")
+    #    return value
 
 
 class ServiceSpec(BaseModel):
     service_id: int
-    name: str
-    desc: str
+    name: str = Field(..., pattern=RUS_RE)
+    desc: str = Field(..., pattern=RUS_RE)
     price: float = Field(gt=0)
     model_config = ConfigDict(extra='forbid')
 
@@ -63,13 +66,15 @@ class ServiceSpec(BaseModel):
     line_price: Optional[float] = Field(gt=0, default=None)
     model_config = ConfigDict(extra='forbid')
 
-    @field_validator('name', mode='after')
-    def validate_russian(self, value):
-        is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace()
-                         for char in value)
-        if not is_russian:
-            raise ValueError("Field must contain only Russian alphabet characters")
-        return value
+    #@field_validator('name', mode='after')
+    #def validate_russian(self, value):
+    #    is_russian = all('а' <= char <= 'я' or 'А' <= char <= 'Я' or char.isspace()
+    #                     for char in value)
+    #    if not is_russian:
+    #        raise ValueError("Field must contain only Russian alphabet characters")
+    #    return value
+
+    model_config = ConfigDict(extra='forbid')
 
 
 class OrdersSpec(BaseModel):
@@ -95,3 +100,5 @@ class OrdersSpec(BaseModel):
                 )
             seen.add(ln.order_line_id)
         return self
+
+    model_config = ConfigDict(extra='forbid')
