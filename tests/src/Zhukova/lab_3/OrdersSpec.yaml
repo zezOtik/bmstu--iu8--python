@@ -1,0 +1,82 @@
+testName: Zhukova/lab_3/OrdersSpec
+answerList:
+  - test_desc: 'Get correct'
+    value:
+      market_place_orders:
+        - order_id: 133
+          user_info:
+            user_id: 1000
+            username: "Пользователь"
+            surname: "Пользователь"
+            email: test@mail.ru
+            status: active
+            bio: "Пользователь"
+            url: https://user.ru
+          items_line:
+            - order_id: 133
+              order_line_id: 1
+              quantity: 10
+              item_line:
+                item_id: 101
+                name: "ЧТОНИБУДЬ"
+                desc: "ЧТОНИБУДЬ"
+                price: 359
+              line_price: 3590.0
+    answer: true
+
+  - test_desc: 'Get incorrect, missing market_place_orders'
+    value:
+      order_id: 456789
+      user_info:
+        user_id: 2000
+        username: "Иван"
+        surname: "Иванов"
+        email: ivan@yandex.ru
+        status: active
+        bio: "программист"
+        url: https://portfolio.ru
+      items_line:
+        - order_id: 456789
+          order_line_id: 2
+          quantity: 5
+          item_line:
+            item_id: 202
+            name: "Курьер"
+            desc: "Срочная доставка"
+            price: 599
+          line_price: 2995.0
+    answer: false
+
+  - test_desc: 'Get correct with empty market_place_orders list'
+    value:
+      market_place_orders: []
+    answer: true
+
+  - test_desc: 'Get incorrect, wrong type in market_place_orders'
+    value:
+      market_place_orders: "not_a_list"
+    answer: false
+
+  - test_desc: 'Get incorrect, invalid order data'
+    value:
+      market_place_orders:
+        - order_id: "не число"
+          user_info:
+            user_id: 3000
+            username: "Петр"
+            surname: "Петров"
+            email: petr@gmail.com
+            status: active
+            bio: "дизайнер"
+            url: https://design.ru
+          items_line:
+            - order_id: 789012
+              order_line_id: 3
+              quantity: 3
+              item_line:
+                item_id: 303
+                name: "Экспресс"
+                desc: "Доставка за 2 часа"
+                price: 899
+              line_price: 2697.0
+    answer: false

@@ -1,0 +1,96 @@
+testName: Zhukova/lab_3/OrderSpec
+answerList:
+  - test_desc: 'Get correct'
+    value:
+      order_id: 789
+      user_info:
+        user_id: 456
+        username: 'Мария'
+        surname: 'Иванова'
+        email: 'maria@example.com'
+        status: 'active'
+        bio: 'Разработчик программного обеспечения'
+        url: 'https://github.com/mariaivanova'
+      items_line:
+        - order_id: 789
+          order_line_id: 101
+          item_line:
+            item_id: 202
+            name: 'Ноутбук'
+            desc: 'Игровой ноутбук'
+            price: 129999
+          quantity: 1.0
+          line_price: 129999.0
+    answer: true
+
+  - test_desc: 'Get incorrect, missing user_info'
+    value:
+      order_id: 555
+      items_line:
+        - order_id: 555
+          order_line_id: 201
+          item_line:
+            item_id: 404
+            name: 'Планшет'
+            desc: 'Графический планшет'
+            price: 45999
+          quantity: 1.5
+          line_price: 68998.5
+    answer: false
+
+  - test_desc: 'Get incorrect, missing items_line'
+    value:
+      order_id: 666
+      user_info:
+        user_id: 777
+        username: 'Дмитрий'
+        surname: 'Петров'
+        email: 'dmitry@mail.ru'
+        status: 'active'
+        bio: 'Аналитик данных'
+        url: 'https://github.com/dmitrypetrov'
+    answer: false
+
+  - test_desc: 'Get incorrect, missing order_id'
+    value:
+      user_info:
+        user_id: 111
+        username: 'Сергей'
+        surname: 'Кузнецов'
+        email: 'sergey@gmail.com'
+        status: 'active'
+        bio: 'Frontend разработчик'
+        url: 'https://github.com/sergeykuznetsov'
+      items_line:
+        - order_line_id: 401
+          item_line:
+            item_id: 606
+            name: 'Клавиатура'
+            desc: 'Механическая клавиатура'
+            price: 12999
+          quantity: 1.0
+          line_price: 12999.0
+    answer: false
+
+  - test_desc: 'Get incorrect, invalid user email'
+    value:
+      order_id: 888
+      user_info:
+        user_id: 999
+        username: 'Ольга'
+        surname: 'Сидорова'
+        email: 'invalid-email'
+        status: 'active'
+        bio: 'Тестировщик ПО'
+        url: 'https://github.com/olgasidorova'
+      items_line:
+        - order_id: 888
+          order_line_id: 301
+          item_line:
+            item_id: 505
+            name: 'Наушники'
+            desc: 'Беспроводные наушники'
+            price: 15999
+          quantity: 3.0
+          line_price: 47997.0
+    answer: false

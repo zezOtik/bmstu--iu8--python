@@ -1,0 +1,55 @@
+testName: Zhukova/lab_3/ProfileSpec
+answerList:
+  - test_desc: 'Get correct ProfileSpec'
+    value:
+      user_id: 456
+      username: 'Мария'
+      surname: 'Иванова'
+      email: 'maria@example.com'
+      status: 'active'
+      bio: 'Разработчик программного обеспечения'
+      url: 'https://github.com/mariaivanova'
+    answer: true
+
+  - test_desc: 'Get incorrect Profile model, missing attributes'
+    value:
+      user_id: 789
+      username: 'Дмитрий'
+      surname: 'Петров'
+      email: 'dmitry@mail.ru'
+      status: 'active'
+    answer: false
+
+  - test_desc: 'Get incorrect Profile model, more attributes'
+    value:
+      user_id: 101
+      username: 'Ольга'
+      surname: 'Сидорова'
+      email: 'olga@yandex.ru'
+      status: 'active'
+      bio: 'Дизайнер интерфейсов'
+      url: 'https://github.com/olgasidorova'
+      phone: '+79161234567'
+    answer: false
+
+  - test_desc: 'Get incorrect type Profile.bio'
+    value:
+      user_id: 202
+      username: 'Сергей'
+      surname: 'Кузнецов'
+      email: 'sergey@gmail.com'
+      status: 'active'
+      bio: 'software engineer'
+      url: 'https://github.com/sergeykuznetsov'
+    answer: false
+
+  - test_desc: 'Get incorrect symbol User.url'
+    value:
+      user_id: 303
+      username: 'Анна'
+      surname: 'Волкова'
+      email: 'anna@mail.com'
+      status: 'active'
+      bio: 'Аналитик данных'
+      url: 'invalid-url'
+    answer: false

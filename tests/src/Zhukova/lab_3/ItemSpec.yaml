@@ -1,0 +1,37 @@
+testName: Zhukova/lab_3/ItemSpec
+answerList:
+  - test_desc: 'Get correct ItemSpec'
+    value:
+      item_id: 456
+      name: 'Смартфон'
+      desc: 'Мощный смартфон с отличной камерой'
+      price: 29999
+    answer: true
+  - test_desc: 'Get incorrect model, missing attributes'
+    value:
+      item_id: 789
+      name: 'Ноутбук'
+      desc: 'Игровой ноутбук'
+    answer: false
+  - test_desc: 'Get incorrect model, more attributes'
+    value:
+      item_id: 321
+      name: 'Планшет'
+      desc: 'Легкий и производительный планшет'
+      price: 15999
+      extra_field: 'лишнее поле'
+    answer: false
+  - test_desc: 'Get incorrect type id'
+    value:
+      item_id: 'abc123'
+      name: 'Наушники'
+      desc: 'Беспроводные наушники с шумоподавлением'
+      price: 7999
+    answer: false
+  - test_desc: 'Get incorrect name'
+    value:
+      item_id: 654
+      name: 12345
+      desc: 'Умные часы с функцией отслеживания здоровья'
+      price: 12999
+    answer: false
