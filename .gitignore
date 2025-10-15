@@ -4,6 +4,5 @@
 venv
 docs_src/build
 
-__pycache__
 
-bmstu_iu8_python.egg-info
+__pycache__
