@@ -1,0 +1,38 @@
+testName: Nikulina/lab_3/ServiceSpec
+answerList:
+  - test_desc: 'Get correct Service'
+    value: 
+      service_id: 10
+      name: Доставка
+      desc: Курьерская доставка
+      price: 500
+    answer: true
+  - test_desc: 'Get incorrect Service, zero price'
+    value: 
+      service_id: 11
+      name: Сборка
+      desc: Сервис сборки
+      price: 0
+    answer: false
+  - test_desc: 'Get incorrect Service, latin name'
+    value: 
+      service_id: 12
+      name: Delivery
+      desc: Курьер
+      price: 100
+    answer: false
+  - test_desc: 'Get incorrect Service, desc with digits (regex fail)'
+    value: 
+      service_id: 13
+      name: Настройка
+      desc: Сборка 300
+      price: 300
+    answer: false
+  - test_desc: 'Get incorrect Service, extra field'
+    value: 
+      service_id: 14
+      name: Монтаж
+      desc: Установка
+      price: 100
+      foo: bar
+    answer: false

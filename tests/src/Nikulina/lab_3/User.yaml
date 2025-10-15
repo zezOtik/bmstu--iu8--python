@@ -1,0 +1,52 @@
+testName: Nikulina/lab_3/UserSpec
+answerList:
+  - test_desc: 'Get correct User'
+    value:
+      user_id: 1
+      username: Иван
+      surname: Иванов
+      second_name: Иванович
+      email: ivan@example.com
+      status: active
+    answer: true
+  - test_desc: 'Get incorrect User, missing required field'
+    value:
+      user_id: 2
+      username: Пётр
+      email: petr@example.com
+      status: non-active
+    answer: false
+  - test_desc: 'Get incorrect User, username not Cyrillic'
+    value:
+      user_id: 3
+      username: Peter
+      surname: Петров
+      email: peter@example.com
+      status: active
+    answer: false
+  - test_desc: 'Get incorrect User, invalid email'
+    value:
+      user_id: 4
+      username: Сергей
+      surname: Сергеев
+      email: sergei.example.com
+      status: active
+    answer: false
+  - test_desc: 'Get incorrect User, null allowed'
+    value:
+      user_id: 5
+      username: Анна
+      surname: Смирнова
+      second_name: null
+      email: anna@example.org
+      status: active
+    answer: true
+  - test_desc: 'Get incorrect User, extra field forbidden'
+    value:
+      user_id: 6
+      username: Олег
+      surname: Олегов
+      email: oleg@example.net
+      status: non-active
+      foo: bar
+    answer: false

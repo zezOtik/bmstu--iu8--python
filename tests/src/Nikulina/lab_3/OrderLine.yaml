@@ -1,0 +1,62 @@
+testName: Nikulina/lab_3/OrderLineSpec
+answerList:
+  - test_desc: 'Get correct Order line'
+    value:
+      order_id: 100
+      order_line_id: 1
+      item_line:
+        service_id: 1
+        name: Услуга
+        desc: Пример услуги
+        price: 200
+      quantity: 2
+      line_price: 400
+    answer: true
+  - test_desc: 'Get incorrect Order line, line_price mismatch'
+    value:
+      order_id: 100
+      order_line_id: 2
+      item_line:
+        service_id: 2
+        name: Доставка
+        desc: Курьер
+        price: 150
+      quantity: 2
+      line_price: 301
+    answer: false
+  - test_desc: 'Get incorrect Order line, quantity is zero'
+    value:
+      order_id: 100
+      order_line_id: 3
+      item_line:
+        service_id: 3
+        name: Услуга
+        desc: Описание
+        price: 10
+      quantity: 0
+      line_price: 0
+    answer: false
+  - test_desc: 'Get incorrect Order line, valid item line'
+    value:
+      order_id: 100
+      order_line_id: 4
+      item_line:
+        item_id: 55
+        name: Товар
+        desc: Хороший товар
+        price: 99.5
+      quantity: 3
+      line_price: 298.5
+    answer: true
+  - test_desc: 'Get incorrect Order line, negative price inside item_line'
+    value:
+      order_id: 100
+      order_line_id: 5
+      item_line:
+        item_id: 77
+        name: Плохой товар
+        desc: с браком
+        price: -5
+      quantity: 1
+      line_price: -5
+    answer: false
