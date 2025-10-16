@@ -1,0 +1,65 @@
+testName: Zemliakov/lab_3/ServiceSPec
+answerList:
+  - test_desc: 'Get correct ServiceSpec'
+    value:
+      service_id: 123
+      name: Продукт
+      desc: Супер крутой продукт
+      price: 10
+    answer: true
+  - test_desc: 'Get incorrect model, missing attributes'
+    value:
+      service_id: 123
+      name: Алексей
+      desc: Земляков
+    answer: false
+  - test_desc: 'Get incorrect model, more attributes'
+    value:
+      service_id: 123
+      name: Продукт
+      desc: Супер крутой продукт
+      price: 10
+      bad_field: 98
+    answer: false
+  - test_desc: 'Get incorrect type id'
+    value:
+      service_id: lkjh
+      name: Продукт
+      desc: Супер крутой продукт
+      price: 10
+    answer: false
+  - test_desc: 'Get incorrect name'
+    value:
+      service_id: 123
+      name: 9876
+      desc: Супер крутой продукт
+      price: 10
+    answer: false
+  - test_desc: 'Get incorrect type desc'
+    value:
+      service_id: 123
+      name: Продукт
+      desc: 786
+      price: 10
+    answer: false
+  - test_desc: 'Get incorrect type price'
+    value:
+      service_id: 123
+      name: Продукт
+      desc: Супер крутой продукт
+      price: [1, 2, 3, 4]
+    answer: false
+  - test_desc: 'Get forbidden name'
+    value:
+      service_id: 123
+      name: Product
+      desc: Супер крутой продукт
+      price: [1, 2, 3, 4]
+    answer: false
+  - test_desc: 'Get forbidden desc'
+    value:
+      service_id: 123
+      name: Продукт
+      desc: angl
+      price: [1, 2, 3, 4]
+    answer: false

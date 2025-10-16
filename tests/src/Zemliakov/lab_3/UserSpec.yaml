@@ -1,0 +1,79 @@
+testName: Zemliakov/lab_3/UserSpec
+answerList:
+  - test_desc: 'Get correct UserSpec'
+    value:
+      user_id: 123
+      username: Алексей
+      surname: Земляков
+      email: test@tes.ru
+      status: active
+    answer: true
+  - test_desc: 'Get incorrect User model, missing attributes'
+    value:
+      user_id: 123
+    answer: false
+  - test_desc: 'Get incorrect User model, more attributes'
+    value:
+      user_id: 123
+      username: Алексей
+      surname: Земляков
+      email: test@tes.ru
+      status: active
+      age: 10
+    answer: false
+  - test_desc: 'Get incorrect type User.user_id'
+    value:
+      user_id: one
+      username: Алексей
+      surname: Земляков
+      email: test@tes.ru
+      status: active
+    answer: false
+  - test_desc: 'Get incorrect symbol User.name'
+    value:
+      user_id: 1
+      username: Alexey
+      surname: Земляков
+      email: test@tes.ru
+      status: active
+    answer: false
+  - test_desc: 'Get incorrect symbol User.surname'
+    value:
+      user_id: 1
+      username: Алексей
+      surname: Zemlyakov
+      email: test@tes.ru
+      status: active
+    answer: false
+  - test_desc: 'Get incorrect validation User.email'
+    value:
+      user_id: 1
+      username: Алексей
+      surname: Земляков
+      email: test.ru
+      status: active
+    answer: false
+  - test_desc: 'Get incorrect type User.name'
+    value:
+      user_id: 1
+      username: [1, 2, 4]
+      surname: Земляков
+      email: test.ru
+      status: active
+    answer: false
+  - test_desc: 'Get incorrect type User.surname'
+    value:
+      user_id: 1
+      username: Алексей
+      surname: [1, 2, 4]
+      email: test.ru
+      status: active
+    answer: false
+  - test_desc: 'Get incorrect User.status'
+    value:
+      user_id: 1
+      username: Алексей
+      surname: [1, 2, 4]
+      email: test.ru
+      status: status
+    answer: false
