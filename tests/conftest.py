@@ -12,6 +12,7 @@ FILES_DIR = os.path.join(DIR_PATH, "src")
 def pytest_configure(config):
     config.addinivalue_line("markers", "zmv_lab1: mark test as part of zmv's test")
     config.addinivalue_line("markers", "zaa_lab3: mark test as part of zaa's test")
+    config.addinivalue_line("markers", "zhukova_lab3: mark test as part of zhukova's test")
 
 
 @pytest.fixture()
