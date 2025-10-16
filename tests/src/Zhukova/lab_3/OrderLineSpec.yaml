@@ -1,0 +1,57 @@
+testName: Zhukova/lab_3/OrderLineSpec
+answerList:
+  - test_desc: 'Get correct without line_price'
+    value:
+      order_id: 456
+      order_line_id: 789
+      item_line:
+        item_id: 321
+        name: 'Ноутбук'
+        desc: 'Игровой ноутбук'
+        price: 89999
+      quantity: 2.0
+      line_price: 179998.0
+    answer: true
+  - test_desc: 'Get correct model, with line_price'
+    value:
+      order_id: 123
+      order_line_id: 456
+      item_line:
+        item_id: 789
+        name: 'Смартфон'
+        desc: 'Флагманский смартфон'
+        price: 74999
+      quantity: 1.5
+      line_price: 112498.5
+    answer: true
+  - test_desc: 'Get incorrect, missing item_line'
+    value:
+      order_id: 111
+      order_line_id: 222
+      quantity: 3.0
+      line_price: 29997.0
+    answer: false
+  - test_desc: 'Get incorrect, negative quantity'
+    value:
+      order_id: 333
+      order_line_id: 444
+      item_line:
+        item_id: 555
+        name: 'Планшет'
+        desc: 'Графический планшет'
+        price: 45999
+      quantity: -2.0
+      line_price: -91998.0
+    answer: false
+  - test_desc: 'Get incorrect, invalid line_price type'
+    value:
+      order_id: 666
+      order_line_id: 777
+      item_line:
+        item_id: 888
+        name: 'Монитор'
+        desc: 'Игровой монитор'
+        price: 34999
+      quantity: 1.0
+      line_price: 'тридцать пять тысяч'
+    answer: false

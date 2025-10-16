@@ -1,0 +1,45 @@
+testName: Zhukova/lab_3/UserSpec
+answerList:
+  - test_desc: 'Get correct UserSpec'
+    value:
+      user_id: 1001
+      username: 'Анна'
+      surname: 'Петрова'
+      email: 'anna@mail.ru'
+      status: 'active'
+    answer: true
+
+  - test_desc: 'Get incorrect User model, missing attributes'
+    value:
+      user_id: 1002
+      username: 'Иван'
+      surname: 'Сидоров'
+    answer: false
+
+  - test_desc: 'Get incorrect User model, more attributes'
+    value:
+      user_id: 1003
+      username: 'Елена'
+      surname: 'Козлова'
+      email: 'elena@gmail.com'
+      status: 'inactive'
+      phone: '+79161234567'
+    answer: false
+
+  - test_desc: 'Get incorrect type User.user_id'
+    value:
+      user_id: 'тысяча'
+      username: 'Павел'
+      surname: 'Федоров'
+      email: 'pavel@yandex.ru'
+      status: 'active'
+    answer: false
+
+  - test_desc: 'Get incorrect symbol User.name'
+    value:
+      user_id: 1005
+      username: 'Michael'
+      surname: 'Васильев'
+      email: 'michael@domain.com'
+      status: 'active'
+    answer: false

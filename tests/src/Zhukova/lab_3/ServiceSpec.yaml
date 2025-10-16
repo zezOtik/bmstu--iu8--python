@@ -1,0 +1,41 @@
+testName: Zhukova/lab_3/ServiceSpec
+answerList:
+  - test_desc: 'Get correct ServiceSpec'
+    value:
+      service_id: 789
+      name: 'Дизайн интерьера'
+      desc: 'Профессиональный дизайн жилых помещений'
+      price: 25000
+    answer: true
+
+  - test_desc: 'Get incorrect model, missing attributes'
+    value:
+      service_id: 456
+      name: 'Ремонт техники'
+      desc: 'Качественный ремонт компьютеров и ноутбуков'
+    answer: false
+
+  - test_desc: 'Get incorrect model, more attributes'
+    value:
+      service_id: 321
+      name: 'Фотосессия'
+      desc: 'Профессиональная фотосъемка на природе'
+      price: 15000
+      duration: 120
+    answer: false
+
+  - test_desc: 'Get incorrect type id'
+    value:
+      service_id: 'abc123'
+      name: 'Консультация'
+      desc: 'Юридическая консультация онлайн'
+      price: 5000
+    answer: false
+
+  - test_desc: 'Get incorrect name'
+    value:
+      service_id: 654
+      name: 12345
+      desc: 'Обучение программированию с нуля'
+      price: 20000
+    answer: false
