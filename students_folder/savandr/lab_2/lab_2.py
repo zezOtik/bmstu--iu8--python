@@ -1,26 +1,17 @@
 from pydantic import (
-    BaseModel, model_validator, HttpUrl, computed_field, field_validator
+    BaseModel, model_validator, HttpUrl, computed_field, field_validator, ConfigDict
 )
-from typing import List, Union, Optional
+from typing import List, Union, Optional, Literal
 
 
 class UserSpec(BaseModel):
-    model_config = {
-        "extra": "forbid"
-    }
+    model_config = ConfigDict(extra='forbid')
     user_id: int
     username: str
     surname: str
     second_name: Optional[str]
     email: str
-    status: str
-
-    @field_validator('status', mode='after')
-    @classmethod
-    def validate_status(cls, value):
-        if value not in ['active', 'non-active']:
-            raise ValueError("Status must be 'active' or 'non-active'")
-        return value
+    status: Literal['active', 'non-active']
 
     @field_validator('email', mode='after')
     def validate_email(self, value):
@@ -37,15 +28,9 @@ class ProfileSpec(BaseModel):
     username: str
     surname: str
     email: str
-    status: str
+    status: Literal['active', 'non-active']
     bio: str
     url: HttpUrl
-
-    @field_validator('status', mode='after')
-    def validate_status(self, value):
-        if value not in ['active', 'non-active']:
-            raise ValueError("Status must be 'active' or 'non-active'")
-        return value
 
     @field_validator('email', mode='after')
     def validate_email(self, value):
