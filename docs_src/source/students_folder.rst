@@ -8,6 +8,7 @@ Subpackages
    :maxdepth: 4
 
    students_folder.Zotov_folder
+   students_folder.zemliakov_alexey
 
 Submodules
 ----------
