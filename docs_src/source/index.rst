@@ -15,3 +15,4 @@ bmstu_python_iu8 documentation
    my_example
    modules
    zemliakov
+   Zhukova_Mariya
