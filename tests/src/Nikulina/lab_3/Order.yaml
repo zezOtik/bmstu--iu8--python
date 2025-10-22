@@ -1,0 +1,122 @@
+testName: Nikulina/lab_3/OrderSpec
+answerList:
+  - test_desc: "Get correct Order"
+    value:
+      order_id: 145541
+      user_info:
+        user_id: 1000
+        username: "Проба"
+        surname: "Калинин"
+        second_name: "Петрович"
+        email: "prob@mail.ru"
+        status: active
+        bio: "студент"
+        url: "https://folder.ru"
+      items_line:
+        - order_id: 145541
+          order_line_id: 1
+          item_line:
+            service_id: 101
+            name: "Доставка"
+            desc: "Клиентская доставка"
+            price: 654
+          quantity: 1
+          line_price: 654
+        - order_id: 145541
+          order_line_id: 2
+          item_line:
+            service_id: 8888
+            name: "Стол"
+            desc: "Деревянный стол"
+            price: 758
+          quantity: 1
+          line_price: 758
+    answer: true
+  - test_desc: "Get incorrect Order, items_line empty"
+    value:
+      order_id: 1
+      user_info:
+        user_id: 1
+        username: "Иван"
+        surname: "Иванов"
+        email: "i@example.com"
+        status: active
+        bio: "студент"
+        url: "https://x.ru"
+      items_line: []
+    answer: false
+  - test_desc: "Get incorrect Order, order_line.order_id mismatch"
+    value:
+      order_id: 10
+      user_info:
+        user_id: 2
+        username: "Пётр"
+        surname: "Петров"
+        email: "p@example.com"
+        status: active
+        bio: "студент"
+        url: "https://y.ru"
+      items_line:
+        - order_id: 11
+          order_line_id: 1
+          item_line:
+            service_id: 1
+            name: "Услуга"
+            desc: "Ок"
+            price: 1
+          quantity: 1
+          line_price: 1
+    answer: false
+  - test_desc: "Get incorrect Order, duplicate order_line_id inside one order"
+    value:
+      order_id: 20
+      user_info:
+        user_id: 3
+        username: "Анна"
+        surname: "Смирнова"
+        email: "a@example.com"
+        status: active
+        bio: "студент"
+        url: "https://z.ru"
+      items_line:
+        - order_id: 20
+          order_line_id: 1
+          item_line:
+            service_id: 2
+            name: "Услуга"
+            desc: "Ок"
+            price: 2
+          quantity: 1
+          line_price: 2
+        - order_id: 20
+          order_line_id: 1
+          item_line:
+            item_id: 10
+            name: "Товар"
+            desc: "Ок"
+            price: 3
+          quantity: 1
+          line_price: 3
+    answer: false
+  - test_desc: "Get incorrect Order, line_price mismatch"
+    value:
+      order_id: 30
+      user_info:
+        user_id: 4
+        username: "Олег"
+        surname: "Олегов"
+        email: "o@example.com"
+        status: non-active
+        bio: "студент"
+        url: "https://k.ru"
+      items_line:
+        - order_id: 30
+          order_line_id: 1
+          item_line:
+            item_id: 1
+            name: "Товар"
+            desc: "Ок"
+            price: 100
+          quantity: 2
+          line_price: 150
+    answer: false

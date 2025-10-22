@@ -1,0 +1,212 @@
+testName: Nikulina/lab_3/OrdersSpec
+answerList:
+  - test_desc: "Get correct Orders"
+    value:
+      market_place_orders:
+        - order_id: 1
+          user_info:
+            user_id: 1
+            username: "Иван"
+            surname: "Иванов"
+            email: "i@e.com"
+            status: active
+            bio: "студент"
+            url: "https://a.ru"
+          items_line:
+            - order_id: 1
+              order_line_id: 1
+              item_line:
+                service_id: 1
+                name: "Услуга"
+                desc: "Удобная"
+                price: 10
+              quantity: 1
+              line_price: 10
+        - order_id: 2
+          user_info:
+            user_id: 2
+            username: "Пётр"
+            surname: "Петров"
+            email: "p@e.com"
+            status: active
+            bio: "студент"
+            url: "https://b.ru"
+          items_line:
+            - order_id: 2
+              order_line_id: 1
+              item_line:
+                item_id: 10
+                name: "Товар"
+                desc: "Мягкий"
+                price: 5
+              quantity: 2
+              line_price: 10
+    answer: true
+  - test_desc: "Get incorrect Orders, duplicate order_id"
+    value:
+      market_place_orders:
+        - order_id: 1
+          user_info:
+            user_id: 1
+            username: "Иван"
+            surname: "Иванов"
+            email: "i@e.com"
+            status: active
+            bio: "студент"
+            url: "https://a.ru"
+          items_line:
+            - order_id: 1
+              order_line_id: 1
+              item_line:
+                service_id: 1
+                name: "Услуга"
+                desc: "Ок"
+                price: 10
+              quantity: 1
+              line_price: 10
+        - order_id: 1
+          user_info:
+            user_id: 2
+            username: "Пётр"
+            surname: "Петров"
+            email: "p@e.com"
+            status: active
+            bio: "студент"
+            url: "https://b.ru"
+          items_line:
+            - order_id: 1
+              order_line_id: 2
+              item_line:
+                item_id: 10
+                name: "Товар"
+                desc: "Ок"
+                price: 5
+              quantity: 2
+              line_price: 10
+    answer: false
+  - test_desc: "Get incorrect Orders, duplicate user_id across orders"
+    value:
+      market_place_orders:
+        - order_id: 10
+          user_info:
+            user_id: 100
+            username: "Анна"
+            surname: "Смирнова"
+            email: "a@e.com"
+            status: active
+            bio: "студент"
+            url: "https://a.ru"
+          items_line:
+            - order_id: 10
+              order_line_id: 1
+              item_line:
+                service_id: 1
+                name: "Услуга"
+                desc: "Быстрая"
+                price: 1
+              quantity: 1
+              line_price: 1
+        - order_id: 11
+          user_info:
+            user_id: 100
+            username: "Олег"
+            surname: "Олегов"
+            email: "o@e.com"
+            status: active
+            bio: "студент"
+            url: "https://b.ru"
+          items_line:
+            - order_id: 11
+              order_line_id: 1
+              item_line:
+                item_id: 2
+                name: "Товар"
+                desc: "Безупречный"
+                price: 2
+              quantity: 1
+              line_price: 2
+    answer: false
+  - test_desc: "Get incorrect Orders, duplicate item_id across set"
+    value:
+      market_place_orders:
+        - order_id: 20
+          user_info:
+            user_id: 1
+            username: "Игорь"
+            surname: "Игорев"
+            email: "i@e.com"
+            status: active
+            bio: "студент"
+            url: "https://a.ru"
+          items_line:
+            - order_id: 20
+              order_line_id: 1
+              item_line:
+                item_id: 5
+                name: "Товар"
+                desc: "Великолепный"
+                price: 2
+              quantity: 3
+              line_price: 6
+        - order_id: 21
+          user_info:
+            user_id: 2
+            username: "Роман"
+            surname: "Романов"
+            email: "r@e.com"
+            status: active
+            bio: "студент"
+            url: "https://b.ru"
+          items_line:
+            - order_id: 21
+              order_line_id: 1
+              item_line:
+                item_id: 5
+                name: "Дубликат"
+                desc: "Плохой"
+                price: 2
+              quantity: 1
+              line_price: 2
+    answer: false
+  - test_desc: "Get incorrect Orders, duplicate service_id across set"
+    value:
+      market_place_orders:
+        - order_id: 30
+          user_info:
+            user_id: 1
+            username: "Леонид"
+            surname: "Леонидов"
+            email: "l@e.com"
+            status: active
+            bio: "студент"
+            url: "https://a.ru"
+          items_line:
+            - order_id: 30
+              order_line_id: 1
+              item_line:
+                service_id: 9
+                name: "Сервис"
+                desc: "Ок"
+                price: 3
+              quantity: 1
+              line_price: 3
+        - order_id: 31
+          user_info:
+            user_id: 2
+            username: "Павел"
+            surname: "Павлов"
+            email: "p@e.com"
+            status: active
+            bio: "студент"
+            url: "https://b.ru"
+          items_line:
+            - order_id: 31
+              order_line_id: 1
+              item_line:
+                service_id: 9
+                name: "Повтор"
+                desc: "Прошедший"
+                price: 3
+              quantity: 1
+              line_price: 3
+    answer: false

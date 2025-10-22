@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field, model_validator
 from pydantic import EmailStr, HttpUrl
+from pydantic import ConfigDict
 from typing import Optional, List, Union, Set
 from typing_extensions import Literal
 import logging
@@ -20,8 +21,7 @@ class UserSpec(BaseModel):
     email: EmailStr
     status: Status
 
-    class Config:
-        extra = 'forbid'
+    model_config = ConfigDict(extra='forbid')
 
     # @field_validator('email')
     # @classmethod
@@ -49,8 +49,7 @@ class ItemSpec(BaseModel):
     desc: str = Field(..., pattern=RUS_RE)
     price: float = Field(..., gt=0)
 
-    class Config:
-        extra = 'forbid'
+    model_config = ConfigDict(extra='forbid')
 
 
 class ServiceSpec(BaseModel):
@@ -59,8 +58,7 @@ class ServiceSpec(BaseModel):
     desc: str = Field(..., pattern=RUS_RE)
     price: float = Field(..., gt=0)
 
-    class Config:
-        extra = 'forbid'
+    model_config = ConfigDict(extra='forbid')
 
 
 class OrderLineSpec(BaseModel):
@@ -70,8 +68,7 @@ class OrderLineSpec(BaseModel):
     quantity: float = Field(..., gt=0)
     line_price: float = Field(..., gt=0)
 
-    class Config:
-        extra = 'forbid'
+    model_config = ConfigDict(extra='forbid')
 
     @model_validator(mode='after')
     def check_line_price(self):
@@ -90,8 +87,7 @@ class OrderSpec(BaseModel):
     user_info: ProfileSpec
     items_line: List[OrderLineSpec]
 
-    class Config:
-        extra = 'forbid'
+    model_config = ConfigDict(extra='forbid')
 
     @model_validator(mode='after')
     def check_lines(self):
@@ -117,8 +113,7 @@ class OrderSpec(BaseModel):
 class OrdersSpec(BaseModel):
     market_place_orders: List[OrderSpec]
 
-    class Config:
-        extra = 'forbid'
+    model_config = ConfigDict(extra='forbid')
 
     @model_validator(mode='after')
     def check_global_uniques(self):
@@ -161,40 +156,44 @@ def load(yaml_text: str) -> OrdersSpec:
     return OrdersSpec(**data)
 
 
-if __name__ == '__main__':
+def main():
     with open("data.yaml", "r", encoding="utf-8") as f:
         yaml_text = f.read()
     orders = load(yaml_text)
 
-for o in orders.market_place_orders:
-    logger.info(f'order_id={o.order_id}')
+    for o in orders.market_place_orders:
+        logger.info(f'order_id={o.order_id}')
 
-    u = o.user_info
-    logger.info(
-        f'id={u.user_id}, '
-        f'ФИО: {u.surname} {u.username} {u.second_name}, '
-        f'email={u.email}, статус={u.status}, био={u.bio}, url={u.url}'
-    )
-
-    for ln in o.items_line:
+        u = o.user_info
         logger.info(
-            f'строка заказа={ln.order_line_id}, '
-            f'order_id={ln.order_id}, '
-            f'количество={ln.quantity}, '
-            f'цена={ln.line_price}'
+            f'id={u.user_id}, '
+            f'ФИО: {u.surname} {u.username} {u.second_name}, '
+            f'email={u.email}, статус={u.status}, био={u.bio}, url={u.url}'
         )
 
-        if isinstance(ln.item_line, ServiceSpec):
-            s = ln.item_line
+        for ln in o.items_line:
             logger.info(
-                f'service_id={s.service_id}, '
-                f'наименование={s.name}, описание={s.desc}, цена={s.price}'
-            )
-        else:
-            it = ln.item_line
-            logger.info(
-                f'item_id={it.item_id}, '
-                f'наименование={it.name}, описание={it.desc}, цена={it.price}'
+                f'строка заказа={ln.order_line_id}, '
+                f'order_id={ln.order_id}, '
+                f'количество={ln.quantity}, '
+                f'цена={ln.line_price}'
             )
 
-logger.info(f'всего заказов = {len(orders.market_place_orders)}')
+            if isinstance(ln.item_line, ServiceSpec):
+                s = ln.item_line
+                logger.info(
+                    f'service_id={s.service_id}, '
+                    f'наименование={s.name}, описание={s.desc}, цена={s.price}'
+                )
+            else:
+                it = ln.item_line
+                logger.info(
+                    f'item_id={it.item_id}, '
+                    f'наименование={it.name}, описание={it.desc}, цена={it.price}'
+                )
+
+    logger.info(f'всего заказов = {len(orders.market_place_orders)}')
+
+
+if __name__ == '__main__':
+    main()
