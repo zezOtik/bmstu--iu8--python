@@ -9,6 +9,7 @@ Subpackages
 
    students_folder.Zotov_folder
    students_folder.zemliakov_alexey
+   students_folder.Zhukova_Mariya
    students_folder.Nikulina
 
 Submodules
