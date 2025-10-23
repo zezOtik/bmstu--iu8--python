@@ -16,3 +16,4 @@ bmstu_python_iu8 documentation
    modules
    zemliakov
    Zhukova_Mariya
+   nikulina
