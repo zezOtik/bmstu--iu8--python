@@ -3,19 +3,20 @@ from pydantic import (
 )
 from typing import List, Union, Optional, Literal, Annotated
 
-RussianStr = Annotated[str, Field(pattern=r'^[А-Яа-яЁё\s\-]+$')]
+RussianStr = Annotated[str, Field(pattern=r'^[А-Яа-яЁё\s\-0-9]+$')]
 
 class UserSpec(BaseModel):
     model_config = ConfigDict(extra='forbid')
     user_id: int
     username: RussianStr
     surname: RussianStr
-    second_name: Optional[str]
+    second_name: Optional[str] = None
     email: str
     status: Literal['active', 'non-active']
 
     @field_validator('email', mode='after')
-    def validate_email(self, value):
+    @classmethod
+    def validate_email(cls, value):
         if '@' not in value or '.' not in value:
             raise ValueError("Email must contain '@' and '.'")
         return value
@@ -26,8 +27,9 @@ class ProfileSpec(UserSpec):
     url: HttpUrl
 
     @field_validator('url', mode='after')
-    def validate_url(self, value):
-        if '://' not in value:
+    @classmethod
+    def validate_url(cls, value):
+        if '://' not in str(value):
             raise ValueError("URL must contain '://'")
         return value
 
@@ -41,8 +43,9 @@ class ItemSpec(BaseModel):
     desc: RussianStr
     price: float
 
-    @field_validator('price', mode='after')
-    def validate_price(self, value):
+    @field_validator("price", mode="after")
+    @classmethod
+    def validate_price(cls, value: float) -> float:
         if value <= 0:
             raise ValueError("Price must be greater than 0")
         return value
@@ -50,7 +53,8 @@ class ItemSpec(BaseModel):
 
 class ServiceSpec(BaseModel):
     model_config = {
-        "extra": "forbid"
+        "extra": "forbid",
+        "populate_by_name": True
     }
     service_id: int
     name: RussianStr
@@ -58,7 +62,8 @@ class ServiceSpec(BaseModel):
     price: float
 
     @field_validator('price', mode='after')
-    def validate_price(self, value):
+    @classmethod
+    def validate_price(cls, value):
         if value <= 0:
             raise ValueError("Price must be greater than 0")
         return value
@@ -72,10 +77,10 @@ class OrderLineSpec(BaseModel):
     order_line_id: int
     item_line: Union[ServiceSpec, ItemSpec]
     quantity: float
-    line_price: float
 
     @field_validator('quantity', mode='after')
-    def validate_quantity(self, value):
+    @classmethod
+    def validate_quantity(cls, value):
         if value <= 0:
             raise ValueError("Quantity must be greater than 0")
         return value
