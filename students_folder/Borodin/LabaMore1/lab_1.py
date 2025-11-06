@@ -21,6 +21,7 @@ class UserSpec(BaseModel):
 class ProfileSpec(UserSpec):
     bio:    str = Field(..., pattern=RUS_RE)
     url:    HttpUrl
+    model_config = ConfigDict(extra="forbid")
 
 class ItemSpec(BaseModel):
     item_id:    int
