@@ -40,6 +40,38 @@ def create_table():
     print("Таблица 'employees' успешно создана!")
 
 
+def create_func():
+    import pandas as pd
+    from sqlalchemy import create_engine, text
+
+
+    # Подключение к PostgreSQL
+    engine = create_engine("postgresql+psycopg2://airflow:airflow@postgres/airflow")
+
+    # SQL-запрос для создания таблицы
+    create_func_query = """
+    CREATE OR REPLACE FUNCTION super_job.get_avg_salary_by_date(input_date DATE)
+    RETURNS NUMERIC(12, 2) AS $$
+    DECLARE
+        avg_sal NUMERIC(12, 2);
+    BEGIN
+        SELECT AVG(salary)
+        INTO avg_sal
+        FROM super_job.employees
+        WHERE invited_date = input_date;
+    
+        RETURN COALESCE(avg_sal, 0.00);  -- возвращает 0.00, если нет данных
+    END;
+    $$ LANGUAGE plpgsql;
+    """
+
+    # Выполняем запрос
+    with engine.connect() as conn:
+        conn.execute(text(create_func_query))
+
+    print("Функция 'employees' успешно создана!")
+
+
 def create_schema():
     import pandas as pd
     from sqlalchemy import create_engine, text
@@ -80,4 +112,10 @@ with DAG(dag_id='init_schema', # важный атрибут
         python_callable=create_table
     )
 
-    run = t_create_schema >> t_create_table
+    t_create_func = PythonOperator(
+        task_id='create_func',
+        dag=dag,
+        python_callable=create_func
+    )
+
+    run = t_create_schema >> t_create_table >> t_create_func

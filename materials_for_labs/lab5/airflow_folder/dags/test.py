@@ -9,7 +9,7 @@ with DAG(dag_id='dag_demo', # важный атрибут
          start_date=datetime(2025, 3, 20), # важный атрибут
          catchup=True) as dag:
 
-    task_1 = EmptyOperator(task_id='dummy_task')
+    task_1 = EmptyOperator(task_id='dummy_task_1')
 
     task_2 = EmptyOperator(task_id='dummy_task_2')
 
