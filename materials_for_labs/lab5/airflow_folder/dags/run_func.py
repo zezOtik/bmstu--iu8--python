@@ -14,7 +14,6 @@ ARGS = {
 
 
 def run_func(run_date: str):
-    print("tyt")
     import os
     import csv
     from sqlalchemy import create_engine, text
