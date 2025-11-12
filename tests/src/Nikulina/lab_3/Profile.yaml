@@ -1,0 +1,53 @@
+testName: Nikulina/lab_3/ProfileSpec
+answerList:
+  - test_desc: 'Get correct Profile'
+    value:
+      user_id: 10
+      username: Мария
+      surname: Соколова
+      second_name: Викторовна
+      email: maria@example.com
+      status: active
+      bio: студент
+      url: https://example.com/profile
+    answer: true
+  - test_desc: 'Get incorrect Profile, url without scheme'
+    value:
+      user_id: 11
+      username: Алексей
+      surname: Алексеев
+      email: alex@example.com
+      status: active
+      bio: студент
+      url: example.com/profile
+    answer: false
+  - test_desc: 'Get incorrect Profile, bio not Cyrillic'
+    value:
+      user_id: 12
+      username: Дмитрий
+      surname: Дмитриев
+      email: d@example.com
+      status: active
+      bio: student
+      url: https://site.ru
+    answer: false
+  - test_desc: 'Get incorrect Profile, username contains digit'
+    value:
+      user_id: 13
+      username: Иван1
+      surname: Иванов
+      email: i1@example.com
+      status: non-active
+      bio: студент
+      url: https://ok.ru
+    answer: false
+  - test_desc: 'Get incorrect Profile, invalid email'
+    value:
+      user_id: 14
+      username: Оксана
+      surname: Оксанина
+      email: oksana@invalid
+      status: active
+      bio: студент
+      url: https://ok.ru
+    answer: false

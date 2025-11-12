@@ -1,0 +1,38 @@
+testName: Nikulina/lab_3/ItemSpec
+answerList:
+  - test_desc: 'Get correct Item'
+    value: 
+      item_id: 1
+      name: Стол
+      desc: Деревянный стол
+      price: 99.9
+    answer: true
+  - test_desc: 'Get incorrect Item, negative price'
+    value: 
+      item_id: 2
+      name: Стул
+      desc: Деревянный стул
+      price: -1
+    answer: false
+  - test_desc: 'Get incorrect Item, name latin'
+    value: 
+      item_id: 3
+      name: Table
+      desc: Стеклянный
+      price: 1
+    answer: false
+  - test_desc: 'Get incorrect Item, desc empty'
+    value: 
+      item_id: 4
+      name: Комод
+      desc: ""
+      price: 10
+    answer: false
+  - test_desc: 'Get incorrect Item, extra field'
+    value: 
+      item_id: 5
+      name: Товар
+      desc: Модный
+      price: 10
+      foo: 1
+    answer: false
