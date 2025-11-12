@@ -1,0 +1,49 @@
+name: NZE Lab3 Tests
+
+on:
+  pull_request:
+    paths:
+      - 'students_folder/melnikova/**'
+      - 'tests/melnikova/**'
+      - 'tests/src/melnikova/**'
+  workflow_dispatch:
+
+jobs:
+  nze-lab3-tests:
+    name: Run Lab3 Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+
+      - name: Cache pip packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('/pyproject.toml', '**/tox.ini') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install tox
+        run: |
+          python -m pip install --upgrade pip
+          pip install tox
+      - name: Run Lab3 Tests
+        run: tox -e nze_lab3
+
+      - name: Show tox environments
+        if: failure()
+        run: tox list
+
+      - name: Show test files found
+        if: failure()
+        run: |
+          echo "=== Test files with lab3 marker ==="
+          find tests/ -name "*.py" -exec grep -l "lab3" {} \; || true
+          echo "=== All test files ==="
+          find tests/ -name "test_*.py" || true
