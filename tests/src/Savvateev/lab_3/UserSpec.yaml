@@ -1,0 +1,50 @@
+testName: Savvateev/UserSpec
+answerList:
+  - test_desc: 'Get correct User'
+    value:
+      user_id: 123
+      username: Андрей
+      surname: Савватеев
+      email: deez@nu.ts
+      status: active
+    answer: true
+  - test_desc: 'Get incorrect, missing user_id'
+    value:
+      username: Андрей
+      surname: Савватеев
+      email: deez@nu.ts
+      status: active
+    answer: false
+  - test_desc: 'Get incorrect, wrong username'
+    value:
+      user_id: 123
+      username: Andrew
+      surname: Савватеев
+      email: deez@nu.ts
+      status: active
+    answer: false
+  - test_desc: 'Get incorrect, wrong email'
+    value:
+      user_id: 123
+      username: Андрей
+      surname: Савватеев
+      email: deeznu.ts
+      status: active
+    answer: false
+  - test_desc: 'Get incorrect, wrong status'
+    value:
+      user_id: 123
+      username: Андрей
+      surname: Савватеев
+      email: deez@nu.ts
+      status: unknown
+    answer: false
+  - test_desc: 'Get incorrect, extra field'
+    value:
+      user_id: 123
+      username: Андрей
+      surname: Савватеев
+      email: deez@nu.ts
+      status: active
+      extra_field: 'extra'
+    answer: false

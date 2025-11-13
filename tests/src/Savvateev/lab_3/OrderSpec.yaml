@@ -1,0 +1,77 @@
+testName: Savvateev/OrderSpec
+answerList:
+  - test_desc: 'Get correct Order'
+    value:
+      order_id: 123
+      user_info:
+        user_id: 123
+        username: Андрей
+        surname: Савватеев
+        email: deez@nu.ts
+        status: active
+        bio: биография
+        url: https://github.com/Slashlight
+      items_line:
+        - order_id: 123
+          order_line_id: 100
+          item_line:
+            item_id: 101
+            name: Товар 1
+            desc: Отличный товар 1
+            price: 19.99
+          quantity: 2.0
+        - order_id: 342
+          order_line_id: 123
+          item_line:
+            item_id: 202
+            name: Товар 2
+            desc: Отличный товар 2
+            price: 29.99
+          quantity: 1.5
+    answer: true
+  - test_desc: 'Get incorrect, missing user_info'
+    value:
+      order_id: 123
+      items_line:
+        - order_id: 123
+          order_line_id: 100
+          item_line:
+            item_id: 101
+            name: Товар 1
+            desc: Отличный товар 1
+            price: 19.99
+          quantity: 2.0
+    answer: false
+  - test_desc: 'Get incorrect, missing items_line'
+    value:
+      order_id: 123
+      user_info:
+        user_id: 123
+        username: Андрей
+        surname: Савватеев
+        email: deez@nu.ts
+        status: active
+        bio: биография
+        url: https://github.com/Slashlight
+    answer: false
+  - test_desc: 'Get incorrect one order instead list'
+    value:
+      order_id: 123
+      user_info:
+        user_id: 123
+        username: Андрей
+        surname: Савватеев
+        email: deez@nu.ts
+        status: active
+        bio: биография
+        url: https://github.com/Slashlight
+      items_line:
+        order_id: 123
+        order_line_id: 100
+        item_line:
+          item_id: 101
+          name: Товар 1
+          desc: Отличный товар 1
+          price: 19.99
+        quantity: 2.0
+    answer: false

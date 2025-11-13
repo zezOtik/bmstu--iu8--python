@@ -1,0 +1,44 @@
+testName: Savvateev/ServiceSpec
+answerList:
+  - test_desc: 'Get correct Service'
+    value:
+      service_id: 1
+      name: Сервис 1
+      desc: Описание сервиса 1
+      price: 99.99
+    answer: true
+  - test_desc: 'Get incorrect, missing service_id'
+    value:
+      name: Сервис 1
+      desc: Описание сервиса 1
+      price: 99.99
+    answer: false
+  - test_desc: 'Get incorrect, wrong name'
+    value:
+      service_id: 1
+      name: Service
+      desc: Описание сервиса 1
+      price: 99.99
+    answer: false
+  - test_desc: 'Get incorrect, wrong price'
+    value:
+      service_id: 1
+      name: Сервис 1
+      desc: Описание сервиса 1
+      price: -10.00
+    answer: false
+  - test_desc: 'Get incorrect, wrong desc'
+    value:
+      service_id: 1
+      name: Сервис 1
+      desc: Desc
+      price: 99.99
+    answer: false
+  - test_desc: 'Get incorrect, extra field'
+    value:
+      service_id: 1
+      name: Сервис 1
+      desc: Описание сервиса 1
+      price: 99.99
+      extra_field: 'extra'
+    answer: false
