@@ -1,0 +1,107 @@
+testName: Savvateev/OrderLineSpec
+answerList:
+  - test_desc: 'Get correct OrderLine'
+    value:
+      order_id: 123
+      order_line_id: 100
+      item_line:
+        item_id: 456
+        name: Товар
+        desc: Отличный товар
+        price: 19.99
+      quantity: 2.0
+    answer: true
+  - test_desc: 'Get OrderLine with incorrect item_line'
+    value:
+      order_id: 123
+      order_line_id: 100
+      item_line:
+        item_id: 456
+        name: Товар
+        desc: Отличный товар
+        price: -19.99
+      quantity: 2.0
+    answer: false
+  - test_desc: 'Get OrderLine with zero quantity'
+    value:
+      order_id: 123
+      order_line_id: 100
+      item_line:
+        item_id: 456
+        name: Товар
+        desc: Отличный товар
+        price: 19.99
+      quantity: 0.0
+    answer: false
+  - test_desc: 'Get OrderLine with negative quantity'
+    value:
+      order_id: 123
+      order_line_id: 100
+      item_line:
+        item_id: 456
+        name: Товар
+        desc: Отличный товар
+        price: 19.99
+      quantity: -2.0
+    answer: false
+  - test_desc: 'Get OrderLine with missing item_line'
+    value:
+      order_id: 123
+      order_line_id: 100
+      item_line: null
+      quantity: 2.0
+    answer: false
+  - test_desc: 'Get OrderLine with missing order_id'
+    value:
+      order_line_id: 789
+      item_line:
+        item_id: 456
+        name: Товар
+        desc: Отличный товар
+        price: 19.99
+      quantity: 2.0
+    answer: false
+  - test_desc: 'Get OrderLine with missing order_line_id'
+    value:
+      order_id: 123
+      item_line:
+        item_id: 456
+        name: Товар
+        desc: Отличный товар
+        price: 19.99
+      quantity: 2.0
+    answer: false
+  - test_desc: 'Get OrderLine with all line price'
+    value:
+      order_id: 123
+      order_line_id: 100
+      item_line:
+        item_id: 456
+        name: Товар
+        desc: Отличный товар
+        price: 19.99
+      quantity: 2.0
+      line_price: 50.0
+    answer: false
+  - test_desc: 'Get OrderLine with Service spec'
+    value:
+      order_id: 123
+      order_line_id: 100
+      item_line:
+        service_id: 456
+        name: Товар
+        desc: Отличный товар
+        price: 19.99
+      quantity: 2.0
+    answer: true
+  - test_desc: 'Get OrderLine with incorrect order_line_id'
+    value:
+      order_id: 123
+      order_line_id: 500
+      item_line:
+        item_id: 456
+        name: Товар
+        desc: Отличный товар
+        price: 19.99
+      quantity: 2.0
+    answer: false

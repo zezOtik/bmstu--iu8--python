@@ -19,11 +19,11 @@ dependencies = [
 ]
 
 [tool.setuptools]
-packages = ["students_folder"]
 include-package-data = true
 
-[tool.setuptools.package-dir]
-"" = "."
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["students_folder*", "tests*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.yaml", "*.yml", "*.txt", "*.md"]

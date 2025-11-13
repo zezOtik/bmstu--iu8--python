@@ -1,0 +1,31 @@
+testName: Savvateev/ProfileSpec
+answerList:
+  - test_desc: 'Get correct Profile'
+    value:
+      user_id: 123
+      username: Андрей
+      surname: Савватеев
+      email: deez@nu.ts
+      status: active
+      bio: биография
+      url: https://github.com/Slashlight
+    answer: true
+  - test_desc: 'Get incorrect, wrong bio'
+    value:
+      user_id: 123
+      username: Андрей
+      surname: Савватеев
+      email: deez@nu.ts
+      status: active
+      bio: 12345
+      url: https://github.com/Slashlight
+    answer: false
+  - test_desc: 'Get incorrect, wrong url'
+    value:
+      username: Андрей
+      surname: Савватеев
+      email: deez@nu.ts
+      status: active
+      bio: биография
+      url: example.com
+    answer: false
