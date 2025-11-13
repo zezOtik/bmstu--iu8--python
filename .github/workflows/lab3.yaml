@@ -1,4 +1,4 @@
-name: NZE Lab3 Tests
+name: Lab3 Tests
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  nze-lab3-tests:
+  lab3-tests:
     name: Run Lab3 Tests
     runs-on: ubuntu-latest
 
