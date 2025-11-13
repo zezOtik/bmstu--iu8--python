@@ -1,0 +1,56 @@
+testName: "Borodin/lab_3/UserSpec.yaml"
+answerList:
+  - test_desc: "Get correct User"
+    value: 
+      user_id: 101
+      username: "Иван"
+      surname: "Иванов"
+      second_name: "Иванович"
+      email: "ivanov@example.com"
+      status: "active"
+    answer: true
+  - test_desc: "Get correct User with non-active status"
+    value: 
+      user_id: 103
+      username: "Алексей"
+      surname: "Сидоров"
+      second_name: "Алексеевич"
+      email: "sidorov@example.com"
+      status: "non-active"
+    answer: true
+  - test_desc: "Get correct User with middle name missing"
+    value: 
+      user_id: 106
+      username: "Ольга"
+      surname: "Волкова"
+      second_name: null
+      email: "volkova@example.com"
+      status: "active"
+    answer: true
+  - test_desc: "Get correct User with special characters in name"
+    value: 
+      user_id: 107
+      username: "Анна-Мария"
+      surname: "О'Коннор"
+      second_name: "Петровна"
+      email: "oconnor@example.com"
+      status: "active"
+    answer: false
+  - test_desc: "Get correct User with invalid email"
+    value: 
+      user_id: 108
+      username: "Сергей"
+      surname: "Лебедев"
+      second_name: "Сергеевич"
+      email: "invalid-email"
+      status: "active"
+    answer: false
+  - test_desc: "Get correct User with invalid status"
+    value: 
+      user_id: 108
+      username: "Сергей"
+      surname: "Лебедев"
+      second_name: "Сергеевич"
+      email: "invalid@list.ru"
+      status: "not active"
+    answer: false

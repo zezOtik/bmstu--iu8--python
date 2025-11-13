@@ -1,0 +1,37 @@
+testName: "Borodin/lab_3/ServiceSpec.yaml"
+answerList:
+  - test_desc: "Get correct Service"
+    value: 
+      service_id: 2001
+      name: "Доставка"
+      desc: "Быстрая доставка курьером"
+      price: 500.0
+    answer: true
+  - test_desc: "Get correct Service with zero price"
+    value: 
+      service_id: 2006
+      name: "Консультация"
+      desc: "Бесплатная консультация"
+      price: 0.0
+    answer: false
+  - test_desc: "Get correct Service with very small price"
+    value: 
+      service_id: 2007
+      name: "Проверка"
+      desc: "Минимальная проверка"
+      price: 0.01
+    answer: true
+  - test_desc: "Get correct Service with Cyrillic name"
+    value: 
+      service_id: 2008
+      name: "Ремонт техники"
+      desc: "Профессиональный ремонт"
+      price: 3500.0
+    answer: true
+  - test_desc: "Get correct Service with negative price"
+    value: 
+      service_id: 2009
+      name: "Возврат"
+      desc: "Обработка возврата"
+      price: -500.0
+    answer: false

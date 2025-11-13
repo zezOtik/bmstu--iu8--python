@@ -1,0 +1,62 @@
+testName: "Borodin/lab_3/OrderLineSpec.yaml"
+answerList:
+  - test_desc: "Get correct OrderLine"
+    value: 
+      order_id: 1
+      order_line_id: 10
+      item_line:
+        item_id: 1001
+        name: "Ноутбук"
+        decs: "Мощный игровой ноутбук"
+        price: 59999.99
+      quantity: 1.0
+      line_price: 59999.99
+    answer: true
+  - test_desc: "Get correct OrderLine with quantity > 1"
+    value: 
+      order_id: 2
+      order_line_id: 20
+      item_line:
+        item_id: 1002
+        name: "Платье"
+        decs: "Красивое вечернее платье"
+        price: 4999.99
+      quantity: 3.0
+      line_price: 14999.97
+    answer: true
+  - test_desc: "Get correct OrderLine with fractional quantity"
+    value: 
+      order_id: 3
+      order_line_id: 30
+      item_line:
+        service_id: 2003
+        name: "Гарантийное обслуживание"
+        desc: "Расширенная гарантия на технику"
+        price: 2999.99
+      quantity: 1.5
+      line_price: 4499.985
+    answer: true
+  - test_desc: "Get OrderLine with mismatched line_price"
+    value: 
+      order_id: 4
+      order_line_id: 40
+      item_line:
+        item_id: 1004
+        name: "Ноутбук"
+        decs: "Ультрабук для работы"
+        price: 79999.99
+      quantity: 1.0
+      line_price: 80000.0
+    answer: false
+  - test_desc: "Get OrderLine with zero quantity"
+    value: 
+      order_id: 5
+      order_line_id: 50
+      item_line:
+        service_id: 2004
+        name: "Обучение"
+        desc: "Мастер-класс по фотографии"
+        price: 3999.0
+      quantity: 0.0
+      line_price: 0.0
+    answer: false
