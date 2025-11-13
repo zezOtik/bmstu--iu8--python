@@ -1,0 +1,117 @@
+testName: "Borodin/lab_3/OrderSpec.yaml"
+answerList:
+  - test_desc: "Get correct Order"
+    value: 
+      order_id: 1
+      user_info:
+        user_id: 101
+        username: "Иван"
+        surname: "Иванов"
+        second_name: "Иванович"
+        email: "ivanov@example.com"
+        status: "active"
+        bio: "Люблю покупать товары"
+        url: "https://example.com/ivanov"
+      items_line:
+        - order_id: 1
+          order_line_id: 10
+          item_line:
+            item_id: 1001
+            name: "Ноутбук"
+            decs: "Мощный игровой ноутбук"
+            price: 59999.99
+          quantity: 1.0
+          line_price: 59999.99
+    answer: true
+  - test_desc: "Get correct Order with multiple items"
+    value: 
+      order_id: 2
+      user_info:
+        user_id: 102
+        username: "Мария"
+        surname: "Петрова"
+        second_name: "Сергеевна"
+        email: "petrova@example.com"
+        status: "active"
+        bio: "Часто покупаю одежду"
+        url: "https://example.com/petrova"
+      items_line:
+        - order_id: 2
+          order_line_id: 20
+          item_line:
+            item_id: 1002
+            name: "Платье"
+            decs: "Красивое вечернее платье"
+            price: 4999.99
+          quantity: 2.0
+          line_price: 9999.98
+        - order_id: 2
+          order_line_id: 21
+          item_line:
+            service_id: 2002
+            name: "Подарочная упаковка"
+            desc: "Элегантная упаковка для подарка"
+            price: 200.0
+          quantity: 2.0
+          line_price: 400.0
+    answer: true
+  - test_desc: "Get correct Order with empty items list"
+    value: 
+      order_id: 6
+      user_info:
+        user_id: 112
+        username: "Андрей"
+        surname: "Васильев"
+        second_name: "Андреевич"
+        email: "vasilev@example.com"
+        status: "active"
+        bio: "Новый пользователь"
+        url: "https://example.com/vasilev"
+      items_line: []
+    answer: true
+  - test_desc: "Get Order with mismatched line prices in items"
+    value: 
+      order_id: 7
+      user_info:
+        user_id: 113
+        username: "Наталья"
+        surname: "Григорьева"
+        second_name: "Дмитриевна"
+        email: "grigoreva@example.com"
+        status: "non-active"
+        bio: "Постоянный клиент"
+        url: "https://example.com/grigoreva"
+      items_line:
+        - order_id: 7
+          order_line_id: 70
+          item_line:
+            item_id: 1005
+            name: "Объектив"
+            decs: "Широкоугольный объектив"
+            price: 15999.99
+          quantity: 1.0
+          line_price: 16000.0
+    answer: false
+  - test_desc: "Get correct Order with service items"
+    value: 
+      order_id: 8
+      user_info:
+        user_id: 114
+        username: "Борис"
+        surname: "Федоров"
+        second_name: "Борисович"
+        email: "fedorov@example.com"
+        status: "active"
+        bio: "Инженер-электронщик"
+        url: "https://example.com/fedorov"
+      items_line:
+        - order_id: 8
+          order_line_id: 80
+          item_line:
+            service_id: 2005
+            name: "Консультация"
+            desc: "Персональная консультация специалиста"
+            price: 1500.0
+          quantity: 1.0
+          line_price: 1500.0
+    answer: true

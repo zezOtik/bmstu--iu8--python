@@ -1,0 +1,37 @@
+testName: "Borodin/lab_3/ItemSpec.yaml"
+answerList:
+  - test_desc: "Get correct Item"
+    value: 
+      item_id: 1001
+      name: "Ноутбук"
+      decs: "Мощный игровой ноутбук"
+      price: 59999.99
+    answer: true
+  - test_desc: "Get correct Item with zero price"
+    value: 
+      item_id: 1007
+      name: "Подарок"
+      decs: "Бесплатный подарок клиенту"
+      price: 0.0
+    answer: false
+  - test_desc: "Get correct Item with negative price"
+    value: 
+      item_id: 1008
+      name: "Распродажа"
+      decs: "Товар со скидкой"
+      price: -1000.0
+    answer: false
+  - test_desc: "Get correct Item with high price"
+    value: 
+      item_id: 1009
+      name: "Суперкомпьютер"
+      decs: "Профессиональная рабочая станция"
+      price: 999999.99
+    answer: true
+  - test_desc: "Get correct Item with Cyrillic name"
+    value: 
+      item_id: 1010
+      name: "Стол письменный"
+      decs: "Деревянный стол для работы"
+      price: 15000.0
+    answer: true

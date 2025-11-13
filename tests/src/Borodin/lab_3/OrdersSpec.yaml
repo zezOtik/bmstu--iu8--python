@@ -1,0 +1,23 @@
+testName: "Borodin/lab_3/OrdersSpec.yaml"
+answerList:
+  - test_desc: "Get correct orders"
+    value:
+      market_place_orders:
+        - order_id: 1000
+          user_info:
+            user_id: 10
+            username: "Лагода"
+            surname:  "Лагодовна"
+            second_name: "Лагода"
+            email:  lagoda.lagoda@mail.ru
+            status: "active"
+            bio:  "Ты думаешь что-то мне сделаешь????"
+            url:  "https://psholVon.com/razrab"
+          items_line:
+            - order_id: 10
+              order_line_id: 100
+              item_id: 101
+              name: "Доставка"
+              desc: "Клиентская доставка"
+              price: 359
+    answer: true
