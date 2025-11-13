@@ -1,7 +1,9 @@
+import csv
+
 from airflow import DAG
 from datetime import datetime
 
-from airflow.providers.standard.operators.python import PythonOperator
+from airflow.operators.python import PythonOperator
 
 ARGS = {
     "owner": "bmstu",
@@ -12,6 +14,8 @@ ARGS = {
     "pool": "default_pool",
     "queue": "default"
 }
+
+CSV_FILE_PATH = '/opt/airflow/dags/deliveries.csv'
 
 def truncate_table():
     from sqlalchemy import create_engine, text
@@ -37,27 +41,27 @@ def init_deliveries():
     # Подключение к PostgreSQL
     engine = create_engine("postgresql+psycopg2://airflow:airflow@postgres/airflow")
 
-    # SQL-запрос для создания таблицы
-    insert_data_query = """
-        INSERT INTO logistics.deliveries (order_id, status, update_date) VALUES
-        (101, 'processing', '2025-10-20'),
-        (102, 'processing', '2025-10-20'),
-        (101, 'in_transit', '2025-10-21'),
-        (103, 'processing', '2025-10-22'),
-        (102, 'delivered', '2025-10-22'), 
-        (101, 'delivered', '2025-10-22'), 
-        (104, 'processing', '2025-10-23'),
-        (103, 'in_transit', '2025-10-23'),
-        (104, 'delivered', '2025-10-23'), 
-        (105, 'cancelled', '2025-10-23'), 
-        (103, 'delivered', '2025-10-24'); 
-    """
+    rows_to_insert = []
+    with open(CSV_FILE_PATH, 'r') as file:
+        reader = csv.reader(file)
+        next(reader)  # Пропускаем заголовок
+
+        for row in reader:
+            status = row[0]
+            update_date = row[1]
+
+            rows_to_insert.append({'status': status, 'update_date': update_date})
 
     # Выполняем запрос
+    insert_data_query = """
+        INSERT INTO logistics.deliveries (status, update_date) VALUES
+        (:status, :update_date)
+    """
     with engine.connect() as conn:
-        conn.execute(text(insert_data_query))
+        conn.execute(text(insert_data_query), rows_to_insert)
 
-    print("Таблица 'deliveries' наполнена заказами!")
+
+print("Таблица 'deliveries' наполнена заказами!")
 
 
 with DAG(dag_id='init_data',  # важный атрибут
@@ -70,7 +74,7 @@ with DAG(dag_id='init_data',  # важный атрибут
     t_truncate_table = PythonOperator(
         task_id='truncate_table',
         dag=dag,
-        python_callable=truncate_table()
+        python_callable=truncate_table
     )
 
     t_insert_data = PythonOperator(

@@ -1,7 +1,7 @@
 from airflow import DAG
 from datetime import datetime
 
-from airflow.providers.standard.operators.python import PythonOperator
+from airflow.operators.python import PythonOperator
 
 ARGS = {
     "owner": "bmstu",
@@ -24,8 +24,7 @@ def create_table():
     # SQL-запрос для создания таблицы
     create_table_query = """
     CREATE TABLE IF NOT EXISTS logistics.deliveries (
-        event_id SERIAL PRIMARY KEY,
-        order_id BIGINT NOT NULL,
+        order_id SERIAL PRIMARY KEY,
         status TEXT NOT NULL,
         update_date DATE NOT NULL
     );
