@@ -3,7 +3,7 @@ name: SAE Lab3 Tests
 on:
   pull_request:
     paths:
-      - 'students_folder/Savandr/**'
+      - 'students_folder/savandr/**'
       - 'tests/Savvateev/**'
       - 'tests/src/Savvateev/**'
   workflow_dispatch:
