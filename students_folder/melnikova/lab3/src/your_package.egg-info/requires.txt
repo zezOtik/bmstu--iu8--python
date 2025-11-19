@@ -1,7 +1,0 @@
-pydantic>=2.0.0
-
-[dev]
-sphinx>=7.0.0
-sphinx-rtd-theme>=1.0.0
-pytest>=7.0.0
-tox>=4.0.0

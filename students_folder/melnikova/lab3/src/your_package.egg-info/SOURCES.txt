@@ -1,7 +1,0 @@
-pyproject.toml
-src/models.py
-src/your_package.egg-info/PKG-INFO
-src/your_package.egg-info/SOURCES.txt
-src/your_package.egg-info/dependency_links.txt
-src/your_package.egg-info/requires.txt
-src/your_package.egg-info/top_level.txt
