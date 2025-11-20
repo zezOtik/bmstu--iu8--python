@@ -10,7 +10,7 @@
 API Документация
 ----------------
 
-.. automodule:: your_package.models
+.. automodule:: lab3.rst
    :members:
    :undoc-members:
    :show-inheritance:
