@@ -1,103 +1,62 @@
 from airflow import DAG
 from datetime import datetime
 from airflow.operators.python import PythonOperator
+from sqlalchemy import create_engine, text
 
 
 ARGS = {
-    "owner": "bmstu",
-    "email": ['wzomzot@hop.ru','1@mail.ru'],
+    "owner": "Zhukova_Mariya",
+    "email": ['test_user_var_2@email.ru','2@email.ru'],
     "email_on_failure": True,
     "email_on_retry": False,
-    "start_date": datetime(2025, 3, 20), # важный атрибут
+    "start_date": datetime(2025, 11, 20),
     "pool": "default_pool",
     "queue": "default"
 }
 
 
-def create_table():
-    import pandas as pd
-    from sqlalchemy import create_engine, text
-
-
-    # Подключение к PostgreSQL
-    engine = create_engine("postgresql+psycopg2://airflow:airflow@postgres/airflow")
-
-    # SQL-запрос для создания таблицы
-    create_table_query = """
-    CREATE TABLE IF NOT EXISTS super_job.employees (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(100) NOT NULL,
-        department VARCHAR(50),
-        salary NUMERIC(10, 2),
-        invited_date TIMESTAMP
-    );
-    """
-
-    # Выполняем запрос
-    with engine.connect() as conn:
-        conn.execute(text(create_table_query))
-
-    print("Таблица 'employees' успешно создана!")
-
-
-def create_func():
-    import pandas as pd
-    from sqlalchemy import create_engine, text
-
-
-    # Подключение к PostgreSQL
-    engine = create_engine("postgresql+psycopg2://airflow:airflow@postgres/airflow")
-
-    # SQL-запрос для создания таблицы
-    create_func_query = """
-    CREATE OR REPLACE FUNCTION super_job.get_avg_salary_by_date(input_date DATE)
-    RETURNS NUMERIC(12, 2) AS $$
-    DECLARE
-        avg_sal NUMERIC(12, 2);
-    BEGIN
-        SELECT AVG(salary)
-        INTO avg_sal
-        FROM super_job.employees
-        WHERE invited_date = input_date;
-    
-        RETURN COALESCE(avg_sal, 0.00);  -- возвращает 0.00, если нет данных
-    END;
-    $$ LANGUAGE plpgsql;
-    """
-
-    # Выполняем запрос
-    with engine.connect() as conn:
-        conn.execute(text(create_func_query))
-
-    print("Функция 'employees' успешно создана!")
-
-
 def create_schema():
-    import pandas as pd
-    from sqlalchemy import create_engine, text
-
-
-    # Подключение к PostgreSQL
     engine = create_engine("postgresql+psycopg2://airflow:airflow@postgres/airflow")
 
-    # SQL-запрос для создания таблицы
     create_schema_query = """
-    CREATE SCHEMA IF NOT EXISTS super_job;
+    CREATE SCHEMA IF NOT EXISTS market;
     """
 
-    # Выполняем запрос
     with engine.connect() as conn:
         conn.execute(text(create_schema_query))
 
-    print("Схема 'super_job' успешно создана!")
+    print("Схема 'market' успешно создана!")
 
 
-with DAG(dag_id='init_schema', # важный атрибут
+def create_table():
+    engine = create_engine("postgresql+psycopg2://airflow:airflow@postgres/airflow")
+
+    create_table_query = """
+    CREATE TABLE IF NOT EXISTS market.sales (
+        id BIGINT PRIMARY KEY,
+        product_name TEXT NOT NULL,
+        sale_date DATE NOT NULL,
+        amount DECIMAL(10,2) NOT NULL
+    );
+    
+    CREATE TABLE IF NOT EXISTS market.daily_sales_metrics (
+        report_date DATE PRIMARY KEY,
+        total_sales_amount DECIMAL(15,2) NOT NULL
+    );
+    """
+
+    with engine.connect() as conn:
+        conn.execute(text(create_table_query))
+
+    print("Таблицы 'sales' и 'daily_sales_metrics' успешно созданы!")
+
+
+with DAG(dag_id='init_schema',
          default_args=ARGS,
          schedule_interval='@once',
          max_active_runs=1,
          start_date=datetime(2025, 3, 20),
-         catchup=False,
+         catchup=True,
          tags=['lab5']) as dag:
 
     t_create_schema = PythonOperator(
@@ -112,10 +71,4 @@ with DAG(dag_id='init_schema', # важный атрибут
         python_callable=create_table
     )
 
-    t_create_func = PythonOperator(
-        task_id='create_func',
-        dag=dag,
-        python_callable=create_func
-    )
-
-    run = t_create_schema >> t_create_table >> t_create_func
+    run = t_create_schema >> t_create_table
