@@ -68,7 +68,7 @@ answerList:
     answer: false
   - test_desc: "Get correct Profile with invalid url"
     value: 
-      user_id: -100
+      user_id: 100
       username: "Владимир"
       surname: "Новиков"
       second_name: "Владимирович"
@@ -79,7 +79,7 @@ answerList:
     answer: false
   - test_desc: "Get correct Profile with valid url"
     value: 
-      user_id: -100
+      user_id: 100
       username: "Владимир"
       surname: "Новиков"
       second_name: "Владимирович"
