@@ -10,7 +10,7 @@ RUS_RE = r'^[а-яА-ЯёЁ\s\-]+$'
 
 
 class UserSpec(BaseModel):
-    user_id:        int
+    user_id:        int = Field(..., gt=0)
     username:       str = Field(..., pattern=RUS_RE)
     surname:        str = Field(..., pattern=RUS_RE)
     second_name:    Optional[str] = Field(None, pattern=RUS_RE)
@@ -24,22 +24,22 @@ class ProfileSpec(UserSpec):
     model_config = ConfigDict(extra="forbid")
 
 class ItemSpec(BaseModel):
-    item_id:    int
+    item_id:    int = Field(..., gt=0)
     name:       str = Field(..., pattern=RUS_RE)
     decs:       str = Field(..., pattern=RUS_RE)
     price:      float = Field(..., gt=0)
     model_config = ConfigDict(extra="forbid")
 
 class ServiceSpec(BaseModel):
-    service_id:     int
+    service_id:     int = Field(..., gt=0)
     name:           str = Field(..., pattern=RUS_RE)
     desc:           str = Field(..., pattern=RUS_RE)
     price:          float = Field(..., gt=0)
     model_config = ConfigDict(extra="forbid")
 
 class OrderLineSpec(BaseModel):
-    order_id:       int
-    order_line_id:  int
+    order_id:       int = Field(..., gt=0)
+    order_line_id:  int = Field(..., gt=0)
     item_line:      Union[ServiceSpec, ItemSpec]
     quantity:       float = Field(..., gt=0)
     line_price:     float = Field(..., gt=0)
@@ -55,7 +55,7 @@ class OrderLineSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
     
 class OrderSpec(BaseModel):
-    order_id:   int
+    order_id:   int = Field(..., gt=0)
     user_info:  ProfileSpec
     items_line: List[OrderLineSpec]
 
