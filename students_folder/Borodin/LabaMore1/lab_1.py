@@ -2,18 +2,18 @@ import logging
 import yaml
 from pydantic import BaseModel, Field, ConfigDict, model_validator
 from pydantic import EmailStr, HttpUrl
-from typing import Literal, Union, List
+from typing import Literal, Union, List, Optional
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
-RUS_RE = r'^[а-яА-ЯёЁ\s]+$'
+RUS_RE = r'^[а-яА-ЯёЁ\s\-]+$'
 
 
 class UserSpec(BaseModel):
     user_id:        int
     username:       str = Field(..., pattern=RUS_RE)
     surname:        str = Field(..., pattern=RUS_RE)
-    second_name:    str = Field(None, pattern=RUS_RE)
+    second_name:    Optional[str] = Field(None, pattern=RUS_RE)
     email:          EmailStr
     status:         Literal['active', 'non-active']
     model_config = ConfigDict(extra="forbid")
