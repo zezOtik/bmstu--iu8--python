@@ -17,3 +17,4 @@ bmstu_python_iu8 documentation
    zemliakov
    Zhukova_Mariya
    nikulina
+   borodin
