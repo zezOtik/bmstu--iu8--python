@@ -8,9 +8,9 @@ from students_folder.Borodin.LabaMore1.lab_1 import ItemSpec
 logger = logging.getLogger("test_Item")
 
 
-@pytest.mark.bgv_lab3
+@pytest.mark.borodin_lab3
 def test_class_profile(yaml_test_data):
-    test_cases = yaml_test_data("Borodin/lab_3/ItemSpec.py")
+    test_cases = yaml_test_data("Borodin/lab_3/ItemSpec.yaml")
     for test_desc, value, answer in test_cases:
         logger.info(f"Testing: {test_desc}")
         try:

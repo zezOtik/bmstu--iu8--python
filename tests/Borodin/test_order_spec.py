@@ -8,7 +8,7 @@ from students_folder.Borodin.LabaMore1.lab_1 import OrderSpec
 logger = logging.getLogger("test_Order")
 
 
-@pytest.mark.bgv_lab3
+@pytest.mark.borodin_lab3
 def test_class_profile(yaml_test_data):
     test_cases = yaml_test_data("Borodin/lab_3/OrderSpec.yaml")
     for test_desc, value, answer in test_cases:
