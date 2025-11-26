@@ -10,7 +10,7 @@ answerList:
             second_name: "Лагода"
             email: "lagoda.lagoda@mail.ru"
             status: "active"
-            bio: "Ты думаешь что-то мне сделаешь????"
+            bio: "Ты думаешь что-то мне сделаешь"
             url: "https://psholVon.com/razrab"
           items_line:
             - order_id: 1000
