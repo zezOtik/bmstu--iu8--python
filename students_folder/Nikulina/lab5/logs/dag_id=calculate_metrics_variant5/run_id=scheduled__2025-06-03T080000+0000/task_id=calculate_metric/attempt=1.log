@@ -1,0 +1,19 @@
+[2025-11-27T07:59:04.969+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-11-27T07:59:04.993+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: calculate_metrics_variant5.calculate_metric scheduled__2025-06-03T08:00:00+00:00 [queued]>
+[2025-11-27T07:59:05.007+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: calculate_metrics_variant5.calculate_metric scheduled__2025-06-03T08:00:00+00:00 [queued]>
+[2025-11-27T07:59:05.014+0000] {taskinstance.py:2867} INFO - Starting attempt 1 of 1
+[2025-11-27T07:59:05.036+0000] {taskinstance.py:2890} INFO - Executing <Task(PythonOperator): calculate_metric> on 2025-06-03 08:00:00+00:00
+[2025-11-27T07:59:05.045+0000] {standard_task_runner.py:72} INFO - Started process 643 to run task
+[2025-11-27T07:59:05.049+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'calculate_metrics_variant5', 'calculate_metric', 'scheduled__2025-06-03T08:00:00+00:00', '--job-id', '318', '--raw', '--subdir', 'DAGS_FOLDER/calculate_metrics.py', '--cfg-path', '/tmp/tmpqo51ser_']
+[2025-11-27T07:59:05.051+0000] {standard_task_runner.py:105} INFO - Job 318: Subtask calculate_metric
+[2025-11-27T07:59:05.138+0000] {task_command.py:467} INFO - Running <TaskInstance: calculate_metrics_variant5.calculate_metric scheduled__2025-06-03T08:00:00+00:00 [running]> on host 26c980262565
+[2025-11-27T07:59:05.270+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='wzomzot@hop.ru,1@mail.ru' AIRFLOW_CTX_DAG_OWNER='bmstu' AIRFLOW_CTX_DAG_ID='calculate_metrics_variant5' AIRFLOW_CTX_TASK_ID='calculate_metric' AIRFLOW_CTX_EXECUTION_DATE='2025-06-03T08:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-06-03T08:00:00+00:00'
+[2025-11-27T07:59:05.274+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2025-11-27T07:59:05.289+0000] {logging_mixin.py:190} INFO - Расчет метрики для даты: 2025-06-03
+[2025-11-27T07:59:05.307+0000] {logging_mixin.py:190} INFO - Количество уникальных пользователей за 2025-06-03: 21
+[2025-11-27T07:59:05.339+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-11-27T07:59:05.361+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2025-11-27T07:59:05.363+0000] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=calculate_metrics_variant5, task_id=calculate_metric, run_id=scheduled__2025-06-03T08:00:00+00:00, execution_date=20250603T080000, start_date=20251127T075904, end_date=20251127T075905
+[2025-11-27T07:59:05.428+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-11-27T07:59:05.455+0000] {taskinstance.py:3901} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-11-27T07:59:05.458+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
