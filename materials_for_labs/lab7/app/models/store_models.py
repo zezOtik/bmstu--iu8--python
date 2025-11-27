@@ -1,5 +1,5 @@
-from pydantic import BaseModel, AfterValidator, Field
-from typing import Annotated, Literal
+from pydantic import BaseModel, AfterValidator, Field, ConfigDict, RootModel
+from typing import Annotated, Literal, Optional, List
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -17,12 +17,21 @@ def default_execution_time():
 
 
 class OrderBase(BaseModel):
-    id: int
     customer_id: int
     desc: str | None = None
-    created_at: AwareDatetime = Field(default_factory=default_execution_time)
+    created_at: Optional[AwareDatetime] = Field(default_factory=default_execution_time)
     status: Literal['new', 'delivery', 'finished']
 
 
 class OrderAdd(OrderBase):
     pass
+
+
+class OrderGet(OrderBase):
+    id: int
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class OrderListGet(RootModel[List[OrderGet]]):
+    model_config = ConfigDict(from_attributes=True)
