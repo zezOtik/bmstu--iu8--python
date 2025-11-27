@@ -39,8 +39,8 @@ asyncpg
 
 **Основные сущности:**
 
-- User (id, name, email)
-- Task (id, title, description, status, due_date, assignee_id → User)
+- user (id, name, email)
+- task (id, title, description, status, due_date, assignee_id → User)
 
 **Эндпоинты:**
 
@@ -57,9 +57,9 @@ API для публикации статей, добавления коммен�
 
 **Основные сущности:**
 
-- Author (id, username, bio)
-- Post (id, title, content, created_at, author_id)
-- Comment (id, content, post_id, author_id, created_at)
+- author (id, username, bio)
+- post (id, title, content, created_at, author_id)
+- comment (id, content, post_id, author_id, created_at)
 
 **Эндпоинты:**
 
@@ -75,8 +75,8 @@ API для публикации статей, добавления коммен�
 
 **Основные сущности:**
 
-- Customer (id, name, email)
-- Order (id, customer_id, desc, created_at, status)
+- customer (id, name, email)
+- order (id, customer_id, desc, created_at, status)
 
 **Эндпоинты:**
 
@@ -93,8 +93,8 @@ API для резервирования переговорок в офисе н�
 
 **Основные сущности:**
 
-- Room (id, name, capacity, location)
-- Booking (id, room_id, user_name, start_time, end_time)
+- room (id, name, capacity, location)
+- booking (id, room_id, user_name, start_time, end_time)
 
 **Эндпоинты:**
 
@@ -110,8 +110,8 @@ API для резервирования переговорок в офисе н�
 
 **Основные сущности:**
 
-- Habit (id, user_id, name, description)
-- Completion (id, habit_id, date)
+- habit (id, user_id, name, description)
+- completion (id, habit_id, date)
 
 **Эндпоинты:**
 
@@ -127,9 +127,9 @@ API для ведения личной библиотеки: добавлени�
 
 **Основные сущности:**
 
-- Book (id, title, author, isbn, total_pages)
-- ReadingEntry (id, book_id, user_id, current_page, updated_at)
-- User (id, name)
+- book (id, title, author, isbn, total_pages)
+- readingEntry (id, book_id, user_id, current_page, updated_at)
+- user (id, name)
 
 **Эндпоинты:**
 
