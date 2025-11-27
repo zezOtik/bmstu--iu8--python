@@ -3,7 +3,7 @@ name: SAE Lab3 Tests
 on:
   pull_request:
     paths:
-      - 'students_folder/malnikova/**'
+      - 'students_folder/melnikova/**'
       - 'tests/Melnikova/**'
       - 'tests/src/Melnikova/**'
   workflow_dispatch:
