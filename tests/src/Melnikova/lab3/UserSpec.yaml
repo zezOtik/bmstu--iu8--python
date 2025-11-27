@@ -16,7 +16,7 @@ answerList:
       surname: "Петров"
       email: "petr@example.com"
       status: "non-active"
-    answer: true
+    answer: false
   - test_desc: 'Get incorrect User, Latin username'
     value:
       user_id: 3

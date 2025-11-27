@@ -6,7 +6,7 @@ answerList:
       name: "Тестовая услуга"
       desc: "Описание тестовой услуги"
       price: 200.0
-    answer: true
+    answer: false
   - test_desc: 'Get incorrect Service, negative price'
     value:
       service_id: 2
