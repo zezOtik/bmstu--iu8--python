@@ -1,0 +1,25 @@
+testName: Melnikova/OrdersSpec
+answerList:
+  - test_desc: 'Get correct OrderLine with valid item'
+    value:
+      order_id: 1
+      order_line_id: 1
+      quantity: 2.0
+    answer: true
+  - test_desc: 'Get incorrect OrderLine, invalid order_line_id'
+    value:
+      order_id: 1
+      order_line_id: 2
+      quantity: 1.0
+    answer: false
+  - test_desc: 'Get incorrect OrderLine, invalid quantity'
+    value:
+      order_id: 1
+      order_line_id: 1
+      quantity: 0.0
+    answer: false
+  - test_desc: 'Get incorrect OrderLine, missing order_id'
+    value:
+      order_line_id: 1
+      quantity: 1.0
+    answer: false

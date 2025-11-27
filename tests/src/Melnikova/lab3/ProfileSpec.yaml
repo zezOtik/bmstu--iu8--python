@@ -1,0 +1,42 @@
+testName: Melnikova/ProfileSpec
+answerList:
+  - test_desc: 'Get correct Profile'
+    value:
+      user_id: 1
+      username: "Алиса"
+      surname: "Мельникова"
+      second_name: "Анатольевна"
+      email: "alisa@example.com"
+      status: "active"
+      bio: "Программист и разработчик"
+      url: "https://example.com/profile"
+    answer: true
+  - test_desc: 'Get incorrect Profile, Latin bio'
+    value:
+      user_id: 2
+      username: "Иван"
+      surname: "Иванов"
+      email: "ivan@example.com"
+      status: "active"
+      bio: "English text here"
+      url: "https://example.com"
+    answer: false
+  - test_desc: 'Get incorrect Profile, invalid URL'
+    value:
+      user_id: 3
+      username: "Петр"
+      surname: "Петров"
+      email: "petr@example.com"
+      status: "active"
+      bio: "Тестовый профиль"
+      url: "invalid-url"
+    answer: false
+  - test_desc: 'Get incorrect Profile, missing bio'
+    value:
+      user_id: 4
+      username: "Анна"
+      surname: "Иванова"
+      email: "anna@example.com"
+      status: "active"
+      url: "https://example.com"
+    answer: false
