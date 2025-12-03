@@ -1,0 +1,6 @@
+logs/
+*.log
+pycache/
+*.pyc
+dag_processor_manager/
+scheduler/
