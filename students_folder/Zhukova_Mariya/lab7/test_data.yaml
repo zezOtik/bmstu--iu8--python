@@ -1,0 +1,24 @@
+authors:
+  test_author_1:
+    username: "test_user_1"
+    bio: "Тестовый автор 1, любит писать о программировании"
+  
+  test_author_2:
+    username: "test_user_2"
+    bio: "Тестовый автор 2, специалист по базам данных"
+
+posts:
+  test_post_1:
+    title: "Мой первый пост на FastAPI"
+    content: "Этот пост написан с помощью FastAPI и SQLAlchemy..."
+  
+  test_post_2:
+    title: "Второй пост о тестировании API"
+    content: "Сегодня мы поговорим о том, как правильно тестировать REST API..."
+
+comments:
+  test_comment_1:
+    content: "Отличная статья! Очень полезно для начинающих."
+  
+  test_comment_2:
+    content: "Спасибо за информацию, буду пробовать на практике"
