@@ -1,0 +1,645 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>students_folder.Nikulina.lab2.lab_2 &mdash; документация bmstu_python_iu8 1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=e35015f7"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/translations.js?v=cd1d70c9"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            bmstu_python_iu8
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../my_example.html">Some info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">students_folder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../zemliakov.html">Zemliakov</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Zhukova_Mariya.html">Zhukova_Mariya</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../nikulina.html">Nikulina</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../borodin.html">Borodin</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">bmstu_python_iu8</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Код модуля</a></li>
+      <li class="breadcrumb-item active">students_folder.Nikulina.lab2.lab_2</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Исходный код students_folder.Nikulina.lab2.lab_2</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">model_validator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmailStr</span><span class="p">,</span> <span class="n">HttpUrl</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Set</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing_extensions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+
+
+<span class="n">RUS_RE</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^[А-Яа-яЁё][А-Яа-яЁё \-]*$&#39;</span>
+<span class="n">Status</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="s1">&#39;non-active&#39;</span><span class="p">]</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;[</span><span class="si">%(levelname)s</span><span class="s1">] </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="UserSpec">
+<a class="viewcode-back" href="../../../../students_folder.Nikulina.lab2.html#students_folder.Nikulina.lab2.lab_2.UserSpec">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserSpec</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Модель пользователя маркетплейса с валидацией имени пользователя,</span>
+<span class="sd">    почты и статуса.</span>
+
+<span class="sd">    Атрибуты:</span>
+<span class="sd">        user_id (int): Уникальный идентификатор пользователя.</span>
+<span class="sd">        username (str): Имя пользователя (кириллица).</span>
+<span class="sd">        surname (str): Фамилия пользователя(кириллица).</span>
+<span class="sd">        second_name (Optional[str]): Отчество пользователя (опционально, кириллица).</span>
+<span class="sd">        email (EmailStr): Почта пользователя (Валидный e-mail).</span>
+<span class="sd">        status (Literal[&#39;active&#39;,&#39;non-active&#39;]): Статус учётной записи.</span>
+
+<span class="sd">    Конфигурация:</span>
+<span class="sd">        extra=&quot;forbid&quot;: запрещает неописанные в модели поля.</span>
+<span class="sd">        При попытке передать неизвестное поле будет вызвано </span>
+<span class="sd">        исключение ValidationError.</span>
+
+<span class="sd">    Валидация:</span>
+<span class="sd">        Поля `username`, `surname`, `second_name` проходит проверку по регулярному</span>
+<span class="sd">        выражению `RUS_RE`. </span>
+<span class="sd">        Поле `email` автоматически валидируется типом `EmailStr` и должно содержать </span>
+<span class="sd">        корректный адрес в формате c @. </span>
+<span class="sd">        Поле `status` ограничено литералами `&#39;active&#39;` и `&#39;non-active&#39;`.</span>
+<span class="sd">        При нарушении любого из условий валидации Pydantic выбрасывает</span>
+<span class="sd">        исключение `ValidationError` с описанием поля и причины ошибки.</span>
+
+<span class="sd">    Пример:</span>
+<span class="sd">        &gt;&gt;&gt; u = UserSpec(</span>
+<span class="sd">        ... user_id=1,</span>
+<span class="sd">        ... username=&quot;Екатерина&quot;,</span>
+<span class="sd">        ... surname=&quot;Иванова&quot;,</span>
+<span class="sd">        ... second_name=&quot;Николаевна&quot;,</span>
+<span class="sd">        ... email=&quot;iv@example.com&quot;,</span>
+<span class="sd">        ... status=&quot;active&quot;,</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; print(u)</span>
+<span class="sd">        user_id=1 username=&#39;Екатерина&#39; surname=&#39;Иванова&#39; second_name=&#39;Николаевна&#39; email=&#39;iv@example.com&#39; status=&#39;active&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">RUS_RE</span><span class="p">)</span>
+    <span class="n">surname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">RUS_RE</span><span class="p">)</span>
+    <span class="n">second_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">RUS_RE</span><span class="p">)</span>
+    <span class="n">email</span><span class="p">:</span> <span class="n">EmailStr</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Status</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s1">&#39;forbid&#39;</span><span class="p">)</span></div>
+
+
+    <span class="c1"># @field_validator(&#39;email&#39;)</span>
+    <span class="c1"># @classmethod</span>
+    <span class="c1"># def check_email(cls, v: str) -&gt; str:</span>
+    <span class="c1">#     if &#39;@&#39; not in v or &#39;.&#39; not in v:</span>
+    <span class="c1">#         raise ValueError(&#39;email должен содержать @ и .&#39;)</span>
+    <span class="c1">#     return v</span>
+
+
+<div class="viewcode-block" id="ProfileSpec">
+<a class="viewcode-back" href="../../../../students_folder.Nikulina.lab2.html#students_folder.Nikulina.lab2.lab_2.ProfileSpec">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProfileSpec</span><span class="p">(</span><span class="n">UserSpec</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Модель профиля пользователя, расширяющая базовую модель UserSpec.</span>
+
+<span class="sd">    Наследует все поля и валидацию базового класса `UserSpec`</span>
+<span class="sd">    (`user_id`, `username`, `surname`, `second_name`, `email`, `status`)</span>
+<span class="sd">    и добавляет дополнительные атрибуты: `bio`, `url`.</span>
+
+<span class="sd">    Атрибуты:</span>
+<span class="sd">        bio (str): Короткая биография пользователя, только кириллица.</span>
+<span class="sd">        url (HttpUrl): Валидный URL, начинающийся с протокола и с ://.</span>
+
+<span class="sd">    Конфигурация:</span>
+<span class="sd">        extra=&quot;forbid&quot;: Запрещает передачу дополнительных,</span>
+<span class="sd">        неописанных в модели полей. </span>
+<span class="sd">        При попытке передать неизвестное поле будет вызвано </span>
+<span class="sd">        исключение `ValidationError`.</span>
+
+<span class="sd">    Пример:</span>
+<span class="sd">        &gt;&gt;&gt; profile = ProfileSpec(</span>
+<span class="sd">        ... user_id=2,</span>
+<span class="sd">        ... username=&quot;Анна&quot;,</span>
+<span class="sd">        ... surname=&quot;Смирнова&quot;,</span>
+<span class="sd">        ... second_name=&quot;Евгеньевна&quot;,</span>
+<span class="sd">        ... email=&quot;anna@example.com&quot;,</span>
+<span class="sd">        ... status=&quot;active&quot;,</span>
+<span class="sd">        ... bio=&quot;Покупатель&quot;,</span>
+<span class="sd">        ... url=&quot;http://example.com&quot;</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; print(profile)</span>
+<span class="sd">        user_id=2 username=&#39;Анна&#39; surname=&#39;Смирнова&#39; second_name=&#39;Евгеньевна&#39; email=&#39;anna@example.com&#39; </span>
+<span class="sd">        status=&#39;active&#39; bio=&#39;Покупатель&#39; url=HttpUrl(&#39;http://example.com/&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bio</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">RUS_RE</span><span class="p">)</span>
+    <span class="n">url</span><span class="p">:</span> <span class="n">HttpUrl</span></div>
+
+
+    <span class="c1"># @field_validator(&#39;url&#39;)</span>
+    <span class="c1"># @classmethod</span>
+    <span class="c1"># def check_url(cls, v: str) -&gt; str:</span>
+    <span class="c1">#     if &#39;://&#39; not in v:</span>
+    <span class="c1">#         raise ValueError(&quot;url должен содержать &#39;://&#39;&quot;)</span>
+    <span class="c1">#     return v</span>
+
+
+<div class="viewcode-block" id="ItemSpec">
+<a class="viewcode-back" href="../../../../students_folder.Nikulina.lab2.html#students_folder.Nikulina.lab2.lab_2.ItemSpec">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ItemSpec</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Модель товара в маркетплейсе с валидацией name, desc, price.</span>
+
+<span class="sd">    Атрибуты:</span>
+<span class="sd">        item_id (int): Уникальный идентификатор товара.</span>
+<span class="sd">        name (str): Название товара. Должно соответствовать шаблону `RUS_RE`</span>
+<span class="sd">            - допускаются кириллические символы.</span>
+<span class="sd">        desc (str): Краткое описание товара. Также проверяется по шаблону `RUS_RE`.</span>
+<span class="sd">        price (float): Стоимость единицы товара. Значение должно быть строго больше нуля.</span>
+
+<span class="sd">    Конфигурация:</span>
+<span class="sd">        extra=&#39;forbid&#39;: Запрещает передачу дополнительных полей, не описанных</span>
+<span class="sd">        в модели. Любое лишнее поле приведёт к выбросу исключения `ValidationError`.</span>
+
+<span class="sd">    Валидация:</span>
+<span class="sd">        Поля `name`, `desc` проходят регулярную проверку соответствия шаблону `RUS_RE`  </span>
+<span class="sd">          (только кириллица).  </span>
+<span class="sd">        Поле `price` должно быть строго больше нуля (`gt=0`), иначе выбрасывается `ValidationError`.  </span>
+<span class="sd">        Поле `item_id` проверяется на тип `int` и должно быть целым числом.  </span>
+
+<span class="sd">        При несоответствии любому из условий автоматически выбрасывает</span>
+<span class="sd">        исключение `ValidationError` с указанием проблемных полей и описанием ошибки.</span>
+
+<span class="sd">    Пример:</span>
+<span class="sd">        &gt;&gt;&gt; item = ItemSpec(</span>
+<span class="sd">        ... item_id=1,</span>
+<span class="sd">        ... name=&quot;Кружка&quot;,</span>
+<span class="sd">        ... desc=&quot;Керамическая кружка&quot;,</span>
+<span class="sd">        ... price=20</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; print(item)</span>
+<span class="sd">        item_id=1 name=&#39;Кружка&#39; desc=&#39;Керамическая кружка&#39; price=20.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">item_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">RUS_RE</span><span class="p">)</span>
+    <span class="n">desc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">RUS_RE</span><span class="p">)</span>
+    <span class="n">price</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s1">&#39;forbid&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ServiceSpec">
+<a class="viewcode-back" href="../../../../students_folder.Nikulina.lab2.html#students_folder.Nikulina.lab2.lab_2.ServiceSpec">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ServiceSpec</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Модель услуги в маркетплейсе с валидацией name, desc, price.</span>
+
+<span class="sd">    Атрибуты:</span>
+<span class="sd">        service_id (int): Уникальный идентификатор услуги.</span>
+<span class="sd">        name (str): Название услуги. Должно соответствовать регулярному выражению `RUS_RE`,</span>
+<span class="sd">            допускается только кириллица.</span>
+<span class="sd">        desc (str): Краткое описание услуги. Также проверяется по шаблону `RUS_RE`.</span>
+<span class="sd">        price (float): Стоимость услуги, выраженная числом с плавающей точкой.</span>
+<span class="sd">            Должна быть строго больше нуля.</span>
+
+<span class="sd">    Конфигурация:</span>
+<span class="sd">        extra=&quot;forbid&quot;: Запрещает передачу дополнительных,</span>
+<span class="sd">        неописанных в модели полей. При попытке передать неизвестное</span>
+<span class="sd">        поле будет вызвано исключение `ValidationError`.</span>
+
+<span class="sd">    Валидация:</span>
+<span class="sd">        Поля `name` и `desc` проходят проверку по регулярному выражению `RUS_RE`.</span>
+<span class="sd">        Поле `price` должно быть строго положительным (`gt=0`).</span>
+<span class="sd">          Если значение не удовлетворяет этому условию, будет выброшено исключение `ValidationError`.</span>
+<span class="sd">        Поле `service_id` должно быть целым числом.</span>
+
+<span class="sd">    Пример:</span>
+<span class="sd">        &gt;&gt;&gt; service = ServiceSpec(</span>
+<span class="sd">        ... service_id=5,</span>
+<span class="sd">        ... name=&quot;Доставка&quot;,</span>
+<span class="sd">        ... desc=&quot;Курьерьеская доставка&quot;,</span>
+<span class="sd">        ... price=250</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; print(service)</span>
+<span class="sd">        service_id=5 name=&#39;Доставка&#39; desc=&#39;Курьерьеская доставка&#39; price=250.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">service_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">RUS_RE</span><span class="p">)</span>
+    <span class="n">desc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">RUS_RE</span><span class="p">)</span>
+    <span class="n">price</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s1">&#39;forbid&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="OrderLineSpec">
+<a class="viewcode-back" href="../../../../students_folder.Nikulina.lab2.html#students_folder.Nikulina.lab2.lab_2.OrderLineSpec">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrderLineSpec</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Модель строки заказа с валидацией quantity.</span>
+
+<span class="sd">    Атрибуты:</span>
+<span class="sd">        order_id (int): Идентификатор заказа.</span>
+<span class="sd">        order_line_id (int): Уникальный идентификатор строки внутри конкретного заказа.</span>
+<span class="sd">        item_line (Union[ServiceSpec, ItemSpec]): Позиция заказа.</span>
+<span class="sd">        quantity (float): Количество товара или услуг. Значение должно быть строго больше нуля.</span>
+<span class="sd">        line_price (float): Итоговая сумма. Должна равняться `quantity * item_line.price`.</span>
+
+<span class="sd">    Конфигурация:</span>
+<span class="sd">        extra=&quot;forbid&quot;: Запрещает передачу дополнительных,</span>
+<span class="sd">        неописанных в модели полей. При попытке передать неизвестное</span>
+<span class="sd">        поле будет вызвано исключение `ValidationError`.</span>
+
+<span class="sd">    Валидация:</span>
+<span class="sd">        Проверяется, что `quantity &gt; 0` и `line_price &gt; 0`.  </span>
+<span class="sd">        При помощи валидатора `check_line_price` выполняется логическая проверка:</span>
+<span class="sd">          `line_price` должно совпадать с произведением `quantity * item_line.price`.  </span>
+<span class="sd">        Если значения не совпадают, Pydantic автоматически выбрасывает исключение `ValidationError`</span>
+<span class="sd">          с описанием несоответствия.</span>
+
+<span class="sd">    Пример:</span>
+<span class="sd">        &gt;&gt;&gt; item = ItemSpec(</span>
+<span class="sd">        ... item_id=1,</span>
+<span class="sd">        ... name=&quot;Кружка&quot;,</span>
+<span class="sd">        ... desc=&quot;Керамическая кружка&quot;,</span>
+<span class="sd">        ... price=20</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; line = OrderLineSpec(</span>
+<span class="sd">        ... order_id=1,</span>
+<span class="sd">        ... order_line_id=1,</span>
+<span class="sd">        ... item_line=item,</span>
+<span class="sd">        ... quantity=1,</span>
+<span class="sd">        ... line_price=20</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; print(line)</span>
+<span class="sd">        order_id=1 order_line_id=1 item_line=ItemSpec(item_id=1, name=&#39;Кружка&#39;, desc=&#39;Керамическая кружка&#39;, price=20.0) </span>
+<span class="sd">        quantity=1.0 line_price=20.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">order_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">order_line_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">item_line</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ServiceSpec</span><span class="p">,</span> <span class="n">ItemSpec</span><span class="p">]</span>
+    <span class="n">quantity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">line_price</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s1">&#39;forbid&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="OrderLineSpec.check_line_price">
+<a class="viewcode-back" href="../../../../students_folder.Nikulina.lab2.html#students_folder.Nikulina.lab2.lab_2.OrderLineSpec.check_line_price">[документация]</a>
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;after&#39;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_line_price</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Проверяет согласованность суммы строки заказа.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Object: Валидированный экземпляр модели OrderLineSpec.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Если `line_price` не совпадает с рассчитанным значением.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_line</span><span class="o">.</span><span class="n">price</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_price</span> <span class="o">!=</span> <span class="n">expected</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;line_price не равно quantity * item_line.price &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">line_price</span><span class="si">}</span><span class="s1"> != </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">quantity</span><span class="si">}</span><span class="s1"> * &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">item_line</span><span class="o">.</span><span class="n">price</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">expected</span><span class="si">}</span><span class="s1">)&#39;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="OrderSpec">
+<a class="viewcode-back" href="../../../../students_folder.Nikulina.lab2.html#students_folder.Nikulina.lab2.lab_2.OrderSpec">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrderSpec</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Модель заказа в маркетплейсе.</span>
+
+<span class="sd">    Атрибуты:</span>
+<span class="sd">        order_id (int): Уникальный идентификатор заказа.</span>
+<span class="sd">        user_info (ProfileSpec): Профиль пользователя, оформившего заказ.</span>
+<span class="sd">        items_line (List[OrderLineSpec]): Список строк заказа.</span>
+
+<span class="sd">    Конфигурация:</span>
+<span class="sd">        extra=&quot;forbid&quot;: Запрещает передачу дополнительных,</span>
+<span class="sd">        неописанных в модели полей. При попытке передать неизвестное</span>
+<span class="sd">        поле будет вызвано исключение `ValidationError`.</span>
+
+<span class="sd">    Валидация:</span>
+<span class="sd">        Проверяется, что список `items_line` не пуст.  </span>
+<span class="sd">        У каждой строки `OrderLineSpec` значение `order_id` совпадает с `order.order_id`.  </span>
+<span class="sd">        Поля `order_line_id` внутри одного заказа должны быть уникальными.  </span>
+<span class="sd">        При обнаружении нарушений создаётся исключение `ValidationError` </span>
+<span class="sd">        с подробным описанием ошибки.</span>
+
+<span class="sd">    Пример:</span>
+<span class="sd">        &gt;&gt;&gt; profile = ProfileSpec(</span>
+<span class="sd">        ... user_id=10,</span>
+<span class="sd">        ... username=&quot;Андрей&quot;,</span>
+<span class="sd">        ... surname=&quot;Кузнецов&quot;,</span>
+<span class="sd">        ... second_name=&quot;Николаевич&quot;,</span>
+<span class="sd">        ... email=&quot;andrey@example.com&quot;,</span>
+<span class="sd">        ... status=&quot;active&quot;,</span>
+<span class="sd">        ... bio=&quot;Клиент&quot;,</span>
+<span class="sd">        ... url=&quot;http://example.com&quot;</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; item = ItemSpec(</span>
+<span class="sd">        ... item_id=1,</span>
+<span class="sd">        ... name=&quot;Кружка&quot;,</span>
+<span class="sd">        ... desc=&quot;Керамическая кружка&quot;,</span>
+<span class="sd">        ... price=20</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; line = OrderLineSpec(</span>
+<span class="sd">        ... order_id=1,</span>
+<span class="sd">        ... order_line_id=1,</span>
+<span class="sd">        ... item_line=item,</span>
+<span class="sd">        ... quantity=1,</span>
+<span class="sd">        ... line_price=20</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; order = OrderSpec(</span>
+<span class="sd">        ... order_id=1,</span>
+<span class="sd">        ... user_info=profile,</span>
+<span class="sd">        ...  items_line=[line]</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; print(order)</span>
+<span class="sd">        order_id=1 user_info=ProfileSpec(user_id=10, username=&#39;Андрей&#39;, surname=&#39;Кузнецов&#39;, second_name=&#39;Николаевич&#39;,</span>
+<span class="sd">        email=&#39;andrey@example.com&#39;, status=&#39;active&#39;, bio=&#39;Клиент&#39;, url=HttpUrl(&#39;http://example.com&#39;, ))</span>
+<span class="sd">        items_line=[OrderLineSpec(order_id=1, order_line_id=1, item_line=ItemSpec(item_id=1, name=&#39;Кружка&#39;,</span>
+<span class="sd">        desc=&#39;Керамическая кружка&#39;, price=20.0), quantity=1.0, line_price=20.0)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">order_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">user_info</span><span class="p">:</span> <span class="n">ProfileSpec</span>
+    <span class="n">items_line</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">OrderLineSpec</span><span class="p">]</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s1">&#39;forbid&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="OrderSpec.check_lines">
+<a class="viewcode-back" href="../../../../students_folder.Nikulina.lab2.html#students_folder.Nikulina.lab2.lab_2.OrderSpec.check_lines">[документация]</a>
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;after&#39;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Проверяет корректность строк заказа.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Object: Валидированный экземпляр модели OrderSpec.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Если список строк пуст, встречаются дублирующиеся индентификаторы.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">items_line</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;items_line пустой&#39;</span><span class="p">)</span>
+
+        <span class="n">seen</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items_line</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ln</span><span class="o">.</span><span class="n">order_id</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_id</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;order_line.order_id должен &#39;</span>
+                    <span class="s1">&#39;совпадать с order.order_id&#39;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">ln</span><span class="o">.</span><span class="n">order_line_id</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;повтор order_line_id &#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;внутри order </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">order_id</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="p">)</span>
+            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ln</span><span class="o">.</span><span class="n">order_line_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="OrdersSpec">
+<a class="viewcode-back" href="../../../../students_folder.Nikulina.lab2.html#students_folder.Nikulina.lab2.lab_2.OrdersSpec">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrdersSpec</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Модель набора заказов маркетплейса.</span>
+
+<span class="sd">    Атрибуты:</span>
+<span class="sd">        market_place_orders (List[OrderSpec]): Список всех заказов маркетплейса.</span>
+
+<span class="sd">    Конфигурация:</span>
+<span class="sd">        extra=&quot;forbid&quot;: Запрещает передачу дополнительных,</span>
+<span class="sd">        неописанных в модели полей. При попытке передать неизвестное</span>
+<span class="sd">        поле будет вызвано исключение `ValidationError`.</span>
+
+<span class="sd">    Валидация:</span>
+<span class="sd">        Проверяется, что каждый `order_id` встречается только один раз</span>
+<span class="sd">          среди всех заказов.</span>
+<span class="sd">        Проверяется уникальность `user_id` - один пользователь не может</span>
+<span class="sd">          встречаться в нескольких заказах в пределах одной структуры.</span>
+<span class="sd">        Проверяется, что `item_id` для товаров и `service_id` для услуг</span>
+<span class="sd">          не дублируются среди всех заказов. </span>
+<span class="sd">        При нарушении любого из условий будет выброшено исключение `ValidationError`.</span>
+
+<span class="sd">    Пример:</span>
+<span class="sd">        &gt;&gt;&gt; profile = ProfileSpec(</span>
+<span class="sd">        ... user_id=21,</span>
+<span class="sd">        ... username=&quot;Сергей&quot;,</span>
+<span class="sd">        ... surname=&quot;Павлов&quot;,</span>
+<span class="sd">        ... second_name=None,</span>
+<span class="sd">        ... email=&quot;sergey@example.com&quot;,</span>
+<span class="sd">        ... status=&quot;active&quot;,</span>
+<span class="sd">        ... bio=&quot;Клиент&quot;,</span>
+<span class="sd">        ... url=&quot;http://example.com&quot;</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; service = ServiceSpec(</span>
+<span class="sd">        ... service_id=8,</span>
+<span class="sd">        ... name=&quot;Доставка&quot;,</span>
+<span class="sd">        ... desc=&quot;Курьерская доставка&quot;,</span>
+<span class="sd">        ... price=300</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; line = OrderLineSpec(</span>
+<span class="sd">        ... order_id=1,</span>
+<span class="sd">        ... order_line_id=1,</span>
+<span class="sd">        ... item_line=service,</span>
+<span class="sd">        ... quantity=1,</span>
+<span class="sd">        ... line_price=300</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; order = OrderSpec(</span>
+<span class="sd">        ... order_id=1,</span>
+<span class="sd">        ... user_info=profile,</span>
+<span class="sd">        ... items_line=[line]</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; orders = OrdersSpec(market_place_orders=[order])</span>
+<span class="sd">        &gt;&gt;&gt; print(orders)</span>
+<span class="sd">        market_place_orders=[OrderSpec(order_id=1, user_info=ProfileSpec(user_id=21, username=&#39;Сергей&#39;, surname=&#39;Павлов&#39;,</span>
+<span class="sd">        second_name=None, email=&#39;sergey@example.com&#39;, status=&#39;active&#39;, bio=&#39;Клиент&#39;, url=HttpUrl(&#39;http://example.com&#39;, )),</span>
+<span class="sd">        items_line=[OrderLineSpec(order_id=1, order_line_id=1, item_line=ServiceSpec(service_id=8, name=&#39;Доставка&#39;, desc=&#39;Курьерская доставка&#39;,</span>
+<span class="sd">        price=300.0), quantity=1.0, line_price=300.0)])]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">market_place_orders</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">OrderSpec</span><span class="p">]</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s1">&#39;forbid&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="OrdersSpec.check_global_uniques">
+<a class="viewcode-back" href="../../../../students_folder.Nikulina.lab2.html#students_folder.Nikulina.lab2.lab_2.OrdersSpec.check_global_uniques">[документация]</a>
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;after&#39;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_global_uniques</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Проверяет глобальные уникальности идентификаторов во всех заказах.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Object: Валидированный экземпляр модели OrdersSpec.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Если встречаются повторяющиеся идентификаторы.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">order_ids</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">user_ids</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">item_ids</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">service_ids</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">market_place_orders</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">order_id</span> <span class="ow">in</span> <span class="n">order_ids</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;повторяющийся order_id: </span><span class="si">{</span><span class="n">o</span><span class="o">.</span><span class="n">order_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">order_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">order_id</span><span class="p">)</span>
+
+            <span class="n">uid</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">user_info</span><span class="o">.</span><span class="n">user_id</span>
+            <span class="k">if</span> <span class="n">uid</span> <span class="ow">in</span> <span class="n">user_ids</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;повторяющийся user_id: </span><span class="si">{</span><span class="n">uid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">user_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="n">o</span><span class="o">.</span><span class="n">items_line</span><span class="p">:</span>
+                <span class="n">il</span> <span class="o">=</span> <span class="n">ln</span><span class="o">.</span><span class="n">item_line</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">il</span><span class="p">,</span> <span class="n">ItemSpec</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">il</span><span class="o">.</span><span class="n">item_id</span> <span class="ow">in</span> <span class="n">item_ids</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s1">&#39;повторяющийся &#39;</span>
+                            <span class="sa">f</span><span class="s1">&#39;item_id: </span><span class="si">{</span><span class="n">il</span><span class="o">.</span><span class="n">item_id</span><span class="si">}</span><span class="s1">&#39;</span>
+                        <span class="p">)</span>
+                    <span class="n">item_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">il</span><span class="o">.</span><span class="n">item_id</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">il</span><span class="o">.</span><span class="n">service_id</span> <span class="ow">in</span> <span class="n">service_ids</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s1">&#39;повторяющийся &#39;</span>
+                            <span class="sa">f</span><span class="s1">&#39;service_id: </span><span class="si">{</span><span class="n">il</span><span class="o">.</span><span class="n">service_id</span><span class="si">}</span><span class="s1">&#39;</span>
+                        <span class="p">)</span>
+                    <span class="n">service_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">il</span><span class="o">.</span><span class="n">service_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="load">
+<a class="viewcode-back" href="../../../../students_folder.Nikulina.lab2.html#students_folder.Nikulina.lab2.lab_2.load">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="n">yaml_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OrdersSpec</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">yaml_text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">OrdersSpec</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../../students_folder.Nikulina.lab2.html#students_folder.Nikulina.lab2.lab_2.main">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">yaml_text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">orders</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">yaml_text</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">orders</span><span class="o">.</span><span class="n">market_place_orders</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;order_id=</span><span class="si">{</span><span class="n">o</span><span class="o">.</span><span class="n">order_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">u</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">user_info</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;id=</span><span class="si">{</span><span class="n">u</span><span class="o">.</span><span class="n">user_id</span><span class="si">}</span><span class="s1">, &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;ФИО: </span><span class="si">{</span><span class="n">u</span><span class="o">.</span><span class="n">surname</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">u</span><span class="o">.</span><span class="n">username</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">u</span><span class="o">.</span><span class="n">second_name</span><span class="si">}</span><span class="s1">, &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;email=</span><span class="si">{</span><span class="n">u</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s1">, статус=</span><span class="si">{</span><span class="n">u</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s1">, био=</span><span class="si">{</span><span class="n">u</span><span class="o">.</span><span class="n">bio</span><span class="si">}</span><span class="s1">, url=</span><span class="si">{</span><span class="n">u</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="n">o</span><span class="o">.</span><span class="n">items_line</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;строка заказа=</span><span class="si">{</span><span class="n">ln</span><span class="o">.</span><span class="n">order_line_id</span><span class="si">}</span><span class="s1">, &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;order_id=</span><span class="si">{</span><span class="n">ln</span><span class="o">.</span><span class="n">order_id</span><span class="si">}</span><span class="s1">, &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;количество=</span><span class="si">{</span><span class="n">ln</span><span class="o">.</span><span class="n">quantity</span><span class="si">}</span><span class="s1">, &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;цена=</span><span class="si">{</span><span class="n">ln</span><span class="o">.</span><span class="n">line_price</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ln</span><span class="o">.</span><span class="n">item_line</span><span class="p">,</span> <span class="n">ServiceSpec</span><span class="p">):</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">ln</span><span class="o">.</span><span class="n">item_line</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;service_id=</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">service_id</span><span class="si">}</span><span class="s1">, &#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;наименование=</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">, описание=</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">desc</span><span class="si">}</span><span class="s1">, цена=</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">price</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">it</span> <span class="o">=</span> <span class="n">ln</span><span class="o">.</span><span class="n">item_line</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;item_id=</span><span class="si">{</span><span class="n">it</span><span class="o">.</span><span class="n">item_id</span><span class="si">}</span><span class="s1">, &#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;наименование=</span><span class="si">{</span><span class="n">it</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">, описание=</span><span class="si">{</span><span class="n">it</span><span class="o">.</span><span class="n">desc</span><span class="si">}</span><span class="s1">, цена=</span><span class="si">{</span><span class="n">it</span><span class="o">.</span><span class="n">price</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;всего заказов = </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">orders</span><span class="o">.</span><span class="n">market_place_orders</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, ZMV. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

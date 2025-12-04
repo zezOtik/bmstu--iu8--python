@@ -15,6 +15,7 @@ def pytest_configure(config):
     config.addinivalue_line("markers", "zhukova_lab3: mark test as part of zhukova's test")
     config.addinivalue_line("markers", "nze_lab3: mark test as part of nze's test")
     config.addinivalue_line("markers", "sae_lab3: mark test as part of sae's test")
+    config.addinivalue_line("markers", "borofin_lab3: mark test as part of borodin's test")
 
 
 @pytest.fixture()

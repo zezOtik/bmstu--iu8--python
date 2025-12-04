@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Borodin &mdash; документация bmstu_python_iu8 1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=e35015f7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="prev" title="Nikulina" href="nikulina.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            bmstu_python_iu8
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="my_example.html">Some info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">students_folder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zemliakov.html">Zemliakov</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Zhukova_Mariya.html">Zhukova_Mariya</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nikulina.html">Nikulina</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Borodin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Бородин Глеб</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Тестирование и сборка</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Структура проекта</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">bmstu_python_iu8</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Borodin</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/borodin.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="borodin">
+<h1>Borodin<a class="headerlink" href="#borodin" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Бородин Глеб<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>В лабораторной работе №3 реализована система валидации данных с помощью <strong>Pydantic</strong>.
+Основная цель — создать строгую и надёжную модель данных для маркетплейса, включая:
+- пользователей (<cite>UserSpec</cite>, <cite>ProfileSpec</cite>),
+- товары и услуги (<cite>ItemSpec</cite>, <cite>ServiceSpec</cite>),
+- заказы (<cite>OrderLineSpec</cite>, <cite>OrderSpec</cite>, <cite>OrdersSpec</cite>).</p>
+<p>Все модели используют строгую валидацию:
+- типы данных,
+- ограничения (<cite>gt=0</cite> для ID и цен),
+- регулярные выражения для текстовых полей (только кириллица, пробелы и дефисы),
+- проверка email через <cite>EmailStr</cite>,
+- URL-поля через <cite>HttpUrl</cite>,
+- запрет дополнительных полей (<cite>extra=“forbid“</cite>).</p>
+<p>Мои модели данных:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">EmailStr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UserSpec</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">user_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^[а-яА-ЯёЁ\s\-]+$&#39;</span><span class="p">)</span>
+    <span class="n">surname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^[а-яА-ЯёЁ\s\-]+$&#39;</span><span class="p">)</span>
+    <span class="n">second_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^[а-яА-ЯёЁ\s\-]+$&#39;</span><span class="p">)</span>
+    <span class="n">email</span><span class="p">:</span> <span class="n">EmailStr</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="s1">&#39;non-active&#39;</span><span class="p">]</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s1">&#39;forbid&#39;</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ProfileSpec</span><span class="p">(</span><span class="n">UserSpec</span><span class="p">):</span>
+    <span class="n">bio</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^[а-яА-ЯёЁ\s\-.,!?]+$&#39;</span><span class="p">)</span>
+    <span class="n">url</span><span class="p">:</span> <span class="n">HttpUrl</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s1">&#39;forbid&#39;</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ItemSpec</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">item_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^[а-яА-ЯёЁ\s\-]+$&#39;</span><span class="p">)</span>
+    <span class="n">desc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^[а-яА-ЯёЁ\s\-]+$&#39;</span><span class="p">)</span>
+    <span class="n">price</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s1">&#39;forbid&#39;</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ServiceSpec</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">service_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^[а-яА-ЯёЁ\s\-]+$&#39;</span><span class="p">)</span>
+    <span class="n">desc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^[а-яА-ЯёЁ\s\-]+$&#39;</span><span class="p">)</span>
+    <span class="n">price</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s1">&#39;forbid&#39;</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">OrderLineSpec</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">order_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">order_line_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">item_line</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ItemSpec</span><span class="p">,</span> <span class="n">ServiceSpec</span><span class="p">]</span>
+    <span class="n">quantity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">line_price</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;after&#39;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_line_price</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;OrderLineSpec&#39;</span><span class="p">:</span>
+        <span class="n">calculated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_line</span><span class="o">.</span><span class="n">price</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_price</span> <span class="o">-</span> <span class="n">calculated</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-9</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;line_price </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">line_price</span><span class="si">}</span><span class="s1"> != quantity * item_line.price </span><span class="si">{</span><span class="n">calculated</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s1">&#39;forbid&#39;</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">OrderSpec</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">order_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">user_info</span><span class="p">:</span> <span class="n">ProfileSpec</span>
+    <span class="n">items_line</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">OrderLineSpec</span><span class="p">]</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s1">&#39;forbid&#39;</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">OrdersSpec</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">market_place_orders</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">OrderSpec</span><span class="p">]</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">extra</span><span class="o">=</span><span class="s1">&#39;forbid&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2>Тестирование и сборка<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<ul>
+<li><p>Все модели покрыты <strong>параметризованными тестами</strong> через <cite>pytest</cite>.</p></li>
+<li><p>Тесты запускаются с помощью <strong>tox</strong> в изолированном окружении.</p></li>
+<li><dl>
+<dt>Для запуска тестов лабораторной работы №3 используется команда:</dt><dd><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tox<span class="w"> </span>-e<span class="w"> </span>borodin_lab3
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><p>Документация генерируется автоматически с помощью <strong>Sphinx</strong> и <strong>sphinx-apidoc</strong>.</p></li>
+<li><p>Автоматическая сборка документации настроена через <strong>GitHub Actions</strong>.</p></li>
+<li><p>Итоговая HTML-документация публикуется на <strong>GitHub Pages</strong>.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Структура проекта<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">students_folder/Borodin/LabaMore1/lab_1.py</span></code> — исходный код моделей</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/Borodin/</span></code> — тесты с маркером <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.borodin_lab3</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/src/Borodin/lab_3/</span></code> — YAML-файлы с тестовыми данными</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs_src/</span></code> — исходники документации (RST)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/_build/html/</span></code> — сгенерированная HTML-документация</p></li>
+</ul>
+<p>Эта документация автоматически обновляется при каждом пуше в основную ветку репозитория.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="nikulina.html" class="btn btn-neutral float-left" title="Nikulina" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, ZMV. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

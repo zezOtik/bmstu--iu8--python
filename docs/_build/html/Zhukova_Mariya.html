@@ -1,0 +1,221 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zhukova_Mariya &mdash; документация bmstu_python_iu8 1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=e35015f7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Nikulina" href="nikulina.html" />
+    <link rel="prev" title="Zemliakov" href="zemliakov.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            bmstu_python_iu8
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="my_example.html">Some info</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">students_folder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zemliakov.html">Zemliakov</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Zhukova_Mariya</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#start">Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#userspec">UserSpec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#profilespec">ProfileSpec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#itemspec">ItemSpec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#servicespec">ServiceSpec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#orderlinespec">OrderLineSpec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#orderspec">OrderSpec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Дополнительно</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nikulina.html">Nikulina</a></li>
+<li class="toctree-l1"><a class="reference internal" href="borodin.html">Borodin</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">bmstu_python_iu8</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Zhukova_Mariya</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Zhukova_Mariya.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="zhukova-mariya">
+<h1>Zhukova_Mariya<a class="headerlink" href="#zhukova-mariya" title="Ссылка на этот заголовок"></a></h1>
+<section id="start">
+<h2>Start<a class="headerlink" href="#start" title="Ссылка на этот заголовок"></a></h2>
+<p>Данный код реализует систему валидации данных для маркетплейса с использованием <strong>Pydantic v2</strong>.
+Модели обеспечивают строгую типизацию, валидацию бизнес-правил и автоматическую документацию.</p>
+</section>
+<section id="userspec">
+<h2>UserSpec<a class="headerlink" href="#userspec" title="Ссылка на этот заголовок"></a></h2>
+<p>Базовая модель пользователя маркетплейса.</p>
+<p><strong>Атрибуты:</strong>
+- <code class="docutils literal notranslate"><span class="pre">user_id</span></code>: Уникальный идентификатор пользователя (int)
+- <code class="docutils literal notranslate"><span class="pre">username</span></code>: Имя пользователя на русском языке (RussianStr)
+- <code class="docutils literal notranslate"><span class="pre">surname</span></code>: Фамилия пользователя на русском языке (RussianStr)
+- <code class="docutils literal notranslate"><span class="pre">second_name</span></code>: Отчество пользователя, опционально (RussianStr)
+- <code class="docutils literal notranslate"><span class="pre">email</span></code>: Email в валидном формате (EmailStr)
+- <code class="docutils literal notranslate"><span class="pre">status</span></code>: Статус пользователя - «active» или «non-active» (Literal)</p>
+<p><strong>Конфигурация:</strong>
+- Запрещены дополнительные поля (<code class="docutils literal notranslate"><span class="pre">extra=&quot;forbid&quot;</span></code>)</p>
+</section>
+<section id="profilespec">
+<h2>ProfileSpec<a class="headerlink" href="#profilespec" title="Ссылка на этот заголовок"></a></h2>
+<p>Расширенная модель профиля пользователя, наследуется от UserSpec.</p>
+<p><strong>Дополнительные атрибуты:</strong>
+- <code class="docutils literal notranslate"><span class="pre">bio</span></code>: Биография пользователя на русском языке (RussianStr)
+- <code class="docutils literal notranslate"><span class="pre">url</span></code>: URL страницы профиля в валидном формате (HttpUrl)</p>
+</section>
+<section id="itemspec">
+<h2>ItemSpec<a class="headerlink" href="#itemspec" title="Ссылка на этот заголовок"></a></h2>
+<p>Модель товара в маркетплейсе.</p>
+<p><strong>Атрибуты:</strong>
+- <code class="docutils literal notranslate"><span class="pre">item_id</span></code>: Уникальный идентификатор товара (int)
+- <code class="docutils literal notranslate"><span class="pre">name</span></code>: Название товара на русском языке (RussianStr)
+- <code class="docutils literal notranslate"><span class="pre">desc</span></code>: Описание товара на русском языке (RussianStr)
+- <code class="docutils literal notranslate"><span class="pre">price</span></code>: Цена товара, должна быть &gt; 0 (float)</p>
+</section>
+<section id="servicespec">
+<h2>ServiceSpec<a class="headerlink" href="#servicespec" title="Ссылка на этот заголовок"></a></h2>
+<p>Модель услуги в маркетплейсе.</p>
+<p><strong>Атрибуты:</strong>
+- <code class="docutils literal notranslate"><span class="pre">service_id</span></code>: Уникальный идентификатор услуги (int)
+- <code class="docutils literal notranslate"><span class="pre">name</span></code>: Название услуги на русском языке (RussianStr)
+- <code class="docutils literal notranslate"><span class="pre">desc</span></code>: Описание услуги на русском языке (RussianStr)
+- <code class="docutils literal notranslate"><span class="pre">price</span></code>: Цена услуги, должна быть &gt; 0 (float)</p>
+</section>
+<section id="orderlinespec">
+<h2>OrderLineSpec<a class="headerlink" href="#orderlinespec" title="Ссылка на этот заголовок"></a></h2>
+<p>Модель строки заказа, содержащей товар или услугу.</p>
+<p><strong>Атрибуты:</strong>
+- <code class="docutils literal notranslate"><span class="pre">order_id</span></code>: Идентификатор заказа (int)
+- <code class="docutils literal notranslate"><span class="pre">order_line_id</span></code>: Идентификатор строки заказа (int)
+- <code class="docutils literal notranslate"><span class="pre">item_line</span></code>: Товар или услуга (Union[ItemSpec, ServiceSpec])
+- <code class="docutils literal notranslate"><span class="pre">quantity</span></code>: Количество, должно быть &gt; 0 (float)
+- <code class="docutils literal notranslate"><span class="pre">line_price</span></code>: Стоимость строки, должна быть &gt; 0 (float)</p>
+<p><strong>Валидатор:</strong>
+- <code class="docutils literal notranslate"><span class="pre">check_line_price()</span></code> - проверяет соответствие <code class="docutils literal notranslate"><span class="pre">line_price</span></code> произведению цены на количество</p>
+</section>
+<section id="orderspec">
+<h2>OrderSpec<a class="headerlink" href="#orderspec" title="Ссылка на этот заголовок"></a></h2>
+<p>Модель полного заказа.</p>
+<p><strong>Атрибуты:</strong>
+- <code class="docutils literal notranslate"><span class="pre">order_id</span></code>: Уникальный идентификатор заказа (int)
+- <code class="docutils literal notranslate"><span class="pre">user_info</span></code>: Информация о пользователе (ProfileSpec)
+- <code class="docutils literal notranslate"><span class="pre">items_line</span></code>: Список строк заказа (List[OrderLineSpec])</p>
+<p><strong>Валидатор:</strong>
+- <code class="docutils literal notranslate"><span class="pre">check_unique_order_lines()</span></code> - проверяет уникальность <code class="docutils literal notranslate"><span class="pre">order_line_id</span></code> в рамках заказа</p>
+<p><strong>OrdersSpec</strong></p>
+<p>Коллекция всех заказов маркетплейса.</p>
+<p><strong>Атрибуты:</strong>
+- <code class="docutils literal notranslate"><span class="pre">market_place_orders</span></code>: Список всех заказов (List[OrderSpec])</p>
+<p><strong>Валидатор:</strong>
+- <code class="docutils literal notranslate"><span class="pre">check_global_uniques()</span></code> - проверяет глобальную уникальность всех идентификаторов</p>
+</section>
+<section id="id1">
+<h2>Дополнительно<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p><strong>RussianStr</strong></p>
+<p>Аннотированный тип для русскоязычных строк:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">RussianStr</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^[А-Яа-яЁё\s\-]+$&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p><strong>Проверяет:</strong>
+- Только русские буквы (А-Я, а-я, Ёё)
+- Пробелы и дефисы
+- Запрещает латинские буквы, цифры, специальные символы</p>
+<p><strong>Функции</strong></p>
+<p>load_orders_from_yaml()</p>
+<p>Загружает и валидирует заказы из YAML файла.</p>
+<p><strong>Параметры:</strong>
+- <code class="docutils literal notranslate"><span class="pre">file_path</span></code>: Путь к YAML файлу</p>
+<p><strong>Возвращает:</strong>
+- <code class="docutils literal notranslate"><span class="pre">OrdersSpec</span></code>: Валидированные данные заказов
+- <code class="docutils literal notranslate"><span class="pre">None</span></code>: В случае ошибки</p>
+<p><strong>Исключения:</strong>
+- <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code>: Если файл не найден
+- <code class="docutils literal notranslate"><span class="pre">yaml.YAMLError</span></code>: При ошибках парсинга YAML
+- <code class="docutils literal notranslate"><span class="pre">ValidationError</span></code>: При ошибках валидации Pydantic</p>
+<p>Документация сгенерирована автоматически с использованием Sphinx и доступна в HTML формате.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="zemliakov.html" class="btn btn-neutral float-left" title="Zemliakov" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="nikulina.html" class="btn btn-neutral float-right" title="Nikulina" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, ZMV. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
