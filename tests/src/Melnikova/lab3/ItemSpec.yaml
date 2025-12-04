@@ -1,0 +1,64 @@
+testName: Melnikova/ItemSpec
+answerList:
+  - test_desc: 'Get correct Item'
+    value:
+      item_id: 456
+      name: "Виджет"
+      desc: "Полезный виджет"
+      price: 19.99
+    answer: true
+  - test_desc: 'Get incorrect Item model, missing attributes'
+    value:
+      item_id: 456
+      name: "Виджет"
+      desc: "Полезный виджет"
+    answer: false
+  - test_desc: 'Get incorrect Item model, wrong type for price'
+    value:
+      item_id: 456
+      name: "Виджет"
+      desc: "Полезный виджет"
+      price: "hi"
+    answer: false
+  - test_desc: 'Get incorrect Item model, missing item_id'
+    value:
+      name: "Виджет"
+      desc: "Полезный виджет"
+      price: 19.99
+    answer: false
+  - test_desc: 'Get incorrect Item model, English name'
+    value:
+      item_id: 456
+      name: "Widget"
+      desc: "Полезный виджет"
+      price: 19.99
+    answer: false
+  - test_desc: 'Get correct Item with additional attributes'
+    value:
+      item_id: 456
+      name: "Виджет"
+      desc: "Полезный виджет"
+      price: 19.99
+      category: "Гаджеты"
+    answer: false
+  - test_desc: 'Get incorrect Item model, English desc'
+    value:
+      item_id: 456
+      name: "Виджет"
+      desc: "Useful widget"
+      price: 19.99
+    answer: false
+  - test_desc: 'Get incorrect Item model, negative price'
+    value:
+      item_id: 456
+      name: "Виджет"
+      desc: "Полезный виджет"
+      price: -10.0
+    answer: false
+  - test_desc: 'Get incorrect Item model, zero price'
+    value:
+      item_id: 456
+      name: "Виджет"
+      desc: "Полезный виджет"
+      price: 0.0
+    answer: false
