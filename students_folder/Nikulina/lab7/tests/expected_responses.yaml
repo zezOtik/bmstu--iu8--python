@@ -1,0 +1,19 @@
+add_habit_response:
+  id: 1
+
+get_habits_response:
+  - id: 1
+    user_id: 1
+    name: "Drink water"
+    description: "2 liters per day"
+
+add_completion_response:
+  id: 1
+
+get_completions_response:
+  - id: 1
+    habit_id: 1
+    date: ANY
+
+streak_response:
+  streak: 1
