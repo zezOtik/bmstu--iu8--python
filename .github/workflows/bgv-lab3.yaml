@@ -1,0 +1,51 @@
+name: Borodin lab3 tests
+
+on:
+  pull_request:
+    paths:
+      - 'students_folder/Borodin/**'
+      - 'tests/Borodin/**'
+      - 'tests/src/Borodin/**'
+  workflow_dispatch:
+
+jobs:
+  borodin-lab3-tests:
+    name: Run Borodin lab3 tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+
+      - name: Cache pip packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml', '**/tox.ini') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install tox
+        run: |
+          python -m pip install --upgrade pip
+          pip install tox
+
+      - name: Run Borodin lab3 tests
+        run: tox -e borodin_lab3
+
+      - name: Show tox environments
+        if: failure()
+        run: tox list
+
+      - name: Show test files found
+        if: failure()
+        run: |
+          echo "=== Test files with borodin_lab3 marker ==="
+          find tests/ -name "*.py" -exec grep -l "borodin_lab3" {} \; || true
+          echo "=== All test files ==="
+          find tests/ -name "test_*.py" || true

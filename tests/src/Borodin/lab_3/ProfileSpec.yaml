@@ -1,0 +1,90 @@
+testName: "Borodin/lab_3/ProfileSpec.yaml"
+answerList:
+  - test_desc: "Get correct Profile"
+    value: 
+      user_id: 101
+      username: "Иван"
+      surname: "Иванов"
+      second_name: "Иванович"
+      email: "ivanov@example.com"
+      status: "active"
+      bio: "Люблю покупать товары"
+      url: "https://example.com/ivanov"
+    answer: true
+  - test_desc: "Get correct Profile with long bio"
+    value: 
+      user_id: 102
+      username: "Мария"
+      surname: "Петрова"
+      second_name: "Сергеевна"
+      email: "petrova@example.com"
+      status: "active"
+      bio: "Я увлекаюсь программированием и разработкой веб-приложений"
+      url: "https://example.com/petrova"
+    answer: true
+  - test_desc: "Get correct Profile with null middle name"
+    value: 
+      user_id: 109
+      username: "Федор"
+      surname: "Медведев"
+      second_name: null
+      email: "medvedev@example.com"
+      status: "active"
+      bio: "Менеджер проектов"
+      url: "https://example.com/medvedev"
+    answer: true
+  - test_desc: "Get correct Profile with invalid URL"
+    value: 
+      user_id: 110
+      username: "Татьяна"
+      surname: "Белова"
+      second_name: "Андреевна"
+      email: "belova@example.com"
+      status: "active"
+      bio: "Дизайнер интерфейсов"
+      url: "not-a-url"
+    answer: false
+  - test_desc: "Get correct Profile with Cyrillic in bio"
+    value: 
+      user_id: 111
+      username: "Владимир"
+      surname: "Новиков"
+      second_name: "Владимирович"
+      email: "novikov@example.com"
+      status: "non-active"
+      bio: "Интересуюсь русской литературой и культурой"
+      url: "https://example.com/novikov"
+    answer: true
+  - test_desc: "Get correct Profile with invalid id"
+    value: 
+      user_id: -100
+      username: "Владимир"
+      surname: "Новиков"
+      second_name: "Владимирович"
+      email: "novikov@example.com"
+      status: "non-active"
+      bio: "Интересуюсь русской литературой и культурой"
+      url: "https://example.com/novikov"
+    answer: false
+  - test_desc: "Get correct Profile with invalid url"
+    value: 
+      user_id: 100
+      username: "Владимир"
+      surname: "Новиков"
+      second_name: "Владимирович"
+      email: "novikov@example.com"
+      status: "non-active"
+      bio: "Интересуюсь русской литературой и культурой"
+      url: "razrab://example.tratatat/novikov"
+    answer: false
+  - test_desc: "Get correct Profile with valid url"
+    value: 
+      user_id: 100
+      username: "Владимир"
+      surname: "Новиков"
+      second_name: "Владимирович"
+      email: "novikov@example.com"
+      status: "non-active"
+      bio: "Интересуюсь русской литературой и культурой"
+      url: "https://127.0.0.1:8000/ads"
+    answer: true
