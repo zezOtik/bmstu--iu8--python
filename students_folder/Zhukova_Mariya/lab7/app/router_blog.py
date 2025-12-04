@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from app.operations.database_operations import BlogWorkflow
 from app.models.store_models import PostAdd, PostWithComments, AuthorAdd, CommentAdd, CommentGet
 from typing import List
@@ -8,7 +8,7 @@ router = APIRouter()
 
 # создание автора поста
 @router.post("/authors/", summary="Создание нового автора")
-async def create_author(author: AuthorAdd) -> dict:
+async def create_author(author: AuthorAdd = Depends()) -> dict:
     try:
         author_id = await BlogWorkflow.create_author(author)
         return {"id": author_id}
@@ -16,9 +16,10 @@ async def create_author(author: AuthorAdd) -> dict:
         raise HTTPException(status_code=400, detail=str(e))
 
 
+
 # создание поста
 @router.post("/posts/", summary="Создание нового поста")
-async def create_post(post: PostAdd) -> dict:
+async def create_post(post: PostAdd = Depends()) -> dict:
     try:
         post_id = await BlogWorkflow.create_post(post)
         return {"id": post_id}
@@ -28,7 +29,7 @@ async def create_post(post: PostAdd) -> dict:
 
 # создание коммента
 @router.post("/comments/", summary="Добавление комментария к посту")
-async def create_comment(comment: CommentAdd) -> dict:
+async def create_comment(comment: CommentAdd = Depends()) -> dict:
     try:
         comment_id = await BlogWorkflow.create_comment(comment)
         return {"id": comment_id}
@@ -53,7 +54,6 @@ async def search_by_author(author_id: int) -> dict:
 # получить всех авторов
 @router.get("/authors/", summary="Получить всех авторов")
 async def get_all_authors():
-    """Получить список всех авторов"""
     authors = await BlogWorkflow.get_all_authors()
     return authors
 
@@ -61,7 +61,7 @@ async def get_all_authors():
 # получить все посты
 @router.get("/posts/", summary="Получить все посты")
 async def get_all_posts():
-    """Получить список всех постов (без комментариев)"""
     posts = await BlogWorkflow.get_all_posts()
     return posts
+
 

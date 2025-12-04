@@ -9,8 +9,8 @@ async def lifespan(app: FastAPI):
     await create_table()
     print("Таблицы созданы")
     yield
-    # await delete_table()
-    # print("Таблицы очищены")
+    await delete_table()
+    print("Таблицы очищены")
 
 
 app = FastAPI(lifespan=lifespan)
