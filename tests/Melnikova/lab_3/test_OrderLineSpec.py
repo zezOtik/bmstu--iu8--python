@@ -6,7 +6,6 @@ from students_folder.melnikova.lab2 import OrdersSpec
 logger = logging.getLogger(__name__)
 
 
-@pytest.mark.melnikova_lab3
 @pytest.mark.maa_lab3
 def test_class_orders_spec(yaml_test_data):
     """Тест OrdersSpec с данными из YAML"""

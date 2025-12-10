@@ -5,7 +5,7 @@ from pydantic import ValidationError
 
 from students_folder.melnikova.lab2 import ProfileSpec
 
-@pytest.mark.melnikova_lab3
+@pytest.mark.maa_lab3
 def test_class_orders_spec(yaml_test_data):
     test_cases = yaml_test_data("Melnikova/lab3/ProfileSpec.yaml")
     for test_desc, value, answer in test_cases:
