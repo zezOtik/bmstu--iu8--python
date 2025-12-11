@@ -1,0 +1,59 @@
+testName: Melnikova/UserSpec
+answerList:
+  - test_desc: 'Get correct User'
+    value:
+      user_id: 1
+      username: "Алиса"
+      surname: "Мельникова"
+      second_name: "Анатольевна"
+      email: "alisa@example.com"
+      status: "active"
+    answer: true
+  - test_desc: 'Get correct User without second_name'
+    value:
+      user_id: 2
+      username: "Петр"
+      surname: "Петров"
+      email: "petr@example.com"
+      status: "non-active"
+    answer: false
+  - test_desc: 'Get incorrect User, Latin username'
+    value:
+      user_id: 3
+      username: "John123"
+      surname: "Мельникова"
+      email: "john@example.com"
+      status: "active"
+    answer: false
+  - test_desc: 'Get incorrect User, invalid email'
+    value:
+      user_id: 4
+      username: "Сергей"
+      surname: "Сергеев"
+      email: "invalid-email"
+      status: "active"
+    answer: false
+  - test_desc: 'Get incorrect User, wrong status'
+    value:
+      user_id: 5
+      username: "Анна"
+      surname: "Иванова"
+      email: "anna@example.com"
+      status: "wrong_status"
+    answer: false
+  - test_desc: 'Get incorrect User, missing required field'
+    value:
+      username: "Алиса"
+      surname: "Мельникова"
+      email: "alisa@example.com"
+      status: "active"
+    answer: false
+  - test_desc: 'Get incorrect User, extra field'
+    value:
+      user_id: 6
+      username: "Мария"
+      surname: "Петрова"
+      email: "maria@example.com"
+      status: "active"
+      extra_field: "should_fail"
+    answer: false

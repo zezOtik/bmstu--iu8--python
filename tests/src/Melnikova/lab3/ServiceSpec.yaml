@@ -1,0 +1,29 @@
+testName: Melnikova/ServiceSpec
+answerList:
+  - test_desc: 'Get correct Service'
+    value:
+      service_id: 1
+      name: "Тестовая услуга"
+      desc: "Описание тестовой услуги"
+      price: 200.0
+    answer: false
+  - test_desc: 'Get incorrect Service, negative price'
+    value:
+      service_id: 2
+      name: "Услуга 2"
+      desc: "Описание услуги 2"
+      price: -50.0
+    answer: false
+  - test_desc: 'Get incorrect Service, Latin name'
+    value:
+      service_id: 3
+      name: "Service 1"
+      desc: "Описание услуги"
+      price: 100.0
+    answer: false
+  - test_desc: 'Get incorrect Service, missing service_id'
+    value:
+      name: "Услуга"
+      desc: "Описание услуги"
+      price: 150.0
+    answer: false
