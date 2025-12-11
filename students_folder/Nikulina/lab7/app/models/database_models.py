@@ -1,5 +1,5 @@
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import DateTime, BIGINT, Integer, Text
+from sqlalchemy import DateTime, BIGINT, Integer, Text, ForeignKey
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -23,5 +23,5 @@ class CompletionOrm(TableModel):
     __table_args__ = {"schema": "public"}
 
     id: Mapped[int] = mapped_column(BIGINT, primary_key=True, autoincrement=True)
-    habit_id: Mapped[int]
+    habit_id: Mapped[int] = mapped_column(ForeignKey(HabitOrm.id))
     date: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)

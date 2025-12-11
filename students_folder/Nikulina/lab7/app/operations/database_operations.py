@@ -57,23 +57,23 @@ class CompletionWorkflow:
     @classmethod
     async def get_streak(cls, habit_id: int) -> int:
         async with new_session() as session:
-            result = await session.execute(
-                select(CompletionOrm.date).where(
-                    CompletionOrm.habit_id == habit_id
-                ).order_by(CompletionOrm.date.desc())
-            )
-            dates = [row for row, in result.all()]
+            query = select(CompletionOrm).where(CompletionOrm.habit_id == habit_id).order_by(CompletionOrm.date.desc())
+            result = await session.execute(query)
+            completions = result.scalars().all()
 
-            if not dates:
+            if not completions:
                 return 0
 
-            streak = 0
-            today = datetime.now(timezone.utc).date()
+            current_date = completions[0].date.date()
+            streak = 1
 
-            for i, day in enumerate(dates):
-                if day.date() == today - timedelta(days=streak):
+            for comp in completions[1:]:
+                comp_date = comp.date.date()
+                if current_date - comp_date == timedelta(days=1):
                     streak += 1
+                    current_date = comp_date
                 else:
                     break
 
             return streak
+
