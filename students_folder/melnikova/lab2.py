@@ -7,6 +7,17 @@ RUS_RE = r'^[А-Яа-яЁё][А-Яа-яЁё \-]*$'
 
 
 class UserSpec(BaseModel):
+    """
+       Базовая модель пользователя.
+
+       Attributes:
+           user_id: Уникальный идентификатор пользователя
+           username: Имя пользователя
+           surname: Фамилия
+           second_name: Отчество (опционально)
+           email: Email адрес
+           status: Статус пользователя ('active' или 'non-active')
+       """
     user_id: int
     username: str
     surname: str
@@ -24,6 +35,13 @@ class UserSpec(BaseModel):
 
 
 class ProfileSpec(UserSpec):
+    """
+       Расширенный профиль пользователя.
+
+       Наследует все поля UserSpec и добавляет:
+           bio: Краткая биография пользователя
+           url: Валидный URL адрес профиля
+       """
     bio: str
     url: HttpUrl
 
@@ -37,6 +55,15 @@ class ProfileSpec(UserSpec):
     model_config = ConfigDict(extra='forbid')
 
 class ItemSpec(BaseModel):
+    """
+       Модель товара/продукта.
+
+       Attributes:
+           item_id: Уникальный идентификатор товара
+           name: Название товара (только русские буквы)
+           desc: Описание товара (только русские буквы)
+           price: Цена товара (должна быть больше 0)
+       """
     item_id: int
     name: str = Field(..., pattern=RUS_RE)
     desc: str = Field(..., pattern=RUS_RE)
@@ -53,6 +80,20 @@ class ItemSpec(BaseModel):
 
 
 class ServiceSpec(BaseModel):
+    """
+       Модель услуги/сервиса.
+
+       Attributes:
+           service_id: Уникальный идентификатор услуги
+           name: Название услуги
+           desc: Описание услуги
+           price: Стоимость услуги
+           order_id: ID заказа
+           order_line_id: ID строки заказа
+           item_line: Связанный товар
+           quantity: Количество
+           line_price: Итоговая цена строки (автоматически рассчитывается)
+       """
     service_id: int
     name: str = Field(..., pattern=RUS_RE)
     desc: str = Field(..., pattern=RUS_RE)
@@ -78,6 +119,17 @@ class ServiceSpec(BaseModel):
 
 
 class OrdersSpec(BaseModel):
+    """
+        Модель заказов.
+
+        Attributes:
+            market_place_orders: Список услуг/сервисов в заказе
+
+        Validators:
+            Проверяет, что список не пустой
+            Проверяет уникальность order_line_id
+            Проверяет соответствие order_id
+        """
     market_place_orders: List[ServiceSpec]
     model_config = ConfigDict(extra='forbid')
 
