@@ -1,15 +1,42 @@
 from datetime import datetime, timedelta
 import random
 from airflow import DAG
-from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
+from airflow.operators.python import PythonOperator
+from airflow.utils.dates import days_ago
+from airflow.utils.task_group import TaskGroup
+from airflow.models import Variable
+import math
+
+# Параметры по умолчанию для DAG
+DEFAULT_ARGS = {
+    'owner': 'airflow',
+    'depends_on_past': False,
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 1,
+    'retry_delay': timedelta(minutes=5),
+}
 
 
-def generate_random_employees(**context):
-    num_employees = 10000  # Количество сотрудников для генерации
-    batch_size = 1000  # Размер пакета для вставки
+def generate_employees_chunk(**context):
+    execution_date = context['ds']
+    task_id = context['task_instance'].task_id
+    task_number = int(task_id.split('_')[-1])
 
-    # Списки для генерации случайных данных
+    params = context['params']
+    num_employees = params.get('num_employees', 10000)
+    num_chunks = params.get('num_chunks', 10)
+    min_hire_date_str = context['templates_dict']['min_hire_date']
+    max_hire_date_str = context['templates_dict']['max_hire_date']
+
+    chunk_size = math.ceil(num_employees / num_chunks)
+    start_idx = task_number * chunk_size + 1
+    end_idx = min((task_number + 1) * chunk_size, num_employees)
+
+    print(f"Запуск задачи {task_id} для генерации записей {start_idx} - {end_idx}")
+    print(f"Диапазон дат приема на работу: с {min_hire_date_str} по {max_hire_date_str}")
+
     male_first_names = ['Иван', 'Петр', 'Сидор', 'Алексей', 'Дмитрий', 'Сергей',
                         'Михаил', 'Андрей', 'Николай', 'Василий', 'Александр', 'Максим',
                         'Евгений', 'Владимир', 'Борис', 'Георгий', 'Станислав', 'Роман',
@@ -42,73 +69,94 @@ def generate_random_employees(**context):
         'Operations', 'Logistics', 'Quality Assurance'
     ]
 
-    start_date = datetime(2018, 1, 1)
-    end_date = datetime(2023, 12, 31)
+    min_hire_date = datetime.strptime(min_hire_date_str, '%Y-%m-%d')
+    max_hire_date = datetime.strptime(max_hire_date_str, '%Y-%m-%d')
 
-    # Подключение к БД
+    max_allowed_date = datetime(2025, 12, 31)
+    if max_hire_date > max_allowed_date:
+        max_hire_date = max_allowed_date
+
     pg_hook = PostgresHook(postgres_conn_id='airflow_db')
     conn = pg_hook.get_conn()
     cursor = conn.cursor()
 
-    # Очистка таблицы перед вставкой
-    cursor.execute("TRUNCATE TABLE hr_employees RESTART IDENTITY CASCADE;")
-
     total_inserted = 0
 
-    # Генерация и вставка данных пакетами
-    for batch_start in range(1, num_employees + 1, batch_size):
-        batch_end = min(batch_start + batch_size - 1, num_employees)
-        batch_data = []
+    for i in range(start_idx, end_idx + 1):
+        is_male = random.choice([True, False])
 
-        for i in range(batch_start, batch_end + 1):
-            # Случайный выбор пола для генерации имени
-            is_male = random.choice([True, False])
+        if is_male:
+            first_name = random.choice(male_first_names)
+            last_name = random.choice(last_names_male)
+        else:
+            first_name = random.choice(female_first_names)
+            last_name = random.choice(last_names_female)
 
-            if is_male:
-                first_name = random.choice(male_first_names)
-                last_name = random.choice(last_names_male)
-            else:
-                first_name = random.choice(female_first_names)
-                last_name = random.choice(last_names_female)
+        full_name = f"{first_name} {last_name}"
+        department = random.choice(departments)
 
-            full_name = f"{first_name} {last_name}"
-            department = random.choice(departments)
+        time_between_dates = max_hire_date - min_hire_date
+        days_between_dates = time_between_dates.days
+        random_number_of_days = random.randrange(days_between_dates + 1)
+        hire_date = min_hire_date + timedelta(days=random_number_of_days)
 
-            # Генерация случайной даты приема на работу
-            time_between_dates = end_date - start_date
-            days_between_dates = time_between_dates.days
-            random_number_of_days = random.randrange(days_between_dates)
-            hire_date = start_date + timedelta(days=random_number_of_days)
+        cursor.execute("""
+            INSERT INTO hr_employees (id, name, department, hire_date)
+            VALUES (%s, %s, %s, %s)
+        """, (i, full_name, department, hire_date))
 
-            batch_data.append((i, full_name, department, hire_date))
+        total_inserted += 1
 
-        # Вставка батчами
-        args_str = b','.join(
-            cursor.mogrify("(%s,%s,%s,%s)", x) for x in batch_data
-        )
-        cursor.execute(b"INSERT INTO hr_employees (id, name, department, hire_date) VALUES " + args_str)
-        conn.commit()
-
-        total_inserted += len(batch_data)
-        print(f"Вставлен пакет записей с {batch_start} по {batch_end} ({len(batch_data)} записей)")
-
+    conn.commit()
     cursor.close()
     conn.close()
 
-    print(f"Всего вставлено записей: {total_inserted}")
-    return f"Успешно сгенерировано и вставлено {total_inserted} записей о сотрудниках"
+    print(f"Задача {task_id} завершена. Вставлено {total_inserted} записей.")
+    return f"Задача {task_id} завершена. Вставлено {total_inserted} записей."
 
 
 with DAG(
-        'init_data',
-        start_date=datetime(2023, 1, 1),
+        dag_id='init_data_parallel',
+        default_args=DEFAULT_ARGS,
+        description='Параллельная генерация данных о сотрудниках',
         schedule_interval='@once',
+        start_date=days_ago(1),
         catchup=False,
-        description='Генерация случайных данных о сотрудниках (10 000 записей)',
-        tags=['data_generation', 'hr']
+        tags=['data_generation', 'hr', 'parallel'],
+        params={
+            'num_employees': 10000,
+            'num_chunks': 10
+        }
 ) as dag:
-    generate_data = PythonOperator(
-        task_id='generate_random_employees',
-        python_callable=generate_random_employees,
-        provide_context=True
+    clear_table = PythonOperator(
+        task_id='clear_table',
+        python_callable=lambda **context: PostgresHook(postgres_conn_id='airflow_db') \
+            .get_conn().cursor().execute("TRUNCATE TABLE hr_employees RESTART IDENTITY CASCADE;")
     )
+
+    with TaskGroup("generate_data_chunks") as generate_data_chunks:
+        num_chunks = dag.params['num_chunks']
+
+        for i in range(num_chunks):
+            PythonOperator(
+                task_id=f'generate_chunk_{i}',
+                python_callable=generate_employees_chunk,
+                op_kwargs={
+                    "chunk_number": i,
+                    "min_hire_date": "{{ macros.datetime(2018, 1, 1).strftime('%Y-%m-%d') }}",
+                    "max_hire_date": "{{ ds }}"
+                },
+                templates_dict={
+                    "min_hire_date": "{{ macros.datetime(2018, 1, 1).strftime('%Y-%m-%d') }}",
+                    "max_hire_date": "{{ ds }}"
+                }
+            )
+
+    check_results = PythonOperator(
+        task_id='check_results',
+        python_callable=lambda **context: print(
+            f"Проверка результатов для {context['params']['num_employees']} записей"),
+        trigger_rule='all_success'
+    )
+
+    clear_table >> generate_data_chunks >> check_results
