@@ -4,3 +4,4 @@
 venv
 docs_src/build
 __pycache__
+pgdata
