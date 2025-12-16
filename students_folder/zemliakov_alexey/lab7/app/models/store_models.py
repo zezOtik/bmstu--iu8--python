@@ -81,7 +81,3 @@ class UserBookingGetRes(Booking):
     id: int
 
     model_config = ConfigDict(from_attributes=True)
-
-
-class BookingListGet(RootModel[List[UserBookingGetRes]]):
-    model_config = ConfigDict(from_attributes=True)
