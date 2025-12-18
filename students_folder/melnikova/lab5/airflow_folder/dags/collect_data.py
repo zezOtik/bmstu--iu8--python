@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 import json
 
 default_args = {
-    'owner': 'Melnikova_Alisa',
+    'owner': 'MelnikovaAlisa',
     'depends_on_past': False,
     'start_date': datetime(2024, 1, 1),
     'email_on_failure': False,
@@ -36,7 +36,7 @@ calculate_metrics = SQLExecuteQueryOperator(
     -- Очистка предыдущей метрики за сегодня
     DELETE FROM hospital.metrics 
     WHERE metric_name = 'dates_with_exactly_5_visits' 
-    AND calculation_date = CURRENT_DATE;
+    AND calculation_date =  '{{ ds }}'::DATE;
 
     -- Поиск дат с ровно 5 визитами
     WITH daily_visits AS (
@@ -65,7 +65,7 @@ calculate_metrics = SQLExecuteQueryOperator(
             ),
             'total_dates', COUNT(*)
         ),
-        CURRENT_DATE
+         '{{ ds }}'::DATE
     FROM five_visits_dates;
     """,
     dag=dag
