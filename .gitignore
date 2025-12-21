@@ -4,3 +4,4 @@
 venv
 docs_src/build
 __pycache__
+students_folder/Borodin/lab5/airflow_folder/logs
